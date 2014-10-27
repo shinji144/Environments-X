@@ -1,0 +1,1 @@
+ENT.Type = "anim"ENT.Base = "base_env_entity" ENT.PrintName		= "Factory Crate"ENT.Author			= "Ludsoe"ENT.Purpose			= "Device Storage" 
