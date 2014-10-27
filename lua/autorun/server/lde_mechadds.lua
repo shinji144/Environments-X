@@ -10,7 +10,6 @@ function LDE:BlastDamage(Data)
 --[[	--Example of the Data table
 	Data = { 
 		Pos 					=		Vector(0,0,0),	--Required--		--Position of the Explosion, World vector
-		Subspace			=		"SPEHS",			--Optional--		--If you don't use it, it'll default to SubSpaces.MainSpace
 		ShrapDamage	=		50,					--Optional--		--Amount of Damage dealt by each Shrapnel that hits, if 0 or nil then other Shap vars are not required
 		ShrapCount		=		20,											--Number of Shrapnel, 0 to not use Shrapnel
 		ShrapDir			=		Vector(1,1,0),							--Direction of the Shrapnel, Direction vector, Example: Missile:GetForward()
@@ -24,7 +23,6 @@ function LDE:BlastDamage(Data)
 	}
 ]]--
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	Data.Subspace = Data.Subspace or SubSpaces.MainSpace
 	if type(Data.ShrapDamage) == "number" then
 		--print("ShrapDamage was a number")
 		if Data.ShrapDamage > 0 then
@@ -127,7 +125,6 @@ function LDE:FireProjectile(MyData)
 		Data = {
 			ShootPos 			=		Vector(0,0,0),								--Required--		--Position to start the Projectile, World Pos
 			Direction			=		Vector(1,1,0),								--Required--		--Direction the weapon is pointing, World Direction not local
-			Subspace			=		"SPEHS",										--Optional--		--If you don't use it, it'll default to SubSpaces.MainSpace
 			ProjSpeed			=		150,												--Required--		--How fast the Projectile Travels
 			HomingPos		=		Vector(0,0,0),								--Optional--		--Anything other than Vector(0,0,0) will make the bullet home on that World position
 			HomingSpeed	=		10,												--Optional--		--Controls homing turn speed, 0 to 100
@@ -164,9 +161,9 @@ function LDE:FireProjectile(MyData)
 		return MyReturn
 	end
 	
-	Data.Subspace = Data.Subspace or SubSpaces.MainSpace
 	Data.Count = Data.Count or 1
 	Data.Drop = Data.Drop or 0
+	Data.Drag = Data.Drag or 0
 	Data.HomingPos = Data.HomingPos or Vector(0,0,0)
 	Data.HomingSpeed = Data.HomingSpeed or 0
 	Data.MuzzleFlash = Data.MuzzleFlash or 1
@@ -176,6 +173,7 @@ function LDE:FireProjectile(MyData)
 	Data.TrailLifeTime = Data.TrailLifeTime or 0.4
 	Data.TrailRes = Data.TrailRes or 1/(Data.TrailStartW+Data.TrailEndW)*0.5
 	Data.TrailTexture = Data.TrailTexture or "trails/laser.vmt"
+	Data.HomeDelay = Data.HomeDelay or 0.2
 	
 	for I=1, Data.Count do
 
@@ -183,10 +181,9 @@ function LDE:FireProjectile(MyData)
 		BulletData.Pos = Data.ShootPos
 		if Data.Spread < 0 then Data.Spread = 0 elseif Data.Spread > 100 then Data.Spread = 100 end
 		local spread = (Data.Spread / 100)*90
-		local cone = Angle(math.Rand(-spread,spread),math.Rand(-spread,spread),0)
+		local cone = Angle(math.Rand(-spread,spread),math.Rand(-spread,spread),math.Rand(-spread,spread))
 		local dir = Vector(Data.Direction.X,Data.Direction.Y,Data.Direction.Z)
 		--BULLET DROP, WILL NEED GRAVITY CHECKING LATER
-		if Data.Drop > 0 then dir = dir - (Data.Drop*Multiplier*Multiplier) end
 		----------------------------------------------------------------
 		dir:Rotate(cone)
 		dir:Normalize()
@@ -196,6 +193,7 @@ function LDE:FireProjectile(MyData)
 	
 		BulletData.Projectile = ents.Create("lde_bulletent")
 		--BulletData.Projectile:SetRenderMode( RENDERMODE_GLOW )
+		BulletData.Birth = CurTime()
 		BulletData.Projectile:SetPos( BulletData.Pos )
 		local angle = BulletData.Dir:Angle()
 		BulletData.Projectile:SetAngles( angle )
@@ -211,13 +209,16 @@ function LDE:FireProjectile(MyData)
 		BulletData.SkipMult = Multiplier
 		BulletData.Skip = 1
 		BulletData.Data = Data
+		
 		--table.insert(LDE.Projectiles,BulletData)
 		LDE.Projectiles[ID] = BulletData
 		
-		if type(Data.HomingPos == "Vector") and I == 1 and Data.Count == 1 then
-			if Data.HomingPos ~= Vector(0,0,0) then
-				MyReturn = LDE.Projectiles[ID]
-			end
+		if I == 1 and Data.Count == 1 then
+			MyReturn = LDE.Projectiles[ID]
+		else
+			MyReturn.Multi=true
+			MyReturn.Bullets = MyReturn.Bullets or {}
+			MyReturn.Bullets[I]=LDE.Projectiles[ID]
 		end
 	
 	end
@@ -238,6 +239,17 @@ end
 local function ProjectileThink()
 	--if ProjectileSkip < 6 then ProjectileSkip=ProjectileSkip+1 return else ProjectileSkip = 1 end						--Don't run every tick, run every 6 ticks for roughly 10FPS animation--DISABLED
 	
+	local Cleanup = table.Count(RemoveProj)
+	if Cleanup > 0 then																											--We have something to cleanup, nil the tables
+		for I, V in pairs(RemoveProj) do
+			if IsValid(LDE.Projectiles[I].Projectile) then
+				LDE.Projectiles[I].Projectile:Remove()
+			end
+			LDE.Projectiles[I] = nil
+			RemoveProj[I] = nil
+		end
+	end
+	
 	--First, see if we have any Projectiles to iterate
 	local Count = table.Count(LDE.Projectiles)
 	if Count > 0 then
@@ -253,18 +265,23 @@ local function ProjectileThink()
 					
 					--Homing
 					if type(BulletData.Data.HomingPos) == "Vector" and type(BulletData.Data.HomingSpeed) == "number" then
-						if BulletData.Data.HomingPos ~= Vector(0,0,0) then
+						if BulletData.Data.HomingPos ~= Vector(0,0,0) and BulletData.Birth+BulletData.Data.HomeDelay < CurTime() then
 							local speed = math.Clamp(BulletData.Data.HomingSpeed,0,100)*0.01
 							local length = BulletData.Dir:Length()
 							local aim = BulletData.Data.HomingPos - BulletData.Pos
 							aim:Normalize()
 							aim=aim*length
 							BulletData.Dir = BulletData.Dir*(1-speed) + aim*speed
+							BulletData.Dir:Normalize()
+							BulletData.Dir = BulletData.Dir*length
 						end
 					end
 					
-					if type(BulletData.Drop) == "number" then BulletData.Dir=BulletData.Dir-Vector(0,0,Drop) end	--Add Drop to the next movement if applicable, will need Env checking
-				
+					
+					--Add Support for spacebuild maps!
+					if type(BulletData.Drop) == "number" then BulletData.Dir=BulletData.Dir+Vector(0,0,-BulletData.Drop) end	--Add Drop to the next movement if applicable, will need Env checking
+					if type(BulletData.Drag) == "number" then BulletData.Dir=BulletData.Dir-(BulletData.Dir*BulletData.Drag) end
+					
 					local tr = {}																											--Create a short trace along the flight path checking for hit and hitdata
 						tr.start = BulletData.Pos
 						tr.endpos = BulletData.Pos + BulletData.Dir
@@ -308,17 +325,6 @@ local function ProjectileThink()
 					--util.Effect( "Tracer", effectdata)
 				end
 			end
-		end
-	end
-	
-	local Cleanup = table.Count(RemoveProj)
-	if Cleanup > 0 then																											--We have something to cleanup, nil the tables
-		for I, V in pairs(RemoveProj) do
-			if IsValid(LDE.Projectiles[I].Projectile) then
-				LDE.Projectiles[I].Projectile:Remove()
-			end
-			LDE.Projectiles[I] = nil
-			RemoveProj[I] = nil
 		end
 	end
 end

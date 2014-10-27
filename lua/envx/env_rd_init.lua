@@ -19,47 +19,32 @@ if not Environments then
 	Environments = {}
 end
 
+local LoadFile = EnvX.LoadFile --Lel Speed.
+local P = "environments/"
 
-if SERVER then
-	//Load Main Luas
-	AddCSLuaFile("environments/cl_init.lua")
+LoadFile(P.."init.lua",2)
 
-	include("environments/init.lua")
+LoadFile(P.."cl_init.lua",0)
 
-	include("environments/shared.lua")
-	AddCSLuaFile("environments/shared.lua")
-
-	include("environments/EntRegister.lua")
-	AddCSLuaFile("environments/EntRegister.lua")
-	
-	include("environments/resources.lua")
-	AddCSLuaFile("environments/resources.lua")
-	
-	include("environments/userinterface.lua")
-	AddCSLuaFile("environments/userinterface.lua")
-	
-	include("environments/easecreation.lua")
-	AddCSLuaFile("environments/easecreation.lua")
-else
-	include("environments/userinterface.lua")
-	
-	include("environments/cl_init.lua")
-	
-	include("environments/shared.lua")
-	
-	include("environments/easecreation.lua")
-	
-	include("environments/EntRegister.lua")
-	
-	include("environments/resources.lua")
-end
-
+LoadFile(P.."userinterface.lua",1)
+LoadFile(P.."shared.lua",1)
+LoadFile(P.."easecreation.lua",1)
+LoadFile(P.."resources.lua",1)
+LoadFile(P.."EntRegister.lua",1)
 
 print("==============================================")
 print("== Environments Life Support Ents Installed ==")
 print("==============================================")
 
+local P = "environments/lifesupport/"
+LoadFile(P.."autorun_ludtech.lua",1)
+LoadFile(P.."ls_core_entities.lua",1)
+LoadFile(P.."ls_core_entities_ludtech.lua",1)
+LoadFile(P.."ls_test_entitys.lua",1)
+LoadFile(P.."ls3_reversecompatability.lua",1)
+
 //Load devices and stuff from addons
+--[[
 local Files
 if file.FindInLua then
 	Files = file.FindInLua( "environments/lifesupport/*.lua" )
@@ -76,4 +61,4 @@ for k, File in ipairs(Files) do
 	else
 		Msg("Loaded: Successfully\n")
 	end
-end
+end]]

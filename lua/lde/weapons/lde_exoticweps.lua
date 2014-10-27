@@ -5,21 +5,24 @@
 
 local Client = function(self) return LDE.Weapons.ShowCharge(self,self.Data.Bullet) end --Clientside
 local ClientSetup = function(ENT) ENT.LDETools.Charge = Client end
-local Func = function(self) LDE.Weapons.ManageCharge(self,self.Data.Bullet) end --Charge function
+local Func = function(self,CanFire) 
+	LDE.Weapons.ManageCharge(self,self.Data.Bullet)
+	return true
+end --Charge function
 local Base = {Tool="Weapon Systems",Type="Chargers"}
 local Effects = {Beam="LDE_laserbeam_long",Hit="LDE_laserhiteffect"}
 
 --Basic RailGun
 local Fire = function(self) LDE.Weapons.SingleBurst(self,self.Data.Bullet) end
 local Bullet = {Recoil=200,CoolDown=2,ChargeRate=5,Radius=1,MinCharge=50,MaxCharge=150,Dpc=4,ChargeType=true,ChargeShoot=Fire,Effect=Effects}
-local Data={name="Basic RailGun",class="basic_railgun_weapon",WireOut={"Charge","CanFire"},In={"energy"},MountType="Medium",shootfunc=Func,ClientSetup=ClientSetup,Points=220,heat=5,firespeed=0.5,InUse={500},Bullet=Bullet}
+local Data={name="Basic RailGun",class="basic_railgun_weapon",WireOut={"Charge","CanFire"},In={"energy"},shootfunc=Func,ClientSetup=ClientSetup,Points=220,heat=5,firespeed=0.5,InUse={500},Bullet=Bullet}
 local Makeup = {name={"Small RailGun"},model={"models/Slyfo_2/drone_railgun.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
 --Large RailGun
 local Fire = function(self) LDE.Weapons.SingleBurst(self,self.Data.Bullet) end
 local Bullet = {Recoil=2000,CoolDown=20,ChargeRate=50,Radius=0.5,MinCharge=500,MaxCharge=1500,Dpc=6,ShootDir=Vector(0,0,1),ShootPos=Vector(0,0,120),ChargeType=true,ChargeShoot=Fire,Effect=Effects}
-local Data={name="Large RailGun",class="large_railgun_weapon",WireOut={"Charge","CanFire"},In={"energy"},MountType="Large",shootfunc=Func,ClientSetup=ClientSetup,Points=2000,heat=1000,firespeed=0.8,InUse={10000},Bullet=Bullet}
+local Data={name="Large RailGun",class="large_railgun_weapon",WireOut={"Charge","CanFire"},In={"energy"},MountType="CapRailGun",shootfunc=Func,ClientSetup=ClientSetup,Points=2000,heat=1000,firespeed=0.8,InUse={10000},Bullet=Bullet}
 local Makeup = {name={"Large RailGun"},model={"models/mandrac/hybride/cap_railgun_gun1.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
@@ -90,8 +93,8 @@ local wirefunc = function(self,iname,value)
 	end
 end
 
-local Func = function(self) 
-	if self.Active == 1 then
+local Func = function(self,CanFire) 
+	if self.Active == 1 and CanFire then
 		if(self.wirefire == false)then self.wirefire=true self.chargetime=CurTime()+6 end
 		
 		self:DoRes(self.multiplier)
@@ -151,6 +154,7 @@ local Func = function(self)
 	local damagesec = (self.damagebase * self.multiplier)*10
 	Wire_TriggerOutput(self,"Plasma/Sec",energyneedsec)
 	Wire_TriggerOutput(self,"DPS",damagesec)
+	return true
 end --Charge function
 
 local shared = function(ENT)
@@ -277,8 +281,8 @@ LDE.Weapons.CompileWeapon(Data,Makeup)
 --Winch
 local Base = {Tool="Weapon Systems",Type="Non-Lethal"}
 
-local Func = function(self)
-	if(self.Active==1)then
+local Func = function(self,CanFire)
+	if(self.Active==1 and CanFire)then
 		if (CurTime() >= self.MCDown) then
 			if(LDE.LifeSupport.ManageResources(self,1))then
 				local NewShell = ents.Create( "SF-GrappleH" )
@@ -302,10 +306,11 @@ local Func = function(self)
 				end
 				self.MCDown = CurTime() + 1
 				self:TurnOff()
-				return
+				return true
 			end
 		end
 	end
+	return false
 end
 
 local WireFunc = function(self,iname,value)

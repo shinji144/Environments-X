@@ -2,7 +2,15 @@
 ------------Machine Guns--------------
 --------------------------------------
 
-local Func = function(self) if(self.Active==1)then if(LDE.LifeSupport.ManageResources(self,1))then LDE.Weapons.ShootBullet(self,self.Data.Bullet) end end end
+local Func = function(self,CanFire) 
+	if self.Active==1 and CanFire then 
+		if LDE.LifeSupport.ManageResources(self,1) then 
+			LDE.Weapons.ShootBullet(self,self.Data.Bullet)
+			return true
+		end 
+	end 
+	return false
+end
 local Base = {Tool="Weapon Systems",Type="MachineGuns"}
 
 --Heavy Machine Gun
@@ -43,7 +51,15 @@ local BulletFunc =  function(self,Data,attacker,tr)
 	LDE:DealAdvDamage(tr.Entity,dam)
 end
 
-local Func = function(self) if(self.Active==1)then if(LDE.LifeSupport.ManageResources(self,1))then LDE.Weapons.ShootBullet(self,self.Data.Bullet) end end end
+local Func = function(self,CanFire) 
+	if(self.Active==1 and CanFire)then 
+		if(LDE.LifeSupport.ManageResources(self,1))then 
+			LDE.Weapons.ShootBullet(self,self.Data.Bullet)
+			return true
+		end 
+	end 
+	return false
+end
 local Base = {Tool="Weapon Systems",Type="Rifles"}
 
 --Anti Ship rifle
@@ -62,7 +78,15 @@ LDE.Weapons.CompileWeapon(Data,Makeup)
 ------------Ship ShotGuns-------------
 --------------------------------------
 
-local Func = function(self) if(self.Active==1)then if(LDE.LifeSupport.ManageResources(self,1))then LDE.Weapons.ShootBullet(self,self.Data.Bullet) end end end
+local Func = function(self,CanFire) 
+	if(self.Active==1 and CanFire)then 
+		if(LDE.LifeSupport.ManageResources(self,1))then 
+			LDE.Weapons.ShootBullet(self,self.Data.Bullet)
+			return true
+		end 
+	end
+	return false
+end
 local Base = {Tool="Weapon Systems",Type="Shotguns"}
 
 --Tiny Shot Gun
@@ -88,7 +112,10 @@ LDE.Weapons.CompileWeapon(Data,Makeup)
 --------------------------------------
 
 local Client = function(self) LDE.Weapons.ShowCharge(self,self.Data.Bullet) end --Clientside
-local Func = function(self) LDE.Weapons.ManageCharge(self,self.Data.Bullet) end --Charge function
+local Func = function(self,CanFire) 
+	LDE.Weapons.ManageCharge(self,self.Data.Bullet) 
+	return true
+end --Charge function
 local Base = {Tool="Weapon Systems",Type="MachineGuns"}
 
 --Basic ChainGun

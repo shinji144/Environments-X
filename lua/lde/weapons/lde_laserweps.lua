@@ -1,5 +1,11 @@
 
-local Func = function(self) if(LDE.LifeSupport.ManageResources(self,1))then LDE.Weapons.FireLaser(self,self.Data.Bullet) end end
+local Func = function(self,CanFire) 
+	if LDE.LifeSupport.ManageResources(self,1) and CanFire then 
+		LDE.Weapons.FireLaser(self,self.Data.Bullet)
+		return true
+	end 
+	return false
+end
 local Base = {Tool="Weapon Systems",Type="Pulse Lasers"}
 local Desc = "Fires a instanthit beam that heats up a targets lifesupport system."
 
@@ -63,16 +69,18 @@ LDE.Weapons.CompileWeapon(Data,Makeup)
 
 --Phazzer 
 local Desc = "Can Fire a beam in any direction."
-local Func = function(self)
-	if(self.Active==1)then
+local Func = function(self,CanFire)
+	if self.Active==1 and CanFire then
 		if(self.TraceTarg)then
 			if(LDE.LifeSupport.ManageResources(self,1))then
 				local bull = self.Data.Bullet
 				local trace=LDE.Weapons.FireLaser(self,bull)
-				util.BlastDamage(self, self.LDEOwner, trace.HitPos, bull.Radius, bull.Damage)
+				LDE.Weapons.Blast(self,trace.HitPos,bull.Radius,bull.Damage,self.LDEOwner)
+				return true
 			end
 		end
 	end
+	return false
 end
 
 local WireFunc = function(self,iname,value)
@@ -113,7 +121,7 @@ LDE.Weapons.CompileWeapon(Data,Makeup)
 local Base = {Tool="Weapon Systems",Type="Beam Lasers"}
 local Client = function(self) return LDE.Weapons.ShowCharge(self,self.Data.Bullet) end --Clientside
 local ClientSetup = function(ENT) ENT.LDETools.Charge = Client end
-local Func = function(self) LDE.Weapons.ManageCharge(self,self.Data.Bullet) end --Charge function
+local Func = function(self) LDE.Weapons.ManageCharge(self,self.Data.Bullet) return true end --Charge function
 
 --Large Beam
 local Effects = {Beam="LDE_laserbeam_long",Hit="LDE_laserhiteffect"}

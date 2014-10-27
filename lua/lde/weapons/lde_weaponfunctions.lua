@@ -181,6 +181,18 @@ LDE.Weapons.NuclearEffect = function(self,Data)
 	ShakeIt:Fire("kill", "", 6)
 end
 
+LDE.Weapons.Blast = function(self,pos,Rad,Dam,Ply)
+	local NewData = { 
+		Pos = pos,
+		ShockDamage	= Dam,
+		ShockRadius	= Rad,
+		Ignore = self,	
+		Inflictor = self,	
+		Owner = Ply
+	}
+	LDE:BlastDamage(NewData)
+end
+
 //Base Code for shooting entitys.
 LDE.Weapons.ShootEntity = function(self,Data)
 	LDE.LifeSupport.ApplyHeat(self,Data)
@@ -211,6 +223,49 @@ LDE.Weapons.ShootEntity = function(self,Data)
 	LDE.Weapons.ApplyRecoil(self,Data.Recoil)
 end
 
+LDE.Weapons.ShootMissile = function(self, Data)
+	local maxs = self:OBBMaxs()
+	local mins = self:OBBMins()
+	local lengthadd = (maxs.X - mins.X)*0.5 + 5
+	local vStart = self:LocalToWorld(self:OBBCenter()+Vector(lengthadd,0,0))--self.Entity:GetPos()
+	local vForward = self:GetForward()
+	
+	if Data.ShootPos then vStart = self:LocalToWorld(Data.ShootPos) end
+	if Data.ShootDir then vForward = Vector(Data.ShootDir.X,Data.ShootDir.Y,Data.ShootDir.Z) vForward:Rotate(self:GetAngles()) end
+	
+	local Bullet = {}
+	Bullet.TrailColor = Data.TrailColor
+	Bullet.TrailStartW = Data.TrailStartW
+	Bullet.TrailLifeTime = Data.TrailLifeTime
+	Bullet.TrailTexture = Data.TrailTexture
+	Bullet.HomingSpeed = Data.HomingSpeed 
+	Bullet.Count = Data.Number or 1
+	Bullet.ShootPos = vStart
+	Bullet.Direction = vForward --Position * -1
+	Bullet.Spread = Data.Spread or 0
+	Bullet.Attacker = self.SPL
+	Bullet.ProjSpeed = Data.Speed or 50
+	Bullet.Drop=0.1*(Data.Weight or 1)
+	Bullet.Drag=0.0001*(Data.Friction or 1)
+	Bullet.Model = Data.Model or "models/Items/AR2_Grenade.mdl"
+	Bullet.Ignore = self
+	Bullet.Data=Data
+	Bullet.Inflictor = self
+	Bullet.OnHit = function (tr, Bullet)
+		local Data = Bullet.Data
+		if Data.BulletFunc then
+			Data.BulletFunc(Bullet.Inflictor,Data,Data.Damage,tr)
+		else
+			LDE.DealDamage(tr.Entity,tr.HitPos,Data.Damage,Bullet.Attacker,Bullet.Inflictor)
+		end
+	end
+	--self:FireBullets(Bullet)
+	if(Data.FireSound)then
+		self:EmitSound(Data.FireSound)
+	end
+	return LDE:FireProjectile(Bullet)
+end
+
 //Base Code for shooting bullets
 LDE.Weapons.ShootBullet = function(self, Data)
 	LDE.LifeSupport.ApplyHeat(self,Data)
@@ -230,6 +285,13 @@ LDE.Weapons.ShootBullet = function(self, Data)
 	Bullet.Spread = Data.Spread or 0
 	Bullet.Attacker = self.SPL
 	Bullet.ProjSpeed = Data.Speed or 50
+	Bullet.FlightLength = Data.DumbTime or 60
+	Bullet.HomingSpeed = Data.HomingSpeed or 10
+	
+	if self.Homing and self.HomePos then
+		Bullet.HomingPos = self.HomePos
+	end
+	
 	Bullet.Drop=0
 	Bullet.Model = Data.Model or "models/Items/AR2_Grenade.mdl"
 	Bullet.Ignore = self

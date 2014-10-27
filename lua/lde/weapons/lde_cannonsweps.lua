@@ -19,7 +19,15 @@ local BulletFunc=function(self,Data,attacker,tr)
 	util.Effect( Data.Effect or "explosion", effectdata )
 end
 
-local Func = function(self) if(self.Active==1)then if(LDE.LifeSupport.ManageResources(self,1))then LDE.Weapons.ShootShell(self,self.Data.Bullet) end end end
+local Func = function(self,CanFire) 
+	if(self.Active==1 and CanFire)then 
+		if(LDE.LifeSupport.ManageResources(self,1))then 
+			LDE.Weapons.ShootShell(self,self.Data.Bullet)
+			return true
+		end 
+	end
+	return false
+end
 local Base = {Tool="Weapon Systems",Type="Cannons"}
 
 --Huge cannon
@@ -30,24 +38,23 @@ LDE.Weapons.CompileWeapon(Data,Makeup)
 
 --Basic cannon
 local Bullet = {ShrapCount=10,ShrapDamage=40,Spread=1,Radius=800,Damage=5000,Recoil=2000,Speed=125,BulletFunc=BulletFunc,FireSound="ambient/explosions/explode_4.wav"}
-local Data={name="Basic Cannon",class="basic_cannon_weapon",In={"Shells"},Out={"Casings"},OutMake={3},shootfunc=Func,Points=600,heat=50,firespeed=5,InUse={3},Bullet=Bullet,MountType="Medium"}
+local Data={name="Basic Cannon",class="basic_cannon_weapon",In={"Shells"},Out={"Casings"},OutMake={3},shootfunc=Func,Points=600,heat=50,firespeed=5,InUse={3},Bullet=Bullet,MountType="Medium",MVO=Vector(70,0,0)}
 local Makeup = {name={"Basic Cannon"},model={"models/Slyfo/mcpcannon.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
-local Bullet = {ShrapCount=10,ShrapDamage=40,Spread=1,Radius=800,Damage=5000,Recoil=2000,Speed=125,BulletFunc=BulletFunc,FireSound="ambient/explosions/explode_4.wav"}
 local Data={name="Slim Basic Cannon",class="slimbasic_cannon_weapon",In={"Shells"},Out={"Casings"},OutMake={3},shootfunc=Func,Points=600,heat=50,firespeed=5,InUse={3},Bullet=Bullet,MountType="NCannon"}
 local Makeup = {name={"Slim Basic Cannon"},model={"models/SBEP_community/navalgun.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
 --Micro cannon
 local Bullet = {ShrapCount=5,ShrapDamage=40,Spread=1,Radius=400,Damage=2000,Recoil=1000,Speed=100,BulletFunc=BulletFunc,FireSound="ambient/explosions/explode_1.wav"}
-local Data={name="Micro Cannon",class="micro_cannon_weapon",In={"Shells"},Out={"Casings"},OutMake={6},shootfunc=Func,Points=350,heat=20,firespeed=3,InUse={1},Bullet=Bullet,MountType="Small"}
+local Data={name="Micro Cannon",class="micro_cannon_weapon",In={"Shells"},Out={"Casings"},OutMake={6},shootfunc=Func,Points=350,heat=20,firespeed=3,InUse={1},Bullet=Bullet}
 local Makeup = {name={"Micro Cannon"},model={"models/Slyfo_2/weap_prover_industrialspiker.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
 --Thud cannon
 local Bullet = {Spread=2,Damage=7500,Recoil=5000,Speed=100,FireSound="ambient/explosions/explode_9.wav"}
-local Data={name="Thud Cannon",class="thud_cannon_weapon",In={"Shells"},Out={"Casings"},OutMake={1},Points=550,heat=10,shootfunc=Func,firespeed=3,InUse={2},Bullet=Bullet,MountType="Medium"}
+local Data={name="Thud Cannon",class="thud_cannon_weapon",In={"Shells"},Out={"Casings"},OutMake={1},Points=550,heat=10,shootfunc=Func,firespeed=3,InUse={2},Bullet=Bullet,MountType="Medium",MVO=Vector(70,0,0)}
 local Makeup = {name={"Basic Thud Cannon"},model={"models/Slyfo/mcpcannon.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
@@ -65,7 +72,10 @@ local Base = {Tool="Weapon Systems",Type="Plasma"}
 local FireCannon = Func
 local Client = function(self) return LDE.Weapons.ShowCharge(self,self.Data.Bullet) end --Clientside
 local ClientSetup = function(ENT) ENT.LDETools.Charge = Client end
-local Func = function(self) LDE.Weapons.ManageCharge(self,self.Data.Bullet) end --Charge function
+local Func = function(self,CanFire) --Charge function
+	LDE.Weapons.ManageCharge(self,self.Data.Bullet) 
+	return true
+end 
 
 --Plasma Cannon
 local Fire = function(self) self.Data.FireCannon(self) end
