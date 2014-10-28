@@ -54,7 +54,7 @@ local Int = function(self)
 	self:SetSolid(SOLID_VPHYSICS)
 	self:SetMaterial("debug/env_cubemap_model")
 	local phys = self:GetPhysicsObject()
-	if (phys:IsValid()) then
+	if (IsValid(phys)) then
 		phys:EnableMotion(false)
 	end
 end
@@ -100,7 +100,7 @@ local Think = function(self)
 	--Msg(" \n Thinking: ")
 	for _,v in pairs(ents) do
 		--Msg("Entity Pull! ")
-		if v:IsValid() and v:GetCreationID()~=self:GetCreationID() then
+		if IsValid(v) and v:GetCreationID()~=self:GetCreationID() then
 			--Msg("IsUsable! ")
 			local range = v:GetPos():Distance(ent:GetPos())
 			if(not LDE:IsImmune(v) and not LDE:IsInSafeZone(v))then
@@ -125,7 +125,7 @@ local Think = function(self)
 					local force = ((v:GetPos()-self:GetPos())*Vector(-pow,-pow,-pow))*(range/self.Radius)
 					v:SetVelocity(force)
 				else
-					if(phys:IsValid()) then
+					if(IsValid(phys)) then
 						local dir = (v:GetPos()-self:GetPos())
 						local pow= (self.Power*phys:GetMass()/range+1^2)
 						local force = (dir*Vector(-pow,-pow,-pow))*(range/self.Radius)
@@ -194,11 +194,11 @@ local Server = function(ENT)
 	end
 	
 	function ENT:Blackhole(ent)
-		if(not ent or not ent:IsValid())then return end
+		if(not IsValid(ent))then return end
 		if(not LDE:IsImmune(ent) and not LDE:IsInSafeZone(v))then
 			local phyx = ent:GetPhysicsObject()
 			str = ent:GetClass()
-			if(phyx and phyx:IsValid())then
+			if(IsValid(phyx))then
 				mass =(phyx:GetMass()/10)
 			else
 				mass = 0

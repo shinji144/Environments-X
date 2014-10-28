@@ -157,23 +157,23 @@ LDE.Weapons.ApplyRecoil = function(self,Force)
 	end 
 end
 
-LDE.Weapons.NuclearEffect = function(self,Data)
+LDE.Weapons.NuclearEffect = function(self,Pos)
 	local effectdata = EffectData()
 	effectdata:SetMagnitude( 1 )
-	effectdata:SetOrigin( self:GetPos() )
+	effectdata:SetOrigin( Pos )
 	effectdata:SetScale( 23000 )
 					
 	util.Effect( "LDE_nukeflash", effectdata )
 					
-	self:EmitSound( "explode_9" )
-					
+	EmitSound( Sound( "explode_9" ), Pos, 1, CHAN_AUTO, 1, 100, 0, 100 )
+	
 	local ShakeIt = ents.Create( "env_shake" )
 	ShakeIt:SetName("Shaker")
 	ShakeIt:SetKeyValue("amplitude", "200" )
 	ShakeIt:SetKeyValue("radius", "200" )
 	ShakeIt:SetKeyValue("duration", "5" )
 	ShakeIt:SetKeyValue("frequency", "255" )
-	ShakeIt:SetPos( self:GetPos() )
+	ShakeIt:SetPos( Pos )
 	ShakeIt:Fire("StartShake", "", 0);
 	ShakeIt:Spawn()
 	ShakeIt:Activate()
@@ -191,36 +191,6 @@ LDE.Weapons.Blast = function(self,pos,Rad,Dam,Ply)
 		Owner = Ply
 	}
 	LDE:BlastDamage(NewData)
-end
-
-//Base Code for shooting entitys.
-LDE.Weapons.ShootEntity = function(self,Data)
-	LDE.LifeSupport.ApplyHeat(self,Data)
-	local NewShell = ents.Create(Data.Class)	
-	if ( !NewShell:IsValid() ) then LDE:Debug("Error, Creating Bullet. "..Data.Class) return end
-	Data.CVel = self:GetPhysicsObject():GetVelocity():Length()
-	local Offset = self:GetPos() + (Data.Offset or (self:GetUp() * 10) + (self:GetForward() * (160 + Data.CVel)))
-	local Angles = self:GetForward():Angle()
-	if(Data.Angles and Data.Angles=="Right")then
-		Angles = self:GetRight():Angle()
-	end
-	
-	NewShell:SetPos(Offset)
-	NewShell:SetAngles(Angles)
-	
-	
-	NewShell.SPL = self.SPL
-	NewShell:Spawn() 
-	NewShell:Initialize()
-	NewShell:Activate()
-	NewShell:SetOwner(self)
-	NewShell.PhysObj:SetVelocity(NewShell:GetForward()*Data.Speed)
-	NewShell:Fire("kill", "", Data.LifeTime or 1)
-	NewShell.ParL = self
-	if(Data.FireSound)then
-		self:EmitSound(Data.FireSound)
-	end
-	LDE.Weapons.ApplyRecoil(self,Data.Recoil)
 end
 
 LDE.Weapons.ShootMissile = function(self, Data)

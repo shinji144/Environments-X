@@ -8,20 +8,20 @@ local BulletFunc=function(self,Data,attacker,tr)
 		ShrapRadius		=		Data.Radius*2,											--How far the Shrapnel travels
 		ShockDamage	=		Data.Damage,					--Optional--		--Amount of Shockwave Damage, if 0 or nil then other Shock vars are not required
 		ShockRadius		=		Data.Radius,												--How far the Shockwave travels in a sphere
-		--Ignore			=		self,									--Optional--		--Entity that Shrapnel and Shockwaves ignore, Example: A missile entity so that Shrapnel doesn't hit it before it's removed
+		Ignore			=		self,									--Optional--		--Entity that Shrapnel and Shockwaves ignore, Example: A missile entity so that Shrapnel doesn't hit it before it's removed
 		Inflictor				=		self,							--Required--		--The weapon or player that is dealing the damage
 		Owner				=		self.LSSOwner					--Required--		--The player that owns the weapon, or the Player if the Inflictor is a player
 	}
 	LDE:BlastDamage(NewData)
 	
 	if Data.Nuclear then
-		LDE.Weapons.NuclearEffect(self,Data)
+		LDE.Weapons.NuclearEffect(self,tr.HitPos)
+	else
+		local effectdata = EffectData()
+			effectdata:SetOrigin(tr.HitPos)
+			effectdata:SetStart(tr.HitPos)
+		util.Effect( Data.Effect or "explosion", effectdata )	
 	end
-	
-	local effectdata = EffectData()
-		effectdata:SetOrigin(tr.HitPos)
-		effectdata:SetStart(tr.HitPos)
-	util.Effect( Data.Effect or "explosion", effectdata )
 end
 
 local MissileBase = {TrailColor=Color(210,210,210,200),TrailStartW=20,TrailLifeTime=1,TrailTexture="trails/smoke.vmt",BulletFunc=BulletFunc}
@@ -122,13 +122,14 @@ local Data={name="Torpedo Launcher",class="heavy_missile_weapon",In={"Missile Pa
 local Makeup = {name={"Torpedo Launcher"},model={"models/punisher239/punisher239_missilebay_light.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
---[[
---Nuclear luancher 1X
-local Bullet=table.Merge(Missiles["Heavy"],MissileBase)
-local Data={name="Nuclear Launcher",class="nuclear_missile_weapon",In={"Missile Parts","Liquid Polylodarium"},ammoclass="nuke_missile",heat=400,InUse={10,100},Shots = 1,BLength = 450,Rows = { -4 , 4 },Cols = { -12 , -12, 0, 12, 12 },AimVec = "Left"}
-local Makeup = {name={"Nuclear Launcher"},model={"models/punisher239/punisher239_missilebay_light.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
-LDE.Weapons.RegisterLauncher(Data)
 
+--Nuclear luancher 1X
+local Bullet=table.Merge(table.Merge(Missiles["Nuclear"],{ShootDir = Vector(0,-1,0),ShootPos=Vector(0,0,50)}),MissileBase)
+local Data={name="Nuclear Launcher",class="nuclear_missile_weapon",In={"Missile Parts","Liquid Polylodarium"},shootfunc=Func,WireSpecial=WireSetup,WireFunc=WireFunc,Bullet=Bullet,heat=400,InUse={10,100},firespeed=1,Points=0}
+local Makeup = {name={"Nuclear Launcher"},model={"models/mandrac/missile/cap_torpedolauncher_tube.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+LDE.Weapons.CompileWeapon(Data,Makeup)
+
+--[[
 --Double Needle Launcher 21X
 local Data={name="Large Needle missile Launcher",class="lrg_needle_missile_weapon",In={"Missile Parts"},ammoclass="needle_missile",heat=1,InUse={1},HasLid=true,Shots = 21,BLength = 40,Rows = { -12 , -12, 0, 12, 12 },Cols = { -4 , 4 },ClosedModel = "models/Slyfo_2/rocketpod_lg_closed.mdl",OpenModel="models/Slyfo_2/rocketpod_lg_open.mdl",AimVec = "Up"}
 LDE.Weapons.RegisterLauncher(Data)
