@@ -9,7 +9,7 @@ for k,v in pairs(sounds) do util.PrecacheSound(v) end
 function Environments.DamageLS(ent, dam) end
 
 function DebugPrint(str)
-	if true then
+	if false then
 		print(str)
 	end
 end

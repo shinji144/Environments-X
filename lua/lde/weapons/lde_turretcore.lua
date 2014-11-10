@@ -14,8 +14,8 @@ function LDE.Weapons.RegisterTurret(Data)
 	ENT.Base = "base_env_entity" --We want to use the environments base
 	ENT.PrintName = Data.name --Set the entity name
 	ENT.Data = Data --Give the entity its Data table.
-	ENT.TDat = Data.Turret
-	
+	--ENT.TDat = Data.Turret
+
 	list.Set( "LSEntOverlayText" , Data.class, {HasOOO = true, resnames = Data.In, genresnames = Data.Out} )
 	
 	
@@ -31,6 +31,14 @@ function LDE.Weapons.RegisterTurret(Data)
 			
 			self.Bits = false
 			self.Active = false
+			
+			self.TDat = table.Copy(self.Data.Turret)
+			
+			local O = {}
+			for i,w in pairs(self.TDat.T) do
+				O[w.I or i]=table.Copy(w)
+			end
+			self.TDat.T = O
 			
 			self.Mounts = table.Copy(self.TDat.M)
 			self.AimOff = self.TDat.AO or Vector(0,0,0)
@@ -67,16 +75,19 @@ function LDE.Weapons.RegisterTurret(Data)
 			return Dumb
 		end
 		
-		function ENT:AttachBit(M,E,Dumb)
+		function ENT:AttachBit(M,E,D,Dumb)
 			E.Mounted = self
 			
-			local Parent = self.TurretBits[D.P].E or self
+			local Parent = self
+			if self.TurretBits[D.P] and IsValid(self.TurretBits[D.P].E) then
+				Parent = self.TurretBits[D.P].E
+			end
 			local Dumb = Dumb or self:CreateDumbEnt(D,Parent)
 			
 			self.TurretBits[M] = {E=E,DE=Dumb}
 
-			E:SetPos(Parent:LocalToWorld(D.V+E.MountVectorOffSet))
-			E:SetAngles(Parent:LocalToWorldAngles(D.A+E.MountAngleOffSet)	)
+			E:SetPos(Parent:LocalToWorld(D.V+D.VO))
+			E:SetAngles(Parent:LocalToWorldAngles(D.A+D.AO)	)
 			E:SetParent(Dumb)		
 		end
 		
@@ -98,7 +109,7 @@ function LDE.Weapons.RegisterTurret(Data)
 				constraint.NoCollide(self, tbit, 0, 0)
 				
 				--self.TurretBits[w.I or i]=tbit
-				self:AttachBit(i,tbit)
+				self:AttachBit(w.I or i,tbit,w)
 			end
 		end
 		
@@ -106,7 +117,7 @@ function LDE.Weapons.RegisterTurret(Data)
 			D.E = E 
 			E.Mounted = self
 			
-			local Parent = self.TurretBits[D.P] or self
+			local Parent = self.TurretBits[D.P].E or self
 			local Dumb = Dumb or self:CreateDumbEnt(D,self.TurretBits[D.P].E or self)
 			
 			self.Weapons[M] = {E=E,DE=Dumb}
@@ -166,8 +177,9 @@ function LDE.Weapons.RegisterTurret(Data)
 			end
 			
 			for i,w in pairs(self.TurretBits) do
+				if not self.TBDat[i] then continue end
 				local R = self.TBDat[i].G
-				w.E:SetAngles(AB:LocalToWorldAngles(Angle(Ang.Pitch*R.P,Ang.Yaw*R.Y,Ang.Roll*R.R)))
+				w.DE:SetAngles(AB:LocalToWorldAngles(Angle(Ang.Pitch*R.P,Ang.Yaw*R.Y,Ang.Roll*R.R)))
 			end
 			
 			if not self.Mounts then return end
@@ -194,12 +206,10 @@ function LDE.Weapons.RegisterTurret(Data)
 			
 			if DupeInfo.TBits then
 				for i,w in pairs(DupeInfo.TBits) do
-					if type(w)=="entity" then --Reverse compatability.
-						local tbit = cents[w]
-						self:AttachBit(i,tbit)
-					else
-						self:AttachBit(i,cents[w.E],cents[w.DE])
-					end
+					local DE = cents[w.DE]
+					self:AttachBit(i,cents[w.E],self.TDat.T[i],DE)
+					DE:SetRenderMode(RENDERMODE_TRANSALPHA)
+					DE:SetColor(Color(0,0,0,0))
 				end
 			end
 			
@@ -207,7 +217,10 @@ function LDE.Weapons.RegisterTurret(Data)
 				for i,w in pairs(DupeInfo.Weapons) do
 					local Ent = cents[w.E]
 					if not IsValid(Ent) then continue end
-					self:MountTurret(i,Ent,self.Mounts[i],cents[w.DE])
+					local DE = cents[w.DE]
+					self:MountTurret(i,Ent,self.Mounts[i],DE)
+					DE:SetRenderMode(RENDERMODE_TRANSALPHA)
+					DE:SetColor(Color(0,0,0,0))
 				end
 			end
 			
@@ -248,8 +261,16 @@ local Base = {Tool="Weapon Systems",Type="Turrets"}--Base code for the compiler 
 
 local Turret = {
 	T = {
-	{M="models/slyfo_2/mini_turret_swivel.mdl",A=Angle(0,0,0),V=Vector(0,0,0),G={P=0,Y=1,R=0},I="Swivel"},
-	{M="models/slyfo_2/mini_turret_mount1.mdl",A=Angle(0,0,0),V=Vector(0,0,10),G={P=1,Y=1,R=0},P="Swivel",I="Mount"}
+		{
+			M="models/slyfo_2/mini_turret_swivel.mdl",
+			A=Angle(0,0,0),V=Vector(0,0,0),VO=Vector(0,0,0),AO=Angle(0,0,0),
+			G={P=0,Y=1,R=0},I="Swivel"
+		},
+		{
+			M="models/slyfo_2/mini_turret_mount1.mdl",
+			A=Angle(0,0,0),V=Vector(0,0,10),VO=Vector(0,0,0),AO=Angle(0,0,0),
+			G={P=1,Y=1,R=0},P="Swivel",I="Mount"
+		}
 	},
 	M = {
 	{T="Small",A=Angle(0,0,0),V=Vector(5,10,5),G={P=1,Y=1,R=0},P="Mount"},
@@ -263,7 +284,11 @@ LDE.Weapons.CompileTurret(Data,Makeup)--Send it in
 
 local Turret = {
 	T = {
-	{M="models/slyfo/smlturrettop.mdl",A=Angle(0,0,0),V=Vector(0,0,30),G={P=0,Y=1,R=0},I="Swivel"}
+		{
+			M="models/slyfo/smlturrettop.mdl",
+			A=Angle(0,0,0),V=Vector(0,0,30),VO=Vector(0,0,0),AO=Angle(0,0,0),
+			G={P=0,Y=1,R=0},I="Swivel"
+		}
 	},
 	M = {
 	{T="Medium",A=Angle(0,0,0),V=Vector(0,0,10),G={P=1,Y=1,R=0},P="Swivel"}
@@ -276,7 +301,11 @@ LDE.Weapons.CompileTurret(Data,Makeup)--Send it in
 
 local Turret = {
 	T = {
-	{M="models/sbep_community/ssnavalmid.mdl",A=Angle(0,0,0),V=Vector(0,0,0),G={P=0,Y=1,R=0},I="Swivel"}
+		{
+			M="models/sbep_community/ssnavalmid.mdl",
+			A=Angle(0,0,0),V=Vector(0,0,0),VO=Vector(0,0,0),AO=Angle(0,0,0),
+			G={P=0,Y=1,R=0},I="Swivel"
+		}
 	},
 	M = {
 	{T="NCannon",A=Angle(0,0,0),V=Vector(0,0,0),G={P=1,Y=1,R=0},P="Swivel"},
