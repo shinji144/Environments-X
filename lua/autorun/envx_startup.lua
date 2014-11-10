@@ -48,7 +48,7 @@ if CLIENT then
 	language.Add( "worldspawn", "World" )
 	language.Add( "trigger_hurt", "Environment" )
 else
-	hook.Add("GetGameDescription", "LSSGameDesc", function() 
+	hook.Add("GetGameDescription", "EnvironmentsGamemode", function() 
 		return "Environments X"
 	end)
 	

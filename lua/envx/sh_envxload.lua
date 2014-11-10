@@ -63,7 +63,7 @@ else
 			if ent:IsRagdoll() then
 				if( ent and ent:IsValid() ) then
 					for i = 0, ent:GetPhysicsObjectCount() do	
-						local phys = ent:GetPhysicsObjectNum( i );
+						local phys = ent:GetPhysicsObjectNum( i )
 						if( phys and phys:IsValid() ) then
 							phys:EnableGravity( false )
 							phys:EnableDrag( false )
@@ -71,8 +71,11 @@ else
 					end
 				end
 			else
-				ent:GetPhysicsObject():EnableDrag( false )
-				ent:GetPhysicsObject():EnableGravity( false )		
+				local phys = ent:GetPhysicsObject()
+				if phys then
+					phys:EnableDrag( false )
+					phys:EnableGravity( false )
+				end
 			end
 		end
 		if not ent.NoSpaceAfterEndTouch then
