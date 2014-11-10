@@ -87,7 +87,11 @@ function LDE.Weapons.RegisterTurret(Data)
 				tbit:SetModel(w.M)
 				tbit:SetPos(self:LocalToWorld(w.V))
 				tbit:SetAngles(self:LocalToWorldAngles(w.A))
-				tbit:SetParent(self.TurretBits[w.P].E or self)
+				local Parent = self
+				if self.TurretBits[w.P] and IsValid(self.TurretBits[w.P].E) then
+					Parent = self.TurretBits[w.P].E
+				end
+				tbit:SetParent(Parent)
 				tbit:Spawn() tbit:Activate()
 				tbit:GetPhysicsObject():Wake()
 				
@@ -132,7 +136,7 @@ function LDE.Weapons.RegisterTurret(Data)
 			if self:TurretValid() then
 				if ent.MountType and not IsValid(ent.Mounted) then
 					for i,w in pairs(self.Mounts) do	
-						if self.TurretBits[w.P].E and not IsValid(self.TurretBits[w.P].E) then continue end
+						if self.TurretBits[w.P] and not IsValid(self.TurretBits[w.P].E) then continue end
 						if not IsValid(w.E) and w.T == ent.MountType then
 							self:MountTurret(i,ent,w)
 							constraint.NoCollide(self, ent, 0, 0)
