@@ -2,6 +2,7 @@
 -------------------------------------------
 ----------LDE Weapon Functions-------------
 -------------------------------------------
+util.PrecacheSound("explode_9")
 
 //Line Trace function.
 LDE.Weapons.DoTrace = function(self,Data)

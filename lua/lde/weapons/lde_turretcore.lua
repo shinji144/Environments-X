@@ -45,41 +45,7 @@ function LDE.Weapons.RegisterTurret(Data)
 			self.Inputs = WireLib.CreateSpecialInputs( self, { "Active", "Fire", "Vector" }, { [3] = "VECTOR"} );
 		end
 		
-		function ENT:SpawnBits()
-			for i,w in pairs(self.TDat.T) do
-				local tbit = ents.Create( "prop_physics" )
-				if not tbit then return end -- what why did it fail?
-				tbit:SetModel(w.M)
-				tbit:SetPos(self:LocalToWorld(w.V))
-				tbit:SetAngles(self:LocalToWorldAngles(w.A))
-				tbit:SetParent(self.TurretBits[w.P] or self)
-				tbit:Spawn() tbit:Activate()
-				tbit:GetPhysicsObject():Wake()
-				
-				constraint.NoCollide(self, tbit, 0, 0)
-				
-				self.TurretBits[w.I or i]=tbit
-			end
-		end
-		
-		function ENT:CompileTurret()
-			if not self.Bits then
-				self:SpawnBits()
-				self.Bits = true
-			end
-		end
-		
-		function ENT:TurretValid()
-			for i,w in pairs(self.TurretBits) do
-				if not IsValid(w) then
-					return false
-				end	
-			end
-			return true
-		end
-		
-		function ENT:CreateDumbEnt(M)
-			local P = self.TurretBits[M.P] or self
+		function ENT:CreateDumbEnt(M,P)
 			if IsValid(M.DE) then
 				Dumb = M.DE
 			else
@@ -101,12 +67,43 @@ function LDE.Weapons.RegisterTurret(Data)
 			return Dumb
 		end
 		
+		function ENT:AttachBit(M,E,Dumb)
+			E.Mounted = self
+			
+			local Parent = self.TurretBits[D.P].E or self
+			local Dumb = Dumb or self:CreateDumbEnt(D,Parent)
+			
+			self.TurretBits[M] = {E=E,DE=Dumb}
+
+			E:SetPos(Parent:LocalToWorld(D.V+E.MountVectorOffSet))
+			E:SetAngles(Parent:LocalToWorldAngles(D.A+E.MountAngleOffSet)	)
+			E:SetParent(Dumb)		
+		end
+		
+		function ENT:SpawnBits()
+			for i,w in pairs(self.TDat.T) do
+				local tbit = ents.Create( "prop_physics" )
+				if not tbit then return end -- what why did it fail?
+				tbit:SetModel(w.M)
+				tbit:SetPos(self:LocalToWorld(w.V))
+				tbit:SetAngles(self:LocalToWorldAngles(w.A))
+				tbit:SetParent(self.TurretBits[w.P].E or self)
+				tbit:Spawn() tbit:Activate()
+				tbit:GetPhysicsObject():Wake()
+				
+				constraint.NoCollide(self, tbit, 0, 0)
+				
+				--self.TurretBits[w.I or i]=tbit
+				self:AttachBit(i,tbit)
+			end
+		end
+		
 		function ENT:MountTurret(M,E,D,Dumb)
 			D.E = E 
 			E.Mounted = self
 			
 			local Parent = self.TurretBits[D.P] or self
-			local Dumb = Dumb or self:CreateDumbEnt(D)
+			local Dumb = Dumb or self:CreateDumbEnt(D,self.TurretBits[D.P].E or self)
 			
 			self.Weapons[M] = {E=E,DE=Dumb}
 
@@ -114,12 +111,28 @@ function LDE.Weapons.RegisterTurret(Data)
 			E:SetAngles(Parent:LocalToWorldAngles(D.A+E.MountAngleOffSet)	)
 			E:SetParent(Dumb)		
 		end
+
+		function ENT:CompileTurret()
+			if not self.Bits then
+				self:SpawnBits()
+				self.Bits = true
+			end
+		end
+		
+		function ENT:TurretValid()
+			for i,w in pairs(self.TurretBits) do
+				if not IsValid(w.E) then
+					return false
+				end	
+			end
+			return true
+		end
 		
 		function ENT:Touch( ent )
 			if self:TurretValid() then
 				if ent.MountType and not IsValid(ent.Mounted) then
 					for i,w in pairs(self.Mounts) do	
-						if self.TurretBits[w.P] and not IsValid(self.TurretBits[w.P]) then continue end
+						if self.TurretBits[w.P].E and not IsValid(self.TurretBits[w.P].E) then continue end
 						if not IsValid(w.E) and w.T == ent.MountType then
 							self:MountTurret(i,ent,w)
 							constraint.NoCollide(self, ent, 0, 0)
@@ -150,7 +163,7 @@ function LDE.Weapons.RegisterTurret(Data)
 			
 			for i,w in pairs(self.TurretBits) do
 				local R = self.TBDat[i].G
-				w:SetAngles(AB:LocalToWorldAngles(Angle(Ang.Pitch*R.P,Ang.Yaw*R.Y,Ang.Roll*R.R)))
+				w.E:SetAngles(AB:LocalToWorldAngles(Angle(Ang.Pitch*R.P,Ang.Yaw*R.Y,Ang.Roll*R.R)))
 			end
 			
 			if not self.Mounts then return end
@@ -177,8 +190,12 @@ function LDE.Weapons.RegisterTurret(Data)
 			
 			if DupeInfo.TBits then
 				for i,w in pairs(DupeInfo.TBits) do
-					local tbit = cents[w]
-					self.TurretBits[i] = tbit
+					if type(w)=="entity" then --Reverse compatability.
+						local tbit = cents[w]
+						self:AttachBit(i,tbit)
+					else
+						self:AttachBit(i,cents[w.E],cents[w.DE])
+					end
 				end
 			end
 			
@@ -198,7 +215,10 @@ function LDE.Weapons.RegisterTurret(Data)
 			
 			Info.TBits = {}
 			for i,w in pairs(self.TurretBits) do
-				Info.TBits[i] = w:EntIndex()
+				Info.TBits[i] = {
+					E=w.E:EntIndex(),
+					DE=w.DE:EntIndex()
+				}
 			end
 						
 			Info.Weapons = {}

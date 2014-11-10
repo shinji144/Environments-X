@@ -30,7 +30,7 @@ MissileParts = {S=1000000000,C=0.9,O="Missile Parts",name="Missile Parts",desc={
 Casings = {S=5000000000,C=0.5,O="Casings",name="Casings",desc={"","","Casings are used to create ammunition,", "and store the explosive arm and payload before firing.","",""}},
 CrystalisedPolylodarium = {S=800000000,C=0.8,O="Crystalised Polylodarium",name="Crystalised Polylodarium",desc={"","","Is a form of alien fauna that stablises","antimatter in extremely heated enviroments.",""}},
 LiquidPolylodarium = {S=500000000,C=1.2,O="Liquid Polylodarium",name="Liquid Polylodarium",desc={"","","Liquid Polylodarium is the stablised antimatter particles","from refined Crystalised Polylodarium.",""}},
-Blackholium = {S=5000000,C=800,O="Blackholium",name="Blackholium",desc={"","","First discovered by scientists in a freak accident", " involving a research ship, ","scientists have no idea what blackholium is,", " or how it works, or even what it does.","",""}}
+Blackholium = {S=1000,C=800,O="Blackholium",name="Blackholium",desc={"","","First discovered by scientists in a freak accident", " involving a research ship, ","scientists have no idea what blackholium is,", " or how it works, or even what it does.","",""}}
 }
 
 if SERVER then

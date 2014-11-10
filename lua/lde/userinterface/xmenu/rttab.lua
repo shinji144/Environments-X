@@ -9,7 +9,7 @@ else
 		local base = vgui.Create( "DPanel", SuperMenu )
 		base:SizeToContents()
 		base.Paint = function() end
-		SuperMenu:AddSheet( "E.C.D.", base, "gui/silkicons/box", false, false, "Environments Communications Device" ) 
+		SuperMenu:AddSheet( "Transfer", base, "icon16/group_go.png", false, false, "Transfer Resources" ) 
 		
 		CreateClientConVar( "cashtransfer_amount", "200",false,false)
 
@@ -34,9 +34,7 @@ else
 		
 	end
 
-	hook.Add("LDEFillCatagorys","ECD",ECDTab)
-	
-			
+	--hook.Add("LDEFillCatagorys","Resource Transfer",ECDTab)	
 end		
 		
 		

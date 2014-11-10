@@ -5,12 +5,12 @@ if(CLIENT)then
 
 	function LDE.UI.SuperMenu.MenuOpen()
 		local Super = {}
-		Super.Base = LDE.UI.CreateFrame({x=ScrW()-100,y=ScrH()-100},true,true,false,true)
+		Super.Base = LDE.UI.CreateFrame({x=800,y=600},true,true,false,true)
 		Super.Base:Center()
-		Super.Base:SetTitle( "Environments Extended Menu System" )
+		Super.Base:SetTitle( "Environments X PDA" )
 		Super.Base:MakePopup()
 		
-		Super.Catagorys = LDE.UI.CreatePSheet(Super.Base,{x=ScrW()-110,y=ScrH()-133 },{x=5,y=30})
+		Super.Catagorys = LDE.UI.CreatePSheet(Super.Base,{x=790,y=565 },{x=5,y=30})
 		
 		LDE.UI.SuperMenu.Menu = Super
 		hook.Call("LDEFillCatagorys")
@@ -55,26 +55,60 @@ if(CLIENT)then
 		return Derma
 	end	
 	
+	function LDE.UI.CreateText(Parent,Spot,Text,Color)
+		local Derma = vgui.Create( "DLabel", Parent )
+			Derma:SetPos( Spot.x, Spot.y )
+			Derma:SetText( Text or "" )
+			Derma:SetTextColor( Color or Color( 255, 255, 255, 255 ) )
+			Derma.OldText = Derma.SetText
+			Derma.SetText = function(self,Text)
+				self:OldText(Text)
+				self:SizeToContents()
+			end
+			Derma:SizeToContents()
+		return Derma
+	end
+	
 	function LDE.UI.CreatePBar(Parent,Size,Spot,Progress)
 		local Derma = vgui.Create( "DProgress", Parent )
 			Derma:SetPos( Spot.x, Spot.y )
 			Derma:SetSize( Size.x, Size.y )
-			Derma:SetFraction( Progress )
+			Derma:SetFraction( Progress() )
+			Derma.OThink=Derma.Think
+			Derma.Think=function(self)
+				self:SetFraction( Progress())
+				--self:OThink()
+			end
 		return Derma
 	end
 	
-	function LDE.UI.CreateList(Parent,Size,Spot,Multi)
+	function LDE.UI.CreateList(Parent,Size,Spot,Multi,Func)
 		local Derma = vgui.Create( "DListView", Parent )
 			Derma:SetPos( Spot.x, Spot.y )
 			Derma:SetSize( Size.x, Size.y )
 			Derma:SetMultiSelect(Multi)
+			if Func then 
+				Derma.OldThink = Derma.Think or function() end
+				Derma.Think = function(self) 	
+					if self:GetSelected() and self:GetSelected()[1] then 
+						local selectedValue = self:GetSelected()[1]:GetValue(1) 
+						if selectedValue ~= self.Selected then 
+							self.Selected = selectedValue
+							Func(selectedValue)
+						end
+					end 
+					self:OldThink() 
+				end 
+			end
 		return Derma
 	end	
 	
-	function LDE.UI.CreateButton(Parent,Size,Spot)
+	function LDE.UI.CreateButton(Parent,Size,Spot,Text,OnClick)
 		local Derma = vgui.Create( "DButton", Parent )
 			Derma:SetPos( Spot.x, Spot.y )
 			Derma:SetSize( Size.x, Size.y )
+			Derma:SetText( Text or "" )
+			Derma.DoClick = OnClick or function() end
 		return Derma
 	end
 	
@@ -103,23 +137,18 @@ else
 
 end
 
-function LDE.UI.Interfaces()
-	local Files
-	if file.FindInLua then
-		Files = file.FindInLua( "lde/userinterface/*.lua" )
-	else//gm13
-		Files = file.Find("lde/userinterface/*.lua", "LUA")
-	end
+local LoadFile = EnvX.LoadFile --Lel Speed.
+local P = "lde/userinterface/"
+LoadFile(P.."xmenu/stats.lua",1)
+LoadFile(P.."xmenu/account.lua",1)
+LoadFile(P.."xmenu/rttab.lua",1)
 
-	for k, File in ipairs(Files) do
-		Msg("*LDE User Interface Loading: "..File.."...\n")
-		local ErrorCheck, PCallError = pcall(include, "lde/userinterface/"..File)
-		ErrorCheck, PCallError = pcall(AddCSLuaFile, "lde/userinterface/"..File)
-		if !ErrorCheck then
-			Msg(PCallError.."\n")
-		end
-	end
-	Msg("LDE User Interface Loaded: Successfully\n")
-end
+LoadFile(P.."factorymenu.lua",1)
+LoadFile(P.."missingmodels.lua",1)
+LoadFile(P.."motd.lua",1)
+LoadFile(P.."trademarkmenu.lua",1)
+LoadFile(P.."vendingmenu.lua",1)
 
-LDE.UI.Interfaces()
+
+
+

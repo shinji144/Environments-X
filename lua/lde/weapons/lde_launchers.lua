@@ -92,42 +92,44 @@ Missiles["Stinger"]={Model="models/Slyfo_2/pss_netprojectile.mdl",Damage=400,Rad
 Missiles["Heavy"]={Model="models/Punisher239/punisher239_missile_light.mdl",Damage=3400,Radius=1300,SD=30,SC=18,Speed=120,DumbTime=10,HomingSpeed=60}
 Missiles["Nuclear"]={Model="models/Punisher239/punisher239_missile_cruise.mdl",Nuclear=true,Damage=32000,Radius=3000,SD=2000,SC=20,Speed=40,DumbTime=180,HomingSpeed=20}
 
+local DBase = {FireSound="weapons/rpg/rocketfire1.wav",shootfunc=Func,WireSpecial=WireSetup,WireFunc=WireFunc,Bullet=Bullet}
+
 --Basic missile luancher 4X
 local Bullet=table.Merge(Missiles["Basic"],MissileBase)
-local Data={name="BML X4",class="bml_x4_weapon",shootfunc=Func,WireSpecial=WireSetup,WireFunc=WireFunc,Bullet=Bullet,In={"Missile Parts"},InUse={1},MountType="Medium",heat=5,firespeed=4,Points=800}
+local Data={name="BML X4",class="bml_x4_weapon",In={"Missile Parts"},InUse={1},MountType="Medium",heat=5,firespeed=4,Points=800}
 local Makeup = {name={"BML X4"},model={"models/slyfo/smlmissilepod.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
-LDE.Weapons.CompileWeapon(Data,Makeup)
+LDE.Weapons.CompileWeapon(table.Merge(DBase,Data),Makeup)
 
 --Basic missile luancher 8X
 local Bullet=table.Merge(Missiles["Basic"],MissileBase)
-local Data={name="BML X8",class="bml_x8_weapon",In={"Missile Parts"},shootfunc=Func,WireSpecial=WireSetup,WireFunc=WireFunc,Bullet=Bullet,InUse={1},MountType="Medium",MAO=Angle(0,0,90),heat=5,firespeed=2,Points=1200}
+local Data={name="BML X8",class="bml_x8_weapon",In={"Missile Parts"},InUse={1},MountType="Medium",MAO=Angle(0,0,90),heat=5,firespeed=2,Points=1200}
 local Makeup = {name={"BML X8"},model={"models/slyfo/missile_pod_8.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
-LDE.Weapons.CompileWeapon(Data,Makeup)
+LDE.Weapons.CompileWeapon(table.Merge(DBase,Data),Makeup)
 
 --Basic missile luancher 10X
 local Bullet=table.Merge(Missiles["Basic"],MissileBase)
-local Data={name="BML X10",class="bml_x10_weapon",In={"Missile Parts"},shootfunc=Func,WireSpecial=WireSetup,WireFunc=WireFunc,Bullet=Bullet,InUse={1},heat=5,firespeed=1,Points=1600}
+local Data={name="BML X10",class="bml_x10_weapon",In={"Missile Parts"},InUse={1},heat=5,firespeed=1,Points=1600}
 local Makeup = {name={"BML X10"},model={"models/slyfo/missile_pod_10.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
-LDE.Weapons.CompileWeapon(Data,Makeup)
+LDE.Weapons.CompileWeapon(table.Merge(DBase,Data),Makeup)
 
 --Stinger luancher 16X
 local Bullet=table.Merge(Missiles["Stinger"],MissileBase)
-local Data={name="Stinger Launcher",class="stinger_missile_weapon",In={"Missile Parts"},shootfunc=Func,WireSpecial=WireSetup,WireFunc=WireFunc,Bullet=Bullet,heat=3,InUse={1},firespeed=3,Points=1600}
+local Data={name="Stinger Launcher",class="stinger_missile_weapon",In={"Missile Parts"},heat=3,InUse={1},firespeed=3,Points=1600}
 local Makeup = {name={"Stinger Launcher"},model={"models/spacebuild/medbridge2_missile_launcher.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
-LDE.Weapons.CompileWeapon(Data,Makeup)
+LDE.Weapons.CompileWeapon(table.Merge(DBase,Data),Makeup)
 
 --Heavy missile luancher 3X
 local Bullet=table.Merge(Missiles["Heavy"],MissileBase)
-local Data={name="Torpedo Launcher",class="heavy_missile_weapon",In={"Missile Parts","Liquid Polylodarium"},shootfunc=Func,WireSpecial=WireSetup,WireFunc=WireFunc,Bullet=Bullet,heat=50,InUse={3,10},firespeed=8,Points=2400}
+local Data={name="Torpedo Launcher",class="heavy_missile_weapon",In={"Missile Parts","Liquid Polylodarium"},heat=50,InUse={3,10},firespeed=8,Points=2400}
 local Makeup = {name={"Torpedo Launcher"},model={"models/punisher239/punisher239_missilebay_light.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
-LDE.Weapons.CompileWeapon(Data,Makeup)
+LDE.Weapons.CompileWeapon(table.Merge(DBase,Data),Makeup)
 
 
 --Nuclear luancher 1X
 local Bullet=table.Merge(table.Merge(Missiles["Nuclear"],{ShootDir = Vector(0,-1,0),ShootPos=Vector(0,0,50)}),MissileBase)
-local Data={name="Nuclear Launcher",class="nuclear_missile_weapon",In={"Missile Parts","Liquid Polylodarium"},shootfunc=Func,WireSpecial=WireSetup,WireFunc=WireFunc,Bullet=Bullet,heat=400,InUse={10,100},firespeed=1,Points=0}
+local Data={name="Nuclear Launcher",class="nuclear_missile_weapon",In={"Missile Parts","Liquid Polylodarium"},heat=400,InUse={10,100},firespeed=1,Points=0}
 local Makeup = {name={"Nuclear Launcher"},model={"models/mandrac/missile/cap_torpedolauncher_tube.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
-LDE.Weapons.CompileWeapon(Data,Makeup)
+LDE.Weapons.CompileWeapon(table.Merge(DBase,Data),Makeup)
 
 --[[
 --Double Needle Launcher 21X
