@@ -622,7 +622,8 @@ function GibMod_HandleDeath( ent, damageForce, damagePos )
 	-- so we don't kill them multiple times
 	ent:SetHealth( -100 )
 	
-	if ent:IsPlayer() and not ent.GibMod_Killed then
+	--if ent:IsPlayer() and not ent.GibMod_Killed then
+	if ent:IsPlayer() then
 		ent:Kill()
 	end
 end
