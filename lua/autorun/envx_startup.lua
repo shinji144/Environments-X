@@ -48,6 +48,10 @@ if CLIENT then
 	language.Add( "worldspawn", "World" )
 	language.Add( "trigger_hurt", "Environment" )
 else
+	hook.Add("GetGameDescription", "LSSGameDesc", function() 
+		return "Environments X"
+	end)
+	
 	--Adding Clientside Files.
 	AddCSLuaFile("autorun/envx_startup.lua")
 
