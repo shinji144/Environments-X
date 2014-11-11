@@ -183,7 +183,7 @@ function LDE.LifeSupport.RegisterDevice(Data)
 				if(Data.WireIn)then
 					self.Inputs = WireLib.CreateInputs(self, Data.WireIn)
 				else
-					self.Inputs = WireLib.CreateInputs(self, { "On","Mult" })
+					self.Inputs = WireLib.CreateInputs(self, { "On","Multiplier" })
 				end
 				if(Data.WireOut)then
 					self.Outputs = WireLib.CreateOutputs(self, Data.WireOut)
@@ -216,7 +216,7 @@ function LDE.LifeSupport.RegisterDevice(Data)
 						self:TurnOff()
 					end
 				end
-			elseif iname == "Mult" then
+			elseif iname == "Multiplier" then
 				if(value<=1)then
 					self:SetMultiplier(1)
 				else
