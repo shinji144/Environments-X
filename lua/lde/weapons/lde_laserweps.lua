@@ -1,9 +1,11 @@
 
-local Func = function(self,CanFire) 
-	if LDE.LifeSupport.ManageResources(self,1) and CanFire then 
-		LDE.Weapons.FireLaser(self,self.Data.Bullet)
-		return true
-	end 
+local Func = function(self,CanFire)
+	if self.Active==1  and CanFire then
+		if LDE.LifeSupport.ManageResources(self,1) then 
+			LDE.Weapons.FireLaser(self,self.Data.Bullet)
+			return true
+		end
+	end
 	return false
 end
 local Base = {Tool="Weapon Systems",Type="Pulse Lasers"}
