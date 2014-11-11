@@ -25,6 +25,6 @@ local Base = {Tool="Generators Advanced",Type="Ls Charge Compresser"}
 
 --Ls Charge
 local Func = function(self) if(self.Active==1)then LDE.LifeSupport.ManageResources(self) end end
-local Data={name="Ls Charge Compresser",class="generator_ls_compresser",In={"energy","water","oxygen"},Out={"LS Charge"},shootfunc=Func,InUse={50,5,10},OutMake={5}}
+local Data={name="Ls Charge Compresser",class="generator_ls_compresser",In={"energy","water","oxygen"},Out={"LS Charge"},shootfunc=Func,InUse={50,5,10},OutMake={30}}
 local Makeup = {name={"LS Charge Compressor"},model={"models/SnakeSVx/resource_node_small.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
 LDE.LifeSupport.CompileDevice(Data,Makeup)

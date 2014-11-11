@@ -341,7 +341,7 @@ end
 
 local SwepThrustSound = "npc/env_headcrabcanister/hiss.wav"
 local SwepThrustSoundObj = Sound(SwepThrustSound)
-local ThrustForce = 3
+local ThrustForce = 6
 local self = {}
 
 function meta:MMUStopSound()

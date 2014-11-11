@@ -1,6 +1,6 @@
 
 local Func = function(self,CanFire)
-	if self.Active==1  and CanFire then
+	if self.Active==1 and CanFire then
 		if LDE.LifeSupport.ManageResources(self,1) then 
 			LDE.Weapons.FireLaser(self,self.Data.Bullet)
 			return true
