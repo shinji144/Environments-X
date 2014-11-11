@@ -58,7 +58,7 @@ function LDE.Weapons.RegisterTurret(Data)
 				Dumb = M.DE
 			else
 				Dumb = ents.Create( "prop_physics" )
-				Dumb:SetModel("models/hunter/blocks/cube025x025x025.mdl")
+				Dumb:SetModel("models/cheeze/wires/cpu.mdl")
 				Dumb:SetColor(Color(0,0,0,0))
 				Dumb:Spawn() Dumb:Activate()
 				constraint.NoCollide(self, Dumb, 0, 0)
