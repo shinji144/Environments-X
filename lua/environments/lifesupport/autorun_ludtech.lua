@@ -41,7 +41,6 @@ if(SERVER)then
 
 else
 	language.Add( "env_explosion", "Meteor" )
-	language.Add( "env_laser", "Lightning" )
 end
 
 print("=========================")
