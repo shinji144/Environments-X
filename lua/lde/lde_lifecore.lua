@@ -187,6 +187,8 @@ function LDE.LifeSupport.RegisterDevice(Data)
 				end
 				if(Data.WireOut)then
 					self.Outputs = WireLib.CreateOutputs(self, Data.WireOut)
+				else
+					self.Outputs = WireLib.CreateOutputs(self, "On")
 				end
 			end
 			if(self.Data.Initialize)then
@@ -202,6 +204,7 @@ function LDE.LifeSupport.RegisterDevice(Data)
 			if self.Active == 0 then
 				self.Active = 1
 				self:SetOOO(1)
+				WireLib.TriggerOutput(self, "On", 1)
 			end
 		end
 		
@@ -230,6 +233,7 @@ function LDE.LifeSupport.RegisterDevice(Data)
 			if self.Active == 1 then
 				self.Active = 0
 				self:SetOOO(0)
+				WireLib.TriggerOutput(self, "On", 0)
 			end
 		end
 

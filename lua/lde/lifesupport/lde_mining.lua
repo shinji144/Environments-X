@@ -106,7 +106,7 @@ local Base = {Tool="Life Support",Type="Scrap Collection"}
 local Func = function(self) end
 local Data={name="Scrap Collector",class="generator_scrap_collect",In={"Scrap Bits"},Out={"Recycled Resources"},shootfunc=Func,InUse={0},OutMake={0}}
 local Makeup = {name={"Scrap Collector"},model={"models/Slyfo/finfunnel.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
-LDE.LifeSupport.RegisterDevice(Data)
+LDE.LifeSupport.CompileDevice(Data,Makeup)
 
 
 -------------I will decide if i want to keep this or not later.---------------------
