@@ -169,7 +169,6 @@ LDE.CoreSys.CoreModels = {
 "models/Slyfo_2/miscequipmentfieldgen.mdl",
 "models/Cerus/Modbridge/Misc/LS/ls_gen11a.mdl",
 "models/SmallBridge/Life Support/sbfusiongen.mdl",
-"models/chipstiks_ls3_models/HydroGenerator/hydrogenerator.mdl",
 "models/Slyfo_2/rocketpod_bigrockethalf.mdl",
 "models/Slyfo_2/miscequipmentmount.mdl",
 "models/props_lab/reciever01b.mdl",

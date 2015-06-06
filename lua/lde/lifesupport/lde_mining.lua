@@ -23,11 +23,13 @@ LDE.LifeSupport.CompileDevice(Data,Makeup)
 //Electromium
 local Base = {Tool="Mining Devices",Type="Electromium"}
 
+--[[
 --Electromium Materialiser
 local Func = function(self) if(self.Active==1)then LDE.LifeSupport.ManageResources(self) end end
 local Data={name="Electromium Materialiser",class="generator_electrom_mat",In={"energy"},Out={"Electromium"},shootfunc=Func,InUse={2000},OutMake={2}}
 local Makeup = {name={"Electromium Materialiser"},model={"models/ce_ls3additional/fusion_generator/fusion_generator_large.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
 LDE.LifeSupport.CompileDevice(Data,Makeup)
+]]
 
 --Electromium Converter
 local Func = function(self) if(self.Active==1)then LDE.LifeSupport.ManageResources(self) end end
@@ -50,7 +52,7 @@ local Base = {Tool="Mining Devices",Type="Ore"}
 --Ore refinery
 local Func = function(self) if(self.Active==1)then LDE.LifeSupport.ManageResources(self) end end
 local Data={name="Ore Refinery",class="generator_ore_refinery",In={"Raw Ore","energy"},Out={"Refined Ore","carbon dioxide"},shootfunc=Func,InUse={10,300},OutMake={8,40}}
-local Makeup = {name={"Ore Refinery","Small Ore Refinery"},model={"models/Slyfo/refinery_small.mdl","models/chipstiks_ls3_models/CO2Comp/co2comp.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"Ore Refinery"},model={"models/Slyfo/refinery_small.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
 LDE.LifeSupport.CompileDevice(Data,Makeup)
 
 --Ore hardener

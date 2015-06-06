@@ -1,5 +1,5 @@
 
-
+--[[
 local Base = {Tool="Generators Advanced",Type="Nitrogen Fuser"}
 
 
@@ -9,6 +9,7 @@ local Data={name="Nitrogen Fuser",class="generator_nitrogen_fuser",In={"carbon d
 local Makeup = {name={"Nitrogen Fuser Small","Nitrogen Fuser Medium","Nitrogen Fuser Large"},model={"models/SnakeSVx/resource_node_small.mdl","models/SnakeSVx/resource_node_medium.mdl","models/SnakeSVx/resource_node_large.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
 LDE.LifeSupport.CompileDevice(Data,Makeup)
 
+]]
 
 local Base = {Tool="Generators Advanced",Type="Power Generation"}
 

@@ -81,7 +81,7 @@ if(SERVER)then
 		--TellPlayers(LDE.Adverts[message])
 		timer.Simple(300,function() LDE:ChatAdvert() end)
 	end
-	timer.Simple(180,function() LDE:ChatAdvert() end)
+	--timer.Simple(180,function() LDE:ChatAdvert() end) --Disabled until further notice...
 	
 	function LDEFigureRole(ply)
 		local oldrole = ply:GetLDERole()

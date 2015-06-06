@@ -606,7 +606,7 @@ Data["Health"] = Data.Extra.HP
 Data["BuildTime"] = 5
 Data["storage"] = {Power=500000}
 Data["Think"]=function(Core,self)self:MakeResources(self.Stats.Make) end
-local Makeup = {name={"Fusion Generator"},model={"models/ce_ls3additional/fusion_generator/fusion_generator_medium.mdl"},Type="Resource Management",class=Data.class}
+local Makeup = {name={"Fusion Generator"},model={"models/punisher239/punisher239_reactor_small.mdl"},Type="Resource Management",class=Data.class}
 LDE.LifeSupport.Bases.RegisterBaseModule(Data,Makeup)
 
 ------Mass Drill------

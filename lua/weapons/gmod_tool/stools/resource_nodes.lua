@@ -6,12 +6,11 @@ TOOL.Description = "Used to spawn resource nodes"
 
 TOOL.Models = { 	
 ["models/props_wasteland/panel_leverBase001a.mdl"] = {},
-["models/SnakeSVx/small_res_node.mdl"] = {},
-["models/SnakeSVx/medium_res_node.mdl"] = {},
-["models/SnakeSVx/node_s.mdl"] = {},
 ["models/SBEP_community/d12shieldemitter.mdl"] = {},
-["models/SnakeSVx/large_res_node.mdl"] = {}				
+["models/slyfo/powercrystal.mdl"] = {},
+["models/slyfo/util_tracker.mdl"] = {}				
 }
+
 local Models = TOOL.Models --fixes stuph		
 
 TOOL.Entity.Class = "resource_node_env";

@@ -64,8 +64,8 @@ LDE.LifeSupport.CompileStorage(Data,Makeup)
 
 --Basic Shells Storage
 local Base = {Tool="Ammo Production",Type="Basic Shells"}
-local Names = {"Shell Wall Storage","Small Shell Storage","Large Shell Storage"}
-local Models = {"models/SmallBridge/Life Support/sbwallcaches05.mdl","models/SnakeSVx/small_screen_ls_1.mdl","models/SnakeSVx/large_res_node.mdl"}
+local Names = {"Shell Wall Storage","Small Shell Storage"}
+local Models = {"models/SmallBridge/Life Support/sbwallcaches05.mdl","models/slyfo_2/rocketpod_turbo_full.mdl"}
 local Data={name="Basic Shells Storage",class="lde_shells_storage",storage={"Shells"},Rates={[30] = "Shells"}}
 local Makeup = {name=Names,model=Models,Tool=Base.Tool,Type=Base.Type,class=Data.class}
 LDE.LifeSupport.CompileStorage(Data,Makeup)
@@ -80,8 +80,8 @@ LDE.LifeSupport.CompileStorage(Data,Makeup)
 
 --Heavy Shells Storage
 local Base = {Tool="Ammo Production",Type="Heavy Shells"}
-local Names = {"Wall Storage","Small Storage","Large Storage","Turret Stockpile"}
-local Models = {"models/SmallBridge/Life Support/sbwallcaches05.mdl","models/SnakeSVx/large_screen_ls_1.mdl","models/SnakeSVx/large_res_node.mdl","models/mandrac/projectile/cap_autocannon_gunbase.mdl"}
+local Names = {"Wall Storage","Turret Stockpile"}
+local Models = {"models/SmallBridge/Life Support/sbwallcaches05.mdl","models/mandrac/projectile/cap_autocannon_gunbase.mdl"}
 local Data={name="Heavy shells Storage",class="lde_hshells_storage",storage={"Heavy Shells"},Rates={[15] = "Heavy Shells"}}
 local Makeup = {name=Names,model=Models,Tool=Base.Tool,Type=Base.Type,class=Data.class}
 LDE.LifeSupport.CompileStorage(Data,Makeup)
@@ -119,6 +119,7 @@ local Makeup = {name=Names,model=Models,Tool=Base.Tool,Type=Base.Type,class=Data
 LDE.LifeSupport.CompileStorage(Data,Makeup)
 
 Environments.RegisterLSStorage("Resource Cache", "env_cache_storage", {[300] = "carbon dioxide",[490] = "oxygen",[480] = "hydrogen",[480] = "nitrogen",[450] = "water",[510] = "steam",[600] = "energy"}, 4084, 100, 10)
+
 //Caches
 Environments.RegisterDevice("Storages", "Resource Cache", "Mandrac Cargo Cache", "env_cache_storage", "models/mandrac/resource_cache/cargo_cache.mdl")
 Environments.RegisterDevice("Storages", "Resource Cache", "Mandrac Huge Cache", "env_cache_storage", "models/mandrac/resource_cache/colossal_cache.mdl")
