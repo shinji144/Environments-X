@@ -41,7 +41,7 @@ function EFFECT:Init( data )
 		self.smokeparticles[k]:SetRoll( math.Rand( 1, 10 ) )
 		//self.smokeparticles[k]:SetRollDelta( math.random( -1, 1 ) )
 		self.smokeparticles[k]:SetColor(100, math.random(100,128), math.random(230,255))
-		self.smokeparticles[k]:VelocityDecay( true )
+		--self.smokeparticles[k]:VelocityDecay( true )
 		self.smokeparticles[k].size = size
 	end
 end
