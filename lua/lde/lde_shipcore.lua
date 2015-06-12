@@ -105,9 +105,10 @@ LDE.CoreSys.CoreHealth = function(self,Data)
 			local temper = ent.LDE.Temperature or 0
 			local health = self.PropHealth[ent:EntIndex()] or 0
 			local enthealth = LDE:GetHealth(ent)*Data.HealthRate
-			local maxhealth = LDE:CalcHealth(ent)*Data.HealthRate			
-			local entshield = LDE:CalcHealth(ent)*Data.ShieldRate
-			local entpoints = LDE:CalcHealth(ent)*Data.CPSRate
+			local Calcedhealth = LDE:CalcHealth(ent)
+			local maxhealth = (Calcedhealth*1.5)*Data.HealthRate			
+			local entshield = (Calcedhealth/10)*Data.ShieldRate
+			local entpoints = Calcedhealth*Data.CPSRate
 			
 			if string.find(ent:GetClass(),"spore") then 
 				continue
@@ -224,7 +225,7 @@ function LDE.CoreSys.RegisterCore(Data)
 			WireLib.TriggerOutput( self, "Temperature", self.LDE.CoreTemp)
 			WireLib.TriggerOutput( self, "Freezing Point", self.LDE.CoreMinTemp or 0 )
 			WireLib.TriggerOutput( self, "Melting Point", self.LDE.CoreMaxTemp or 0 )	
-			WireLib.TriggerOutput( self, "Mount Points", self.LDE.CorePoints or 0)	
+			WireLib.TriggerOutput( self, "Mount Points", self.LDE.CorePoints or 0 )	
 			WireLib.TriggerOutput( self, "Mount Capacity", self.LDE.MaxCorePoints or 0 )
 			
 			self:SetNWInt("LDECoreType", self.Data.name)
