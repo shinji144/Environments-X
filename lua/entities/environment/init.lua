@@ -59,7 +59,7 @@ function ENT:StartTouch(ent)
 	if not ent:GetPhysicsObject():IsValid() then return end	--only physics stuff 
 	if notouch[ent:GetClass()] or ent:IsWorld() then return end --no world stuff
 	
-	if ent.NoGrav then return end --let missiles,ect do their thang
+	--if ent.NoGrav then return end --let missiles,ect do their thang
 	
 	if not self.Enabled then 
 		if self.Debugging then Msg("Entity ", ent, " tried to enter but ", self.name, " wasn't on.\n") end
@@ -129,6 +129,7 @@ function ENT:Check()
 				/*if ent.environment and ent.environment != self and ent.environment != Space() and (ent.environment.radius or 0) < (self.radius or 0) then --try and fix planets in each other
 					continue --breaks LS Core
 				end*/
+				if ent.NoGrav then continue end
 				if ent:GetPos():Distance(self:GetPos()) <= radius then
 					//Set Planet
 					ent:SetGravity( self.gravity )
