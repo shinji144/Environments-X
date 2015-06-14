@@ -21,16 +21,50 @@ if(SERVER)then
 		self:SetMoveType( MOVETYPE_VPHYSICS )
 		self:SetSolid( SOLID_VPHYSICS )
 	
-		self.MoveInputs = {MoveUp=0,MoveDown=0,MoveLeft=0,MoveRight=0,MoveForward=0,MoveBackward=0}
+		self.MoveInputs = {MoveUp=0,MoveDown=0,MoveLeft=0,MoveRight=0,MoveForward=0,MoveBackward=0,PitchUp=0,PitchDown=0,YawLeft=0,YawRight=0,RollLeft=0,RollRight=0}
 		self.Times = {LastCheck=0}
 		self.HoverPos = Vector(0,0,0)
-	
+		
+		self.MoveMult = {MoveUp=0,MoveDown=0,MoveLeft=0,MoveRight=0,MoveForward=0,MoveBackward=0}
+		
 		self.Props = {}
 		self.MassCenter = Vector(0,0,0)
 		self.Mass = self:GetPhysicsObject():GetMass()
 		self.ForceProp = self
 		
-		self.Inputs = Wire_CreateInputs(self, { "Activate", "Move Up","Move Down" })
+		self.Inputs = Wire_CreateInputs(self, { 
+			"Activate", 
+			"Move Up",
+			"Move Down", 
+			"Move Forward", 
+			"Move BackWard", 
+			"Move Left", 
+			"Move Right", 
+			"Pitch Up (Nose Up)", 
+			"Pitch Down (Nose Down)",
+			"Yaw Left (Turn Left)",
+			"Yaw Right (Turn Right)",
+			"Roll Left (Flip Left)",
+			"Roll Right (Flip Right)"
+		})
+		
+		local InputTran = {}
+			InputTran["Move Up"] = "MoveUp"
+			InputTran["Move Down"] = "MoveDown"
+			InputTran["Move Forward"] = "MoveForward"
+			InputTran["Move BackWard"] = "MoveBackward"
+			InputTran["Move Left"] = "MoveLeft"
+			InputTran["Move Right"] = "MoveRight"
+		self.InputTrans = InputTran
+		
+		local InputTran = {}
+			InputTran["Pitch Up"] = "PitchUp"
+			InputTran["Pitch Down"] = "PitchDown"
+			InputTran["Yaw Left"] = "YawLeft"
+			InputTran["Yaw Right"] = "YawRight"
+			InputTran["Roll Left"] = "RollLeft"
+			InputTran["Roll Right"] = "RollRight"
+		self.InputTransSpecial = InputTran
 	end
 	
 	function ENT:TriggerInput(iname, value)
@@ -40,6 +74,24 @@ if(SERVER)then
 			else
 				self:TurnOff()
 			end
+		else
+			local Trans = self.InputTrans[iname]
+			if Trans then
+				if value~= 0 then
+					self.MoveInputs[Trans] = 1
+				else
+					self.MoveInputs[Trans] = 0
+				end
+			end
+			
+			local Transpecial = self.InputTransSpecial[iname]
+			if Transpecial then
+				if value>= 0 then
+					self.MoveInputs[Transpecial] = value
+				else
+					self.MoveInputs[Transpecial] = 0
+				end
+			end
 		end
 	end
 	
@@ -47,6 +99,8 @@ if(SERVER)then
 		local Mass = self:GetPhysicsObject():GetMass()
 		local MCV = self:GetPhysicsObject():GetMassCenter()
 		local MassCenter = Vector(MCV.x*Mass,MCV.y*Mass,MCV.z*Mass)
+		
+		self:SetPropGravity(true)
 		
 		self.Props = constraint.GetAllWeldedEntities(self.Entity)
 		for _, ent in pairs( self.Props ) do
@@ -68,13 +122,16 @@ if(SERVER)then
 			end
 		end
 		
+		self:SetPropGravity(false)
 		--print("Mass: "..Mass.." MassCenter: "..tostring(self.MassCenter).." ForceProp: "..tostring(self.ForceProp))
 	end
 	
 	function ENT:SetPropGravity(bool)
 		--self:GetPhysicsObject():EnableGravity(bool)
 		for _, ent in pairs( self.Props ) do
-			ent:GetPhysicsObject():EnableGravity(bool)
+			if not bool then
+				ent:GetPhysicsObject():EnableGravity(bool)
+			end
 			ent.NoGrav = not bool
 		end	
 	end
@@ -99,6 +156,39 @@ if(SERVER)then
 		end
 	end
 	
+	function ENT:OnRemove()
+		self:SetPropGravity(true)
+	end
+	
+	function ENT:GetMoveInputs()
+		local In,Mm = self.MoveInputs,self.MoveMult
+		local Inputs = {}
+		
+		local MaxMult = 20
+		
+		for i, v in pairs( In ) do
+			if self.MoveMult[i] then
+				if v ~= 0 then
+					if MaxMult > self.MoveMult[i] then
+						self.MoveMult[i] = self.MoveMult[i]+1
+					end
+				else
+					self.MoveMult[i] = 0
+				end
+			end
+		end
+		
+		Inputs["MoveZ"] = ((In.MoveUp*Mm.MoveUp)-(In.MoveDown*Mm.MoveDown))*10
+		Inputs["MoveX"] = ((In.MoveForward*Mm.MoveForward)-(In.MoveBackward*Mm.MoveBackward))*10
+		Inputs["MoveY"] = ((In.MoveLeft*Mm.MoveLeft)-(In.MoveRight*Mm.MoveRight))*10
+		
+		Inputs["RotateX"] = ((In.PitchDown)-(In.PitchUp))*5
+		Inputs["RotateZ"] = ((In.YawLeft)-(In.YawRight))*5
+		Inputs["RotateY"] = ((In.RollLeft)-(In.RollRight))*5
+		
+		return Inputs
+	end
+	
 	function ENT:Think()
 		if self.Active then
 			if self.Times.LastCheck+1 < CurTime() then
@@ -106,14 +196,23 @@ if(SERVER)then
 				self:FindStats()
 			end
 			
-			local Direction,Rotate = Vector(0,0,0),Angle(0,0,0)
-			local MyPos,MyVel = self:GetPos(),self:GetVelocity()
 			local PhysObj = self.ForceProp:GetPhysicsObject()
+		
+			local MyVel,MyAngVel = PhysObj:GetVelocity(),PhysObj:GetAngleVelocity()
 			
+			local TurnMax = 10
+			local MoveWant,TurnWant = Vector(),Vector()
 			
-			local Force = ((MyVel*-0.3))
-			local AForce = PhysObj:GetAngleVelocity()*-0.8
+			local Inputs = self:GetMoveInputs()
 			
+			MoveWant = Vector(Inputs.MoveX,Inputs.MoveY,Inputs.MoveZ)
+			MoveWant:Rotate(self:GetAngles())
+
+			TurnWant = Vector(Inputs.RotateX,Inputs.RotateY,Inputs.RotateZ)
+			
+			local Force = (MyVel*-0.3)+MoveWant
+			local AForce = (MyAngVel*-0.8)+TurnWant
+						
 			--print(tostring(Force).." "..tostring(AForce))
 			
 			PhysObj:ApplyForceOffset( Force*self.Mass, self:LocalToWorld(self.MassCenter) )
