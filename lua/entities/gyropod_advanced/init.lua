@@ -540,6 +540,7 @@ function ENT:Think()
 			end
 		end
 	end
+	
 	Wire_TriggerOutput(self, "On", self.OnOut)
 	Wire_TriggerOutput(self, "Frozen", self.FreezeOut)
 	Wire_TriggerOutput(self, "Targeting Mode", self.ModeOut)

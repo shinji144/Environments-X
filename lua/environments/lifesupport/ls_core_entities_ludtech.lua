@@ -21,8 +21,8 @@ Environments.RegisterDevice("Life Support", "HydroPonics","Hydroponics Potted pl
 Environments.RegisterDevice("Life Support", "Suit Dispenser", "Flat Dispenser", "suit_dispenser", "models/resourcepump/resourcepump.mdl")
 Environments.RegisterDevice("Life Support", "Medical Dispenser", "Flat Dispenser", "env_health", "models/resourcepump/resourcepump.mdl")
 Environments.RegisterDevice("Life Support", "Medical Dispenser", "Delux Dispenser", "env_health", "models/Items/HealthKit.mdl")
-Environments.RegisterDevice("Life Support", "TradeConsoles","Deluxe TradeConsole", "env_tradeconsole", "models/SBEP_community/errject_smbwallcons.mdl")
-Environments.RegisterDevice("Life Support", "TradeConsoles","Compact TradeConsole", "env_tradeconsole", "models/props_lab/reciever_cart.mdl")
+--Environments.RegisterDevice("Life Support", "TradeConsoles","Deluxe TradeConsole", "env_tradeconsole", "models/SBEP_community/errject_smbwallcons.mdl")
+--Environments.RegisterDevice("Life Support", "TradeConsoles","Compact TradeConsole", "env_tradeconsole", "models/props_lab/reciever_cart.mdl")
 Environments.RegisterDevice("Life Support", "Fabricators","Item Materialiser", "env_factory", "models/slyfo/swordreconlauncher.mdl")
 
 //Core Upgrades

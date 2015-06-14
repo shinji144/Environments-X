@@ -102,7 +102,7 @@ Environments.RegisterDevice("Storages", "Resource Cache","SmallBridge Small Wall
 Environments.RegisterDevice("Storages", "Resource Cache","SmallBridge Large Wall Cache (half length)","env_cache_storage","models/smallbridge/Life Support/SBwallcacheL05.mdl")
 Environments.RegisterDevice("Storages", "Resource Cache","SmallBridge Hull Cache","env_cache_storage","models/smallbridge/life support/sbhullcache.mdl")
 
-Environments.RegisterDevice("Storages", "Admin Cache", "Admin Cache", "environments_admincache", "models/ascension/objects/crate_01.mdl")
+Environments.RegisterDevice("Storages", "Admin Cache", "Admin Cache", "environments_admincache", "models/sbep_community/d12siesmiccharge.mdl")
 
 //Life Support Tool
 Environments.RegisterDevice("Life Support", "Suit Dispenser", "Suit Dispenser", "suit_dispenser", "models/props_combine/combine_emitter01.mdl")

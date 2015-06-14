@@ -15,16 +15,6 @@ function ENT:Initialize()
 	end
 	self.Inputs = Wire_CreateInputs(self.Entity, { "Lock" })
 	self.Locked = false
-	
-	self.resources = {}
-	self.resources["energy"] = 0
-	self.resources["water"] = 0
-	self.resources["air"] = 0
-	
-	self.maxresources = {}
-	self.maxresources["energy"] = 0
-	self.maxresources["water"] = 0
-	self.maxresources["air"] = 0
 end
 
 function ENT:Damage()
@@ -63,26 +53,36 @@ local Divider = 1/Multiplier
 function ENT:SetActive( value, caller )
 	if not self.node then return end
 	if self.Locked then return end
-	self.energy = self:GetResourceAmount("LS Charge")
-	self.fuel = self:GetResourceAmount("hydrogen")
+	local energy,water,oxygen,fuel = self:GetResourceAmount("energy"),self:GetResourceAmount("water"),self:GetResourceAmount("oxygen"),self:GetResourceAmount("hydrogen")
 	
 	local Res_needed = math.ceil((MaxAmount - caller.suit.energy) * Divider)
-
-	if ( Res_needed < self.energy ) then
-		self:ConsumeResource("LS Charge", Res_needed)
+	
+	local MaxEng,MaxWat,MaxAir = math.floor(energy/10),math.floor(water/1),math.floor(oxygen/2)
+	
+	local MaxCharge = MaxEng
+	if MaxCharge<MaxWat then MaxCharge = MaxWat end
+	if MaxCharge<MaxAir then MaxCharge = MaxAir end
+	
+	if ( Res_needed < MaxCharge ) then
+		self:ConsumeResource("energy", Res_needed/10)
+		self:ConsumeResource("water", Res_needed/1)
+		self:ConsumeResource("oxygen", Res_needed/2)
+		
 		caller.suit.energy = MaxAmount
 	elseif (self.energy > 0) then
-		caller.suit.energy = caller.suit.energy + math.floor(self.energy * Multiplier)
-		self:ConsumeResource("LS Charge", self.energy)
+		caller.suit.energy = caller.suit.energy + math.floor(MaxCharge * Multiplier)
+		self:ConsumeResource("energy", energy)
+		self:ConsumeResource("water", water)
+		self:ConsumeResource("oxygen", oxygen)
 	end
 	
 	local fuel_needed = math.ceil(((MaxAmount) - caller.suit.fuel) * Divider)
-	if ( fuel_needed < self.fuel ) then
+	if ( fuel_needed < fuel ) then
 		self:ConsumeResource("hydrogen", fuel_needed)
 		caller.suit.fuel = MaxAmount
-	elseif (self.fuel > 0) then
-		caller.suit.fuel = caller.suit.fuel + math.floor(self.fuel * Multiplier)
-		self:ConsumeResource("hydrogen", self.fuel)
+	elseif (fuel > 0) then
+		caller.suit.fuel = caller.suit.fuel + math.floor(fuel * Multiplier)
+		self:ConsumeResource("hydrogen", fuel)
 	end
 	
 	caller:EmitSound( "ambient.steam01" )

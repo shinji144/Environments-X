@@ -50,11 +50,11 @@ function LoadHud()
 			local Fuel = (Environments.suit.fuel/Environments.suit.maxfuel)*100
 			
 			local Spot,Col = Vector(a.y-133,130,0),Color(0,140,220,255)
-			draw.DrawText(tostring(Life),"lcd2",Spot.y,Spot.x,Col,2)
+			draw.DrawText(tostring(math.Round(Life)),"lcd2",Spot.y,Spot.x,Col,2)
 			draw.DrawText("LifeSupport", "DermaDefault",Spot.y,Spot.x-7, Col, 2)
 
 			local Spot = Vector(a.y-133,230,0)
-			draw.DrawText(tostring(Fuel),"lcd2",Spot.y,Spot.x,Col,2)
+			draw.DrawText(tostring(math.Round(Fuel)),"lcd2",Spot.y,Spot.x,Col,2)
 			draw.DrawText("Fuel", "DermaDefault",Spot.y,Spot.x-7,Col, 2)
 						
 			local Spot,Col = Vector(a.y-83,130,0),Color(0,140,220,255)

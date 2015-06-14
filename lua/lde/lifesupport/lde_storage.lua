@@ -110,6 +110,7 @@ local Data={name="BlackHolium Storage",class="lde_blackhole_storage",storage={"B
 local Makeup = {name=Names,model=Models,Tool=Base.Tool,Type=Base.Type,class=Data.class}
 LDE.LifeSupport.CompileStorage(Data,Makeup)
 
+--[[
 --LSCharge
 local Base = {Tool="Storages",Type="LS Charge"}
 local Names = {"Large LS Charge Storage","Medium LS Charge Storage","Portable LS Charge Storage"}
@@ -117,6 +118,7 @@ local Models = {"models/slyfo/t-eng.mdl","models/spacebuild/smallairtank.mdl","m
 local Data={name="LS Charge Storage",class="lde_lscharge_storage",storage={"LS Charge"},Rates={[19000] = "LS Charge"}}
 local Makeup = {name=Names,model=Models,Tool=Base.Tool,Type=Base.Type,class=Data.class}
 LDE.LifeSupport.CompileStorage(Data,Makeup)
+]]
 
 Environments.RegisterLSStorage("Resource Cache", "env_cache_storage", {[300] = "carbon dioxide",[490] = "oxygen",[480] = "hydrogen",[480] = "nitrogen",[450] = "water",[510] = "steam",[600] = "energy"}, 4084, 100, 10)
 
