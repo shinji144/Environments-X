@@ -144,6 +144,12 @@ if(SERVER)then
 			self.HoverPos = self:GetPos()
 			self.Times.LastCheck = CurTime()
 			
+			self.HighEngineSound = CreateSound(self.ForceProp, Sound("ambient/atmosphere/outdoor2.wav"))
+			self.LowDroneSound = CreateSound(self.ForceProp, Sound("ambient/atmosphere/indoor1.wav"))
+			self.HighEngineSound:Play()
+			self.LowDroneSound:Play()
+			self.ForceProp:EmitSound( "buttons/button1.wav" )
+			
 			self:SetPropGravity(false)
 		end
 	end
@@ -152,6 +158,9 @@ if(SERVER)then
 		if self.Active then
 			self.Active = false
 			
+			self.LowDroneSound:Stop()
+			self.HighEngineSound:Stop()
+				
 			self:SetPropGravity(true)
 		end
 	end
@@ -217,6 +226,19 @@ if(SERVER)then
 			
 			PhysObj:ApplyForceOffset( Force*self.Mass, self:LocalToWorld(self.MassCenter) )
 			PhysObj:AddAngleVelocity( AForce )
+			
+			--Sound Part
+			local speedmph = math.Round(MyVel:Length() / 17.6) 
+			if speedmph > 80 then  --changing sounds based on speed
+				self.HighEngineVolume = math.Clamp(((speedmph * 0.035)-2.6), 0, 1)
+			else
+				self.HighEngineVolume = speedmph * 0.0025
+			end
+			self.HighEnginePitch = (speedmph * 1.2) + 60
+			self.LowDronePitch = 35+(speedmph * 0.2)
+			self.HighEngineSound.ChangeVolume(self.HighEngineSound, self.HighEngineVolume, 0)
+			self.HighEngineSound.ChangePitch(self.HighEngineSound, math.Clamp(self.HighEnginePitch, 0, 255), 0)
+			self.LowDroneSound.ChangePitch(self.LowDroneSound, math.Clamp(self.LowDronePitch, 0, 255), 0)
 		end
 		
 		self:NextThink( CurTime() + 0.01 )
