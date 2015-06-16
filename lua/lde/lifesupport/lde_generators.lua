@@ -11,7 +11,7 @@ LDE.LifeSupport.CompileDevice(Data,Makeup)
 
 ]]
 
-local Base = {Tool="Generators Advanced",Type="Power Generation"}
+local Base = {Tool="Generators",Type="Power Generation"}
 
 --Alternater
 local Func = function(self)

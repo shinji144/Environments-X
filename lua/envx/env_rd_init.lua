@@ -38,9 +38,7 @@ print("==============================================")
 
 local P = "environments/lifesupport/"
 LoadFile(P.."autorun_ludtech.lua",1)
-LoadFile(P.."ls_core_entities.lua",1)
-LoadFile(P.."ls_core_entities_ludtech.lua",1)
-LoadFile(P.."ls_test_entitys.lua",1)
+LoadFile(P.."ls_core_entities_merged.lua",1)
 LoadFile(P.."ls3_reversecompatability.lua",1)
 
 //Load devices and stuff from addons

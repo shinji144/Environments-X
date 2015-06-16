@@ -49,7 +49,7 @@ print("LDE Installed, Have fun. :)")
 print("=========================")
 	
 hook.Add("AddTools", "environments tool lud", function()
-	Environments.RegisterTool("Generators Advanced", "Energy_Gens_Lud", "Life Support", "Used to spawn various LS devices", "generator", 30)
+	--Environments.RegisterTool("Generators Advanced", "Energy_Gens_Lud", "Life Support", "Used to spawn various LS devices", "generator", 30)
 	Environments.RegisterTool("Core Upgrades", "Life_Support_lde", "Ship Cores", "Used to spawn Core Module upgrades", "heatman", 30)
 	Environments.RegisterTool("Ship Core", "shipcore_lde", "Ship Cores", "Used to spawn Ship Cores.", "heatcore", 3)
 	--Environments.RegisterTool("Base Construction", "base_building", "Base Building", "Used to build bases.", "basebuild", 100)

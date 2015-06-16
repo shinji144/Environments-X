@@ -120,25 +120,3 @@ local Makeup = {name=Names,model=Models,Tool=Base.Tool,Type=Base.Type,class=Data
 LDE.LifeSupport.CompileStorage(Data,Makeup)
 ]]
 
-Environments.RegisterLSStorage("Resource Cache", "env_cache_storage", {[300] = "carbon dioxide",[490] = "oxygen",[480] = "hydrogen",[480] = "nitrogen",[450] = "water",[510] = "steam",[600] = "energy"}, 4084, 100, 10)
-
-//Caches
-Environments.RegisterDevice("Storages", "Resource Cache", "Mandrac Cargo Cache", "env_cache_storage", "models/mandrac/resource_cache/cargo_cache.mdl")
-Environments.RegisterDevice("Storages", "Resource Cache", "Mandrac Huge Cache", "env_cache_storage", "models/mandrac/resource_cache/colossal_cache.mdl")
-Environments.RegisterDevice("Storages", "Resource Cache", "Mandrac Hanger Container", "env_cache_storage", "models/mandrac/resource_cache/hangar_container.mdl")
-Environments.RegisterDevice("Storages", "Resource Cache", "Mandrac Large Cache", "env_cache_storage", "models/mandrac/resource_cache/huge_cache.mdl")
-Environments.RegisterDevice("Storages", "Resource Cache", "Mandrac Medium Cache", "env_cache_storage", "models/mandrac/resource_cache/large_cache.mdl")
-Environments.RegisterDevice("Storages", "Resource Cache", "Mandrac Small Cache", "env_cache_storage", "models/mandrac/resource_cache/medium_cache.mdl")
-Environments.RegisterDevice("Storages", "Resource Cache", "Mandrac Tiny Cache", "env_cache_storage", "models/mandrac/resource_cache/small_cache.mdl")
-Environments.RegisterDevice("Storages", "Resource Cache", "Mandrac Levy Cache", "env_cache_storage", "models/mandrac/nitrogen_tank/nitro_large.mdl")
-
-//Energy
-Environments.RegisterDevice("Storages", "Energy Storage", "Large Capacitor", "env_energy_storage", "models/mandrac/energy_cell/large_cell.mdl")
-Environments.RegisterDevice("Storages", "Energy Storage", "Medium Capacitor", "env_energy_storage", "models/mandrac/energy_cell/medium_cell.mdl")
-Environments.RegisterDevice("Storages", "Energy Storage", "Small Capacitor", "env_energy_storage", "models/mandrac/energy_cell/small_cell.mdl")
-
-//Oxygen
-Environments.RegisterDevice("Storages", "Oxygen Storage", "Large Compressed Oxygen Crate", "env_oxygen_storage", "models/mandrac/oxygen_tank/oxygen_tank_large.mdl")
-Environments.RegisterDevice("Storages", "Oxygen Storage", "Medium Compressed Oxygen Crate", "env_oxygen_storage", "models/mandrac/oxygen_tank/oxygen_tank_medium.mdl")
-Environments.RegisterDevice("Storages", "Oxygen Storage", "Small Compressed Oxygen Crate", "env_oxygen_storage", "models/mandrac/oxygen_tank/oxygen_tank_small.mdl")
-
