@@ -249,7 +249,7 @@ if SERVER then
 	else
 						
 		if not sql.TableExists("ldeplystats") then
-			local query = "CREATE TABLE ldeplystats (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, SteamID varchar(255), Stats varchar(255) , Strings varchar(255));" //Format the query
+			local query = "CREATE TABLE ldeplystats (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, SteamID varchar(255), Stats varchar(255), Strings varchar(255), Unlocks varchar(255));" //Format the query
 			local result = sql.Query(query) //Send the query in
 			if (sql.TableExists("ldeplystats")) then
 				sql.Query( "CREATE INDEX IDX_LDE_PLAYER ON ldeplystats ( player DESC );" ) 
@@ -271,17 +271,27 @@ if SERVER then
 				local Stats = util.JSONToTable(row.Stats or "")
 				local Strings = util.JSONToTable(row.Strings or "")
 				local Unlocks = util.JSONToTable(row.Unlocks or "")
-				local Str = "GetStats: "
+				local Str = "Stats: "
+				
 				for i,stat in pairs(Stats) do
 					Str=Str.." "..i..": "..stat
 					ply:SetLDEStat(i, stat)
 				end
+				
+				Str=Str.." Strings:"
+				
 				for i,stat in pairs(Strings) do
 					Str=Str.." "..i..": "..stat
 					ply:SetLDEString(i, stat)
 				end
 				
-				ply.Unlocks = Unlocks
+				Str=Str.." Unlocks:"
+				
+				for i,stat in pairs(Unlocks) do
+					ply:UnlockItem(i)
+					Str=Str.." "..i..": "..tostring(stat)
+				end
+				--ply.Unlocks = Unlocks
 				print(Str)
 			else
 				LDE.Cash.SetBaseData(ply)
@@ -300,13 +310,13 @@ if SERVER then
 			
 			for _, ply in ipairs( players ) do
 				if ply and ply:IsConnected() then
-					ply:GiveLDEStat("Cash",5)
+					ply:GiveLDEStat("Cash",1)
 					updatePlayer( ply )
 					LDEFigureRole(ply)
 				end
 			end
 		end
-		timer.Create( "LDECashTimer", 67, 0, updateAll )
+		timer.Create( "LDECashTimer", 10, 0, updateAll )
 	end
 
 	print("GlobalDBfileLoaded")

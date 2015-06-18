@@ -5,6 +5,7 @@ if(SERVER)then
 		if ent == nil or !ent:IsValid() then print("Null Ent") return false end
 		local str = ent:GetClass()
 		local unlocked = ply:GetUnlocks()
+		--PrintTable(unlocked)
 		for t,v in pairs(LDE.Unlocks) do
 			for i,u in pairs(v) do
 				if i == str and not unlocked[str] then
