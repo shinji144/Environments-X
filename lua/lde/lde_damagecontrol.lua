@@ -85,7 +85,7 @@ function LDE:ApplyPlayerDamage(ent,dmginfo,amount)
 		if(attacker and attacker:IsPlayer())then
 			--print("Attacker "..attacker:Name().." \n")
 			local Text = ent:GetName().." was damaged by "..attacker:GetName().." for "..amount
-			--LDE.Logger.LogEvent( Text )
+			----LDE.Logger.LogEvent( Text )
 		end
 	end
 	
@@ -354,7 +354,7 @@ function LDE:CoreDeath(ent)
 				LDEFigureRole(owner)
 			end
 		end
-		LDE.Logger.LogEvent( Text )
+		--LDE.Logger.LogEvent( Text )
 	end
 	//End
 	
@@ -542,7 +542,7 @@ function LDE:DealPlyDamage(ent,amount,attacker,inflictor)
 		if(attacker and attacker:IsPlayer())then
 			--print("Attacker "..attacker:Name().." \n")
 			local Text = ent:GetName().." was damaged by "..attacker:GetName().." for "..amount
-			--LDE.Logger.LogEvent( Text )
+			----LDE.Logger.LogEvent( Text )
 		end
 	end
 	

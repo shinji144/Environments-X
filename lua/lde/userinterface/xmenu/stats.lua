@@ -26,7 +26,7 @@ else
 		local base = vgui.Create( "DPanel", SuperMenu )
 		base:SizeToContents()
 		base.Paint = function() end
-		SuperMenu:AddSheet( "Stats", base, "icon16/book_open.png", false, false, "View your stats." ) 
+		SuperMenu:AddSheet( "Stats", base, "icon16/chart_bar.png", false, false, "View your stats." ) 
 		base.Players = {}
 		
 		

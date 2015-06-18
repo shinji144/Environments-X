@@ -11,8 +11,7 @@ local P = "lde/"
 
 LoadFile(P.."lde_variables.lua",2)
 
-LoadFile(P.."lde_logsystem.lua",1)
---LoadFile(P.."lde_userinterface.lua",1)
+LoadFile(P.."lde_userinterface.lua",1)
 LoadFile(P.."sh_vguiease.lua",1)
 LoadFile(P.."lde_core.lua",1)
 LoadFile(P.."lde_weaponcore.lua",1)
@@ -23,7 +22,6 @@ LoadFile(P.."lde_variables.lua",1)
 LoadFile(P.."lde_spaceanons.lua",1)
 LoadFile(P.."lde_sporeai.lua",1)
 LoadFile(P.."lde_overrides.lua",1)
-LoadFile(P.."lde_manual.lua",1)
 LoadFile(P.."lde_effectcore.lua",1)
 
 LoadFile(P.."lde_damagecontrol.lua",2)

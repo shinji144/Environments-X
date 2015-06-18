@@ -142,6 +142,8 @@ local P = "lde/userinterface/"
 LoadFile(P.."xmenu/stats.lua",1)
 LoadFile(P.."xmenu/account.lua",1)
 LoadFile(P.."xmenu/rttab.lua",1)
+LoadFile(P.."xmenu/help.lua",1)
+LoadFile(P.."xmenu/unlocks.lua",1)
 
 LoadFile(P.."factorymenu.lua",1)
 LoadFile(P.."missingmodels.lua",1)

@@ -106,7 +106,7 @@ if(SERVER)then
 			local Text = ply:GetName().." is now a "..Role.name.."."
 			--TellPlayers(Text)
 			LDE:NotifyPlayers("Stats",Text,{r=0,g=100,b=255})
-			LDE.Logger.LogEvent( Text )
+			--LDE.Logger.LogEvent( Text )
 			ply:SetLDERole(Role.name)
 			ply:SetLDEStat("Moral",Role.Moral)
 		end
@@ -124,14 +124,14 @@ if(SERVER)then
 		if(not killer:IsPlayer())then killer = killer.LDEOwner end
 		if(victim==killer or not killer or not killer:IsValid() or not killer.GiveLDEStat)then 
 			local Text = victim:GetName().." has died through their own means."
-			LDE.Logger.LogEvent( Text )
+			--LDE.Logger.LogEvent( Text )
 			return 
 		end
 		
 		killer:GiveLDEStat("Kills",1)
 		LDEFigureRole(killer)
 		local Text = victim:GetName().." was killed by "..killer:GetName()
-		LDE.Logger.LogEvent( Text )
+		--LDE.Logger.LogEvent( Text )
 		LDE:NotifyPlayers("Stats",Text,{r=255,g=0,b=0})
 	end
 	hook.Add("PlayerDeath","ldeplayerdeath",LDEPlayDeath)
@@ -150,7 +150,7 @@ if(SERVER)then
 		net.WriteString( ply:GetName() )
 		net.Send( ply )
 
-		LDE.Logger.LogEvent( Text )
+		--LDE.Logger.LogEvent( Text )
 	end
 	hook.Add("PlayerInitialSpawn","ldeplayerispawn",LDEFirstSpawn)
 	
@@ -159,7 +159,7 @@ if(SERVER)then
 		--TellPlayers(Text) --Fixed
 		LDE:NotifyPlayers("Server",Text,{r=150,g=150,b=150})
 		
-		LDE.Logger.LogEvent( Text )
+		--LDE.Logger.LogEvent( Text )
 		hook.Call("LDEPlyLeft",nil,ply)
 	end
 	hook.Add("PlayerDisconnected","ldedisconnected",LDELeftServ)
@@ -169,7 +169,7 @@ if(SERVER)then
 		--TellPlayers( Text )
 		LDE:NotifyPlayers("Server",Text,{r=150,g=150,b=150})
 		
-		LDE.Logger.LogEvent( Text )
+		--LDE.Logger.LogEvent( Text )
 	end
 	hook.Add("PlayerConnect","ldeconnected",LDEPlayConnect)	
 	

@@ -3,7 +3,7 @@ if(SERVER)then
 
 else
 
-	function ECDTab()
+	function HelpTab()
 		local SuperMenu = LDE.UI.SuperMenu.Menu.Catagorys
 
 		local base = vgui.Create( "DPanel", SuperMenu )
@@ -11,7 +11,7 @@ else
 		base.Paint = function() end
 		SuperMenu:AddSheet( "Help", base, "icon16/book_open.png", false, false, "Complete Missions" ) 
 		
-		local List = LDE.UI.CreateList(base,{x=300,y=200},{x=0,y=0},false,function() end)
+		local List = LDE.UI.CreateList(base,{x=200,y=500},{x=0,y=0},false,function() end)
 		List:AddColumn("Topic") -- Add column
 
 		--[[for k,v in pairs(LocalPlayer():GetStats()) do
@@ -19,6 +19,6 @@ else
 		end]]
 	end
 
-	hook.Add("LDEFillCatagorys","Missions",ECDTab)	
+	--hook.Add("LDEFillCatagorys","Help",HelpTab)	
 end		
 	

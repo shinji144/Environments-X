@@ -91,8 +91,8 @@ Environments.RegisterDevice("Life Support", "LS Core","SmallBridge LS Core", "en
 Environments.RegisterDevice("Life Support", "Atmospheric Probe", "Atmospheric Probe", "env_probe", "models/props_combine/combine_mine01.mdl")
 
 --Trade Console
---Environments.RegisterDevice("Life Support", "TradeConsoles","Deluxe TradeConsole", "env_tradeconsole", "models/SBEP_community/errject_smbwallcons.mdl")
---Environments.RegisterDevice("Life Support", "TradeConsoles","Compact TradeConsole", "env_tradeconsole", "models/props_lab/reciever_cart.mdl")
+Environments.RegisterDevice("Life Support", "TradeConsoles","Deluxe TradeConsole", "env_tradeconsole", "models/SBEP_community/errject_smbwallcons.mdl")
+Environments.RegisterDevice("Life Support", "TradeConsoles","Compact TradeConsole", "env_tradeconsole", "models/props_lab/reciever_cart.mdl")
 
 --Item Fabricator
 Environments.RegisterDevice("Life Support", "Fabricators","Item Materialiser", "env_factory", "models/slyfo/swordreconlauncher.mdl")
