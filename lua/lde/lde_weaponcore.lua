@@ -35,36 +35,55 @@ ShrapnelDamage="ShrapDamage"
 
 //Function that compiles a weapons tool tip.
 function LDE.Weapons.CreateToolTip(Data)
-	local ToolTip=Data.name
+	local ToolTip,Stats=Data.name,{}
 	
 	if(Data.Desc)then
 		ToolTip=ToolTip.." \n "..Data.Desc
 	end
 	
+	ToolTip=ToolTip.." \n UnlockCost: "..(Data.UnlockCost or "None")
 	ToolTip=ToolTip.." \n MountType: "..(Data.MountType or "None")
 	
-	ToolTip=ToolTip.." \n Heat: "..Data.heat.." \n FireRate: "..Data.firespeed.." \n Processes: "..Data.Points
+	Stats.UnlockCost=(Data.UnlockCost or "None")
+	Stats.MountType=(Data.MountType or "None")
+	
+	ToolTip=ToolTip.." \n Heat: "..Data.heat.." \n FireRate: "..(Data.firespeed).." \n Processes: "..Data.Points
+	
+	Stats.Heat=Data.Heat
+	Stats.FireRate=Data.firespeed
+	Stats.Processes=Data.Points
 	
 	Data.Bullet = Data.Bullet or {}
 	
 	for k,v in pairs(LDE.Weapons.PrimaryStats) do
 		if(Data.Bullet[v])then
 			ToolTip=ToolTip.."\n "..k..": "..Data.Bullet[v]
+			Stats[k]=Data.Bullet[v]
+		end
+		if Data[v] then
+			ToolTip=ToolTip.."\n "..k..": "..Data[v]
+			Stats[k]=Data[v]
 		end
 	end
 	
-	return ToolTip
+	return ToolTip,Stats
 end
 
 //Function to compile a weapon into the system.
 function LDE.Weapons.CompileWeapon(Data,Inner)
-	local ToolTip = LDE.Weapons.CreateToolTip(Data)
+	Data.UnlockCost=Inner.UnlockCost or 0
+	local ToolTip,Stats = LDE.Weapons.CreateToolTip(Data)
 	for k,v in pairs(Inner.model) do
 		Environments.RegisterDevice(Inner.Tool, Inner.Type, Inner.name[k], Inner.class, v,1,1,Inner.name[k],ToolTip)
+			
+		if Inner.Unlock and Inner.Unlock == true then
+			local Data = {Name=Inner.name[k] ,Type=Inner.UnlockType,Class=Inner.class,Model=v,ToolTip=ToolTip,Stats=Stats,Cost=Inner.UnlockCost}
+			LDE:CreateUnlockable(Data)
+		end
 	end
 	LDE.Weapons.RegisterWeapon(Data,Inner.model)
 end
-
+ 
 //Custom Weapon Think - Cuz they were thinking too slow >_<
 function LDE.Weapons.NewThink(Ent)
 	if IsValid(Ent) then Ent:FireWeapon() end
@@ -114,6 +133,7 @@ function LDE.Weapons.RegisterWeapon(Data,Models)
 	if(Data.FireSound)then
 		util.PrecacheSound(Data.FireSound)
 	end
+	
 	if(Data.Shared)then
 		Data.Shared(ENT) -- Call any initial functions.
 	end
@@ -191,7 +211,7 @@ function LDE.Weapons.RegisterWeapon(Data,Models)
 			--
 			
 			--If the cores valid, unlink ourself from it to free up some points.
-			if(IsValid(self.LDE.Core))then
+			if self.LDE and IsValid(self.LDE.Core) then
 				self.LDE.Core:CoreUnLink( self )
 			end
 			

@@ -255,8 +255,18 @@ function meta:GetStats()
 	return self.Stats or {}
 end
 
+function meta:GetUnlocks()
+	return self.Unlocks or {}
+end
+
 function meta:GetStrings()
 	return self.SStrings or {}
+end
+
+function meta:UnlockItem(Item)
+	self.Unlocks = self:GetUnlocks()
+	
+	self.Unlocks[Item] = true
 end
 
 function meta:SyncMutations()

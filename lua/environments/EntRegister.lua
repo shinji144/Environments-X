@@ -474,6 +474,7 @@ function Environments.RegisterTool(name, filename, category, description, cleanu
 		
 			//create it
 			local ent = self:CreateDevice( ply, trace, model, self:GetDeviceClass() )
+				LDE.UnlockCreateCheck(ply,ent) --Check if unlocked!
 			if !ent or !ent:IsValid() then return end
 			
 			if ent.AdminOnly then

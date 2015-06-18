@@ -65,13 +65,13 @@ local Base = {Tool="Weapon Systems",Type="Rifles"}
 --Anti Ship rifle
 local Bullet = {BulletFunc=BulletFunc,Number=1,Spread=1,Speed=500,Damage=1000,Explodes=0,Recoil=900,FireSound="npc/sniper/sniper1.wav",MuzzleFlash=2}
 local Data={name="Anti-Ship Rifle",class="basic_sniper_rifle",In={"Basic Rounds","Crystalised Polylodarium"},MountType="Medium",shootfunc=Func,Points=1000,heat=500,firespeed=5,InUse={20,20},Bullet=Bullet}
-local Makeup = {name={"Simple Ship Rifle"},model={"models/Slyfo/rover_snipercannon.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"Simple Ship Rifle"},model={"models/Slyfo/rover_snipercannon.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class,Unlock=true,UnlockCost=15000,UnlockType="Rifles"}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
 --Automatic Ship rifle
 local Bullet = {BulletFunc=BulletFunc,Number=1,Spread=2,Speed=500,Damage=1200,Explodes=0,Recoil=1800,FireSound="npc/sniper/sniper1.wav",MuzzleFlash=3}
 local Data={name="Automatic Ship Rifle",class="huge_sniper_rifle",In={"Basic Rounds","Crystalised Polylodarium"},shootfunc=Func,Points=2600,heat=1000,firespeed=2.5,InUse={30,30},Bullet=Bullet}
-local Makeup = {name={"Automatic Ship Rifle"},model={"models/Spacebuild/Nova/flak1.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"Automatic Ship Rifle"},model={"models/Spacebuild/Nova/flak1.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class,Unlock=true,UnlockCost=18000,UnlockType="Rifles"}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
 --------------------------------------
@@ -98,13 +98,13 @@ LDE.Weapons.CompileWeapon(Data,Makeup)
 --Basic Shot Gun
 local Bullet = {Number=15,Spread=15,Speed=125,Damage=150,Explodes=0,Recoil=500,FireSound="weapons/shotgun/shotgun_fire6.wav",MuzzleFlash=2,TrailStartW=5}
 local Data={name="Basic ShotGun",class="basic_shotgun_weapon",In={"Basic Rounds"},Out={"Casings"},MountType="Small",shootfunc=Func,Points=700,heat=160,firespeed=1.6,InUse={50},OutMake={12},Bullet=Bullet}
-local Makeup = {name={"Basic Shotgun"},model={"models/Slyfo_2/weap_prover_cannonlarge.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"Basic Shotgun"},model={"models/Slyfo_2/weap_prover_cannonlarge.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class,Unlock=true,UnlockCost=8000,UnlockType="ShotGuns"}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
 --Huge Shot Gun
 local Bullet = {Number=20,Spread=20,Speed=150,Damage=300,Explodes=0,Recoil=2000,FireSound="weapons/shotgun/shotgun_dbl_fire.wav",MuzzleFlash=4,TrailStartW=5}
 local Data={name="Huge ShotGun",class="huge_shotgun_weapon",In={"Basic Rounds"},Out={"Casings"},shootfunc=Func,Points=1400,heat=360,firespeed=2.4,InUse={120},OutMake={20},Bullet=Bullet}
-local Makeup = {name={"Huge Shotgun"},model={"models/Stat_Turrets/st_turretheavy.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"Huge Shotgun"},model={"models/Stat_Turrets/st_turretheavy.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class,Unlock=true,UnlockCost=30000,UnlockType="ShotGuns"}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
 --------------------------------------
@@ -123,5 +123,5 @@ local Shot = {Number=1,Spread=15,Speed=250,Damage=40,Explodes=0,Recoil=100,FireS
 local Fire = function(self) self.Data.firespeed=0.02+((self.Data.Bullet.MaxCharge-self.Charge)*0.001) LDE.Weapons.ShootBullet(self,self.Data.Shot) end
 local Bullet = {Spread=15,Speed=250,Damage=40,Number=1,Recoil=100,CoolDown=2,ChargeRate=10,Radius=5,MinCharge=5,MaxCharge=400,Single=false,Heats=false,Explosive=false,ChargeShoot=Fire,Direction=1}
 local Data={name="Basic ChainGun",class="basic_chaingun_weapon",WireOut={"Charge","CanFire"},In={"Basic Rounds","energy"},shootfunc=Func,Client=Client,Points=1600,heat=5,firespeed=0.42,InUse={1,40},Bullet=Bullet,Shot=Shot}
-local Makeup = {name={"Heavy Chaingun"},model={"models/Spacebuild/medbridge2_gatling_cannon.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"Heavy Chaingun"},model={"models/Spacebuild/medbridge2_gatling_cannon.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class,Unlock=true,UnlockCost=22000,UnlockType="ChainGuns"}
 LDE.Weapons.CompileWeapon(Data,Makeup)

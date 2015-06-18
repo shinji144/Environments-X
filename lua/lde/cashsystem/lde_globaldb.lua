@@ -26,17 +26,19 @@ if SERVER then
 	function LDE.Cash.GetUpdateQuery(ply)
 		local Stats = util.TableToJSON(ply:GetStats())
 		local Strings = util.TableToJSON(ply:GetStrings())
-		updateString = "UPDATE ldeplystats SET Stats='%s', Strings='%s' WHERE SteamID ='%s'"		
+		local Unlocks = util.TableToJSON(ply:GetUnlocks())		
+		updateString = "UPDATE ldeplystats SET Stats='%s', Strings='%s', Unlocks='%s' WHERE SteamID ='%s'"		
 		local uid = ply:SteamID()
-		return string.format(updateString,Stats,Strings,uid)
+		return string.format(updateString,Stats,Strings,Unlocks,uid)
 	end	
 	
 	function LDE.Cash.GetInsertQuery(ply)
 		local Stats = util.TableToJSON(ply:GetStats())
 		local Strings = util.TableToJSON(ply:GetStrings())
-		updateString = "INSERT INTO ldeplystats(SteamID, Stats, Strings) VALUES ( '%s', '%s', '%s' )"
+		local Unlocks = util.TableToJSON(ply:GetUnlocks())		
+		updateString = "INSERT INTO ldeplystats(SteamID, Stats, Strings, Unlocks) VALUES ( '%s', '%s', '%s', '%s' )"
 		local uid = ply:SteamID()
-		return string.format(updateString,uid,Stats,Strings)
+		return string.format(updateString,uid,Stats,Strings,Unlocks)
 	end	
 	
 	function LDE.Cash.SetBaseData(ply)
@@ -46,6 +48,7 @@ if SERVER then
 		ply:SetLDEStat("Trades", 0)
 		ply:SetLDERole("Civilian")
 		ply:SetLDEStat("Kills", 0)
+		ply.Unlocks = {}
 	end
 	
 	if(mysqloo and GlobalDB.Host)then
@@ -185,17 +188,13 @@ if SERVER then
 				notifyerror(e)
 			end
 			tquery1:start()
-		end
-
-		 
+		end 
 
 		function updatePlayer(ply)
 			if not ply.dbReady then return end
 			if table.HasValue( peopleToUpdate, ply ) then return; end
 			table.insert( peopleToUpdate, ply);
-
 		end
-
 
 		function updateAll()		
 			local players = player.GetAll()
@@ -269,8 +268,9 @@ if SERVER then
 			
 			ply.LDETeam = 0
 			if(row)then
-				local Stats = util.JSONToTable(row.Stats)
-				local Strings = util.JSONToTable(row.Strings)
+				local Stats = util.JSONToTable(row.Stats or "")
+				local Strings = util.JSONToTable(row.Strings or "")
+				local Unlocks = util.JSONToTable(row.Unlocks or "")
 				local Str = "GetStats: "
 				for i,stat in pairs(Stats) do
 					Str=Str.." "..i..": "..stat
@@ -280,6 +280,8 @@ if SERVER then
 					Str=Str.." "..i..": "..stat
 					ply:SetLDEString(i, stat)
 				end
+				
+				ply.Unlocks = Unlocks
 				print(Str)
 			else
 				LDE.Cash.SetBaseData(ply)
@@ -307,8 +309,8 @@ if SERVER then
 		timer.Create( "LDECashTimer", 67, 0, updateAll )
 	end
 
-
+	print("GlobalDBfileLoaded")
 end
 
 
-print("GlobalDBfileLoaded")
+

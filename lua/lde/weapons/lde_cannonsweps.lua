@@ -33,35 +33,35 @@ local Base = {Tool="Weapon Systems",Type="Cannons"}
 --Huge cannon
 local Bullet = {ShrapCount=15,ShrapDamage=80,Spread=2,Radius=1600,Damage=10000,Recoil=5000,Speed=150,Model="models/props_combine/headcrabcannister01a.mdl",BulletFunc=BulletFunc,FireSound="ambient/explosions/explode_6.wav"}
 local Data={name="Huge Cannon",class="huge_cannon_weapon",In={"Heavy Shells"},shootfunc=Func,Points=2200,heat=500,firespeed=6,InUse={3},Bullet=Bullet}
-local Makeup = {name={"Huge Cannon"},model={"models/Cerus/Modbridge/Misc/Weapons/wep_ion1.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"Huge Cannon"},model={"models/Cerus/Modbridge/Misc/Weapons/wep_ion1.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class,Unlock=true,UnlockCost=800000,UnlockType="Cannons"}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
 --Basic cannon
 local Bullet = {ShrapCount=10,ShrapDamage=40,Spread=1,Radius=800,Damage=5000,Recoil=2000,Speed=125,BulletFunc=BulletFunc,FireSound="ambient/explosions/explode_4.wav"}
 local Data={name="Basic Cannon",class="basic_cannon_weapon",In={"Shells"},Out={"Casings"},OutMake={3},shootfunc=Func,Points=600,heat=50,firespeed=5,InUse={3},Bullet=Bullet,MountType="Medium",MVO=Vector(70,0,0)}
-local Makeup = {name={"Basic Cannon"},model={"models/Slyfo/mcpcannon.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"Basic Cannon"},model={"models/Slyfo/mcpcannon.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class,Unlock=true,UnlockCost=16000,UnlockType="Cannons"}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
 local Data={name="Slim Basic Cannon",class="slimbasic_cannon_weapon",In={"Shells"},Out={"Casings"},OutMake={3},shootfunc=Func,Points=600,heat=50,firespeed=5,InUse={3},Bullet=Bullet,MountType="NCannon"}
-local Makeup = {name={"Slim Basic Cannon"},model={"models/SBEP_community/navalgun.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"Slim Basic Cannon"},model={"models/SBEP_community/navalgun.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class,Unlock=true,UnlockCost=16000,UnlockType="Cannons"}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
 --Micro cannon
 local Bullet = {ShrapCount=5,ShrapDamage=40,Spread=1,Radius=400,Damage=2000,Recoil=1000,Speed=100,BulletFunc=BulletFunc,FireSound="ambient/explosions/explode_1.wav"}
 local Data={name="Micro Cannon",class="micro_cannon_weapon",In={"Shells"},Out={"Casings"},OutMake={6},shootfunc=Func,Points=350,heat=20,firespeed=3,InUse={1},Bullet=Bullet}
-local Makeup = {name={"Micro Cannon"},model={"models/Slyfo_2/weap_prover_industrialspiker.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"Micro Cannon"},model={"models/Slyfo_2/weap_prover_industrialspiker.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class,Unlock=true,UnlockCost=4000,UnlockType="Cannons"}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
 --Thud cannon
 local Bullet = {Spread=2,Damage=7500,Recoil=5000,Speed=100,FireSound="ambient/explosions/explode_9.wav"}
 local Data={name="Thud Cannon",class="thud_cannon_weapon",In={"Shells"},Out={"Casings"},OutMake={1},Points=550,heat=10,shootfunc=Func,firespeed=3,InUse={2},Bullet=Bullet,MountType="Medium",MVO=Vector(70,0,0)}
-local Makeup = {name={"Basic Thud Cannon"},model={"models/Slyfo/mcpcannon.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"Basic Thud Cannon"},model={"models/Slyfo/mcpcannon.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class,Unlock=true,UnlockCost=6000,UnlockType="Cannons"}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
 --Micro Thud cannon
 local Bullet = {Spread=1,Damage=1000,Recoil=2000,Speed=75,FireSound="ambient/explosions/explode_1.wav"}
 local Data={name="Micro Thud Cannon",class="micro_thud_cannon_weapon",In={"Shells"},Out={"Casings"},OutMake={4},Points=300,heat=3,shootfunc=Func,firespeed=0.7,InUse={1},Bullet=Bullet,MountType="Small"}
-local Makeup = {name={"Micro Thud Cannon"},model={"models/Slyfo_2/mini_turret_rocketpod.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"Micro Thud Cannon"},model={"models/Slyfo_2/mini_turret_rocketpod.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class,Unlock=true,UnlockCost=2000,UnlockType="Cannons"}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
 -------------------------------------
@@ -81,14 +81,14 @@ end
 local Fire = function(self) self.Data.FireCannon(self) end
 local Bullet = {ShrapCount=0,ShrapDamage=0,Spread=1,Radius=400,Damage=5000,Recoil=2000,Speed=60,Recoil=0,CoolDown=3,ChargeRate=10,MinCharge=50,MaxCharge=60,Single=true,ChargeShoot=Fire,BulletFunc=BulletFunc,FireSound="ambient/explosions/explode_1.wav"}
 local Data={name="Plasma Cannon",class="plasma_cannon_weapon",WireOut={"Charge"},In={"Plasma"},MountType="Medium",FireCannon=FireCannon,shootfunc=Func,ClientSetup=ClientSetup,Points=500,heat=100,firespeed=0.8,InUse={5},Bullet=Bullet,Shot=Shot}
-local Makeup = {name={"Plasma Cannon"},model={"models/Spacebuild/cannon1_gen.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"Plasma Cannon"},model={"models/Spacebuild/cannon1_gen.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class,Unlock=true,UnlockCost=20000,UnlockType="Plasma Weapons"}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
 --Plasma Cannon mini
 local Fire = function(self) self.Data.FireCannon(self) end
 local Bullet = {ShrapCount=0,ShrapDamage=0,Spread=1,Radius=250,Damage=3400,Recoil=2000,Speed=65,Recoil=0,CoolDown=1,ChargeRate=10,MinCharge=20,MaxCharge=30,Single=true,ChargeShoot=Fire,BulletFunc=BulletFunc,FireSound="ambient/explosions/explode_1.wav"}
 local Data={name="Small Plasma Cannon",class="plasma_cannon_small_weapon",WireOut={"Charge","CanFire"},In={"Plasma"},MountType="Small",FireCannon=FireCannon,shootfunc=Func,ClientSetup=ClientSetup,Points=400,heat=100,firespeed=0.8,InUse={5},Bullet=Bullet,Shot=Shot}
-local Makeup = {name={"Small Plasma Cannon"},model={"models/Slyfo_2/mini_turret_pulselaser.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"Small Plasma Cannon"},model={"models/Slyfo_2/mini_turret_pulselaser.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class,Unlock=true,UnlockCost=10000,UnlockType="Plasma Weapons"}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
 

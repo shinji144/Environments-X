@@ -103,32 +103,32 @@ LDE.Weapons.CompileWeapon(table.Merge(DBase,Data),Makeup)
 --Basic missile luancher 8X
 local Bullet=table.Merge(Missiles["Basic"],MissileBase)
 local Data={name="BML X8",class="bml_x8_weapon",In={"Missile Parts"},InUse={1},MountType="Medium",MAO=Angle(0,0,90),heat=5,firespeed=2,Points=1200}
-local Makeup = {name={"BML X8"},model={"models/slyfo/missile_pod_8.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"BML X8"},model={"models/slyfo/missile_pod_8.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class,Unlock=true,UnlockCost=10000,UnlockType="Launchers"}
 LDE.Weapons.CompileWeapon(table.Merge(DBase,Data),Makeup)
 
 --Basic missile luancher 10X
 local Bullet=table.Merge(Missiles["Basic"],MissileBase)
 local Data={name="BML X10",class="bml_x10_weapon",In={"Missile Parts"},InUse={1},heat=5,firespeed=1,Points=1600}
-local Makeup = {name={"BML X10"},model={"models/slyfo/missile_pod_10.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"BML X10"},model={"models/slyfo/missile_pod_10.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class,Unlock=true,UnlockCost=14000,UnlockType="Launchers"}
 LDE.Weapons.CompileWeapon(table.Merge(DBase,Data),Makeup)
 
 --Stinger luancher 16X
 local Bullet=table.Merge(Missiles["Stinger"],MissileBase)
 local Data={name="Stinger Launcher",class="stinger_missile_weapon",In={"Missile Parts"},heat=3,InUse={1},firespeed=3,Points=1600}
-local Makeup = {name={"Stinger Launcher"},model={"models/spacebuild/medbridge2_missile_launcher.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"Stinger Launcher"},model={"models/spacebuild/medbridge2_missile_launcher.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class,Unlock=true,UnlockCost=20000,UnlockType="Launchers"}
 LDE.Weapons.CompileWeapon(table.Merge(DBase,Data),Makeup)
 
 --Heavy missile luancher 3X
 local Bullet=table.Merge(Missiles["Heavy"],MissileBase)
 local Data={name="Torpedo Launcher",class="heavy_missile_weapon",In={"Missile Parts","Liquid Polylodarium"},heat=50,InUse={3,10},firespeed=8,Points=2400}
-local Makeup = {name={"Torpedo Launcher"},model={"models/punisher239/punisher239_missilebay_light.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"Torpedo Launcher"},model={"models/punisher239/punisher239_missilebay_light.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class,Unlock=true,UnlockCost=30000,UnlockType="Launchers"}
 LDE.Weapons.CompileWeapon(table.Merge(DBase,Data),Makeup)
 
 
 --Nuclear luancher 1X
 local Bullet=table.Merge(table.Merge(Missiles["Nuclear"],{ShootDir = Vector(0,-1,0),ShootPos=Vector(0,0,50)}),MissileBase)
 local Data={name="Nuclear Launcher",class="nuclear_missile_weapon",In={"Missile Parts","Liquid Polylodarium"},heat=400,InUse={10,100},firespeed=1,Points=0}
-local Makeup = {name={"Nuclear Launcher"},model={"models/mandrac/missile/cap_torpedolauncher_tube.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"Nuclear Launcher"},model={"models/mandrac/missile/cap_torpedolauncher_tube.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class,Unlock=true,UnlockCost=1000000,UnlockType="Launchers"}
 LDE.Weapons.CompileWeapon(table.Merge(DBase,Data),Makeup)
 
 --[[

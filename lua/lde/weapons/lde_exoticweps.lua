@@ -16,14 +16,14 @@ local Effects = {Beam="LDE_laserbeam_long",Hit="LDE_laserhiteffect"}
 local Fire = function(self) LDE.Weapons.SingleBurst(self,self.Data.Bullet) end
 local Bullet = {Recoil=200,CoolDown=2,ChargeRate=5,Radius=1,MinCharge=50,MaxCharge=150,Dpc=4,ChargeType=true,ChargeShoot=Fire,Effect=Effects}
 local Data={name="Basic RailGun",class="basic_railgun_weapon",WireOut={"Charge","CanFire"},In={"energy"},shootfunc=Func,ClientSetup=ClientSetup,Points=220,heat=5,firespeed=0.5,InUse={500},Bullet=Bullet}
-local Makeup = {name={"Small RailGun"},model={"models/Slyfo_2/drone_railgun.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"Small RailGun"},model={"models/Slyfo_2/drone_railgun.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class,Unlock=true,UnlockCost=8000,UnlockType="Exotic"}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
 --Large RailGun
 local Fire = function(self) LDE.Weapons.SingleBurst(self,self.Data.Bullet) end
 local Bullet = {Recoil=2000,CoolDown=20,ChargeRate=50,Radius=0.5,MinCharge=500,MaxCharge=1500,Dpc=6,ShootDir=Vector(0,0,1),ShootPos=Vector(0,0,120),ChargeType=true,ChargeShoot=Fire,Effect=Effects}
 local Data={name="Large RailGun",class="large_railgun_weapon",WireOut={"Charge","CanFire"},In={"energy"},MountType="CapRailGun",shootfunc=Func,ClientSetup=ClientSetup,Points=2000,heat=1000,firespeed=0.8,InUse={10000},Bullet=Bullet}
-local Makeup = {name={"Large RailGun"},model={"models/mandrac/hybride/cap_railgun_gun1.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"Large RailGun"},model={"models/mandrac/hybride/cap_railgun_gun1.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class,Unlock=true,UnlockCost=16000,UnlockType="Exotic"}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
 -------------------------------------
@@ -275,7 +275,7 @@ local client = function(self)
 end
 
 local Data={name="Hyper Rift Beam",class="hyper_rift_laser_weapon",Client=client,Shared=shared,Intial=Intial,WireFunc=wirefunc,WireSpecial=wire,In={"Plasma"},MountType="Titan",shootfunc=Func,Client=client,Points=3000,heat=0,firespeed=0.1,InUse={0}}
-local Makeup = {name={"Hyper Rift Beam"},model={"models/Spacebuild/Nova/machuge.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+local Makeup = {name={"Hyper Rift Beam"},model={"models/Spacebuild/Nova/machuge.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class,Unlock=true,UnlockCost=1000000,UnlockType="Exotic"}
 LDE.Weapons.CompileWeapon(Data,Makeup)
 
 --Winch

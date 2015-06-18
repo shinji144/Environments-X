@@ -90,6 +90,7 @@ if SERVER then
 	
 		//create it
 		local ent = self:CreateDevice( ply, trace, model )
+			LDE.UnlockCreateCheck(ply,ent) --Check if unlocked!
 		if !ent or !ent:IsValid() then return end
 		
 		//effect :D

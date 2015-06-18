@@ -74,6 +74,10 @@ if(SERVER)then
 		end
 	end
 	
+	function LDE:NotifyPlayer(Ply,Source,String,Color)
+		Ply:SendColorChat(Source,Color,String)
+	end
+		
 	function LDE:ChatAdvert()
 		local adcount = table.Count(LDE.Adverts)
 		local message = math.random(1,adcount)
@@ -275,7 +279,7 @@ function LDE:IsLifeSupport(ent)
 end
 
 function LDE_EntCreated(ent)--Entity Spawn hook.
-	if(LDE:CheckBanned(ent))then LDE:Debug("Illigal Entity spawned. Removing it.") ent:Remove() return end
+	if(LDE:CheckBanned(ent))then LDE:Debug("Illegal Entity spawned. Removing it.") ent:Remove() return end
 	if ent:IsValid() and not ent:IsWeapon() and CurTime() > 5 then
 		timer.Simple( 0.25, function()  if(not ent or not ent:IsValid())then return end LDE_Filter( ent ) end)  --Need the timer or the ent will be detect as the base class and with no model.
 	end
