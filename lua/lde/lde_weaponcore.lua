@@ -83,7 +83,7 @@ function LDE.Weapons.CompileWeapon(Data,Inner)
 	end
 	LDE.Weapons.RegisterWeapon(Data,Inner.model)
 end
- 
+
 //Custom Weapon Think - Cuz they were thinking too slow >_<
 function LDE.Weapons.NewThink(Ent)
 	if IsValid(Ent) then Ent:FireWeapon() end

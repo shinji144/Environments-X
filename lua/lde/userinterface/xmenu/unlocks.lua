@@ -45,8 +45,7 @@ else
 					icon.base = self.base
 					icon.data = d
 					icon.DoClick = function(self)						
-						self.base.UnlockButton:SetText("Unlock: "..self.data.Cost)
-						self.base.UnlockButton.Selected = self.data
+						self.base.StatContainer:SetSelected(self.data)
 						self.base.UnlockStats:SetStats(self.data.Stats)
 					end
 					
@@ -80,13 +79,32 @@ else
 		StatContainer:SetPos(305,0)
 		base.StatContainer = StatContainer
 		
+		function StatContainer:SetSelected(data)
+			local Unlocks = LocalPlayer():GetUnlocks()
+			
+			local Cost = "Unlock: "..data.Cost
+			
+			if Unlocks[data.Class] then
+				print("Already Unlocked!")
+				Cost = "Already Unlocked!"
+			end
+			
+			self.SelectedLabel:SetText("Selected: "..data.Name)
+			self.UnlockButton:SetText(Cost)
+			self.UnlockButton.Selected = data
+		end
+		
+		local Text = LDE.UI.CreateText(StatContainer,{x=5,y=160},"Selected: (Select Something!)",Color(0,0,0,255))
+		StatContainer.SelectedLabel = Text
+		
 		local Text = LDE.UI.CreateText(StatContainer,{x=5,y=10},"Cash: 0",Color(0,0,0,255))
+		StatContainer.CashLabel = Text
 		Text.Think = function(self) 
 			self:SetText("Cash: "..LocalPlayer():GetLDEStat("Cash"))
 		end
 		
 		local Butt = LDE.UI.CreateButton(StatContainer,{x=200,y=60},{x=0,y=190},"Unlock: (Select Something)",function() end)
-		base.UnlockButton = Butt
+		StatContainer.UnlockButton = Butt
 		
 		Butt.DoClick = function(self)
 			if self.Selected~=nil then

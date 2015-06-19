@@ -161,6 +161,7 @@ end
 if(SERVER)then
 	util.AddNetworkString('LDE_Stat')
 	util.AddNetworkString('LDE_Strings')
+	util.AddNetworkString('LDE_Unlocks')
 	util.AddNetworkString('LDE_SyncBuff')
 	
 	function LDE.FindByNamePly(name)
@@ -247,6 +248,14 @@ local function StoreStrings( length, client )
 end
 net.Receive("LDE_Strings", StoreStrings)
 
+local function StoreUnlocks( length, client )
+	Ent = net.ReadEntity()
+	if(not Ent or not Ent:IsValid())then return end --Derp
+	Ent.Unlocks = util.JSONToTable(net.ReadString()) or {}
+	--print("Storing stats.")
+end
+net.Receive("LDE_Unlocks", StoreUnlocks)
+
 ---Player functions	
 local meta = FindMetaTable( "Player" )
 if not meta then return end
@@ -267,6 +276,8 @@ function meta:UnlockItem(Item)
 	self.Unlocks = self:GetUnlocks()
 	
 	self.Unlocks[Item] = true
+	
+	self:SyncLDEUnlocks()
 end
 
 function meta:SyncMutations()
@@ -388,6 +399,13 @@ function meta:SyncLDEStrings()
 	net.Start('LDE_Strings')
 		net.WriteEntity(self)
 		net.WriteString(util.TableToJSON(self.SStrings))
+	net.Broadcast()
+end
+
+function meta:SyncLDEUnlocks()
+	net.Start('LDE_Unlocks')
+		net.WriteEntity(self)
+		net.WriteString(util.TableToJSON(self.Unlocks))
 	net.Broadcast()
 end
 

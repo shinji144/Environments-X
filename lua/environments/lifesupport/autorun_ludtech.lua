@@ -11,6 +11,9 @@ local P = "lde/"
 
 LoadFile(P.."lde_variables.lua",2)
 
+LoadFile(P.."sh_utility.lua",1)
+LoadFile(P.."sh_networking.lua",1)
+
 LoadFile(P.."lde_userinterface.lua",1)
 LoadFile(P.."sh_vguiease.lua",1)
 LoadFile(P.."lde_core.lua",1)

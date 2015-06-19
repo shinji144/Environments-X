@@ -168,10 +168,15 @@ function LDE.Weapons.RegisterTurret(Data)
 			end
 		end
 
+		function ENT:MixAngles(Ang1,Ang2,Ratio)
+			return Angle((Ang1.p*ratio)+(Ang2.p*(1-ratio)),(Ang1.y*ratio)+(Ang2.y*(1-ratio)),(Ang1.r*ratio)+(Ang2.r*(1-ratio)))
+		end
+		
 		function ENT:Think()
 			if not self:TurretValid() then return false end
 			local AB = self
 			local Ang = Angle(0,0,0)
+			
 			if self.Active and self.TargetPos then
 				Ang = AB:WorldToLocalAngles((self.TargetPos-AB:LocalToWorld(self.AimOff)):Angle())
 			end

@@ -1,4 +1,7 @@
 local LDE = LDE
+local Utl = LDE.Utl
+local NDat = Utl.NetMan
+
 if(SERVER)then
 	function LDE:CheckUnlocked(ply,ent)
 		print("Checking! "..tostring(ply).." "..tostring(ent))
@@ -48,7 +51,7 @@ local Unlocks = LDE.Unlocks
 
 function LDE:CreateUnlockable(Data)
 	Unlocks[Data.Type]=Unlocks[Data.Type] or {}
-	Unlocks[Data.Type][Data.Class]={Type=Data.Type,Class=Data.Class,Model=Data.Model,Cost=Data.Cost,Stats=Data.Stats,ToolTip=Data.ToolTip}
+	Unlocks[Data.Type][Data.Class]={Name=Data.Name,Type=Data.Type,Class=Data.Class,Model=Data.Model,Cost=Data.Cost,Stats=Data.Stats,ToolTip=Data.ToolTip}
 end
 
 print("Unlock Core Loaded")

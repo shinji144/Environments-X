@@ -1,6 +1,9 @@
 LDE.UI = {}
 LDE.UI.SuperMenu = {}
 
+local Utl = LDE.Utl
+local NDat = Utl.NetMan
+
 if(CLIENT)then
 
 	function LDE.UI.SuperMenu.MenuOpen()
@@ -126,15 +129,24 @@ if(CLIENT)then
 		label:OpenURL(Text)
 		return label
 	end
-
+	
 else
 ----Server side-----
+	print("UserInterface Loading!")
+	
 	function LDE.UI.OpenPanel( ply )
 		ply:ConCommand( "ldesupermenuopen" )
 	end
 	hook.Add( "ShowSpare1", "bindtoSpare1", LDE.UI.OpenPanel )
 
-
+	function chatCommand( ply, text, public )
+		local Chat = string.Explode(" ",text)
+		if Chat[1] == "/pda" then
+			LDE.UI.OpenPanel( ply )
+		end
+	end
+	hook.Add( "PlayerSay", "OpenInterface", chatCommand )
+	
 end
 
 local LoadFile = EnvX.LoadFile --Lel Speed.
