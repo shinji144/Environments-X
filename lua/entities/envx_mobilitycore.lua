@@ -6,7 +6,7 @@ ENT.PrintName		= "Ship Drive Systems"
 ENT.Author			= "Ludsoe"
 ENT.Category		= "Other"
 
-ENT.Spawnable		= true
+ENT.Spawnable		= false
 ENT.AdminSpawnable	= true
 ENT.Owner			= nil
 ENT.SPL				= nil
@@ -191,9 +191,9 @@ if(SERVER)then
 		Inputs["MoveX"] = ((In.MoveForward*Mm.MoveForward)-(In.MoveBackward*Mm.MoveBackward))*10
 		Inputs["MoveY"] = ((In.MoveLeft*Mm.MoveLeft)-(In.MoveRight*Mm.MoveRight))*10
 		
-		Inputs["RotateX"] = ((In.PitchDown)-(In.PitchUp))*5
+		Inputs["RotateY"] = ((In.PitchDown)-(In.PitchUp))*5
 		Inputs["RotateZ"] = ((In.YawLeft)-(In.YawRight))*5
-		Inputs["RotateY"] = ((In.RollLeft)-(In.RollRight))*5
+		Inputs["RotateX"] = ((In.RollLeft)-(In.RollRight))*5
 		
 		return Inputs
 	end
