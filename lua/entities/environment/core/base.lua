@@ -91,7 +91,9 @@ end
 --self.air.total = amount filled
 function ENT:Convert(res1, res2, value)
 	value = math.Round(value)
-
+	
+	if true then return end
+	
 	if res1 == res2 then return 0 end
 	if value < 1 then return 0 end
 	if not value then return 0 end

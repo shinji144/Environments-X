@@ -26,12 +26,14 @@ Environments.RegisterDevice("Generators", "Fusion Generator", "Large SBEP Reacto
 Environments.RegisterDevice("Generators", "Fusion Generator", "Small Pallet Reactor", "generator_fusion", "models/slyfo/forklift_reactor.mdl")
 Environments.RegisterDevice("Generators", "Fusion Generator", "Large Crate Reactor", "generator_fusion", "models/slyfo/crate_reactor.mdl")
 Environments.RegisterDevice("Generators", "Fusion Generator", "Classic Reactor", "generator_fusion", "models/props_c17/substation_circuitbreaker01a.mdl")
+Environments.RegisterDevice("Generators", "Fusion Generator", "Rotary Reactor", "generator_fusion", "models/cerus/modbridge/misc/ls/ls_gen11a.mdl")
 
 --Fission Reactor
-Environments.RegisterDevice("Generators", "Fission Generator", "Basic Fission Reactor", "generator_fission", "models/SBEP_community/d12siesmiccharge.mdl")
+--Environments.RegisterDevice("Generators", "Fission Generator", "Basic Fission Reactor", "generator_fission", "models/SBEP_community/d12siesmiccharge.mdl")
 
 --WaterPumps
-Environments.RegisterDevice("Generators", "Water Pump", "Small Water Pump", "generator_water", "models/props_phx/life_support/gen_water.mdl")
+Environments.RegisterDevice("Generators", "Water Pump", "Small Water Pump", "generator_water", "models/sbep_community/d12shieldemitter.mdl")
+Environments.RegisterDevice("Generators", "Water Pump", "Large Water Pump", "generator_water", "models/sbep_community/d12siesmiccharge.mdl")
 
 --Atmospheric Water Generator
 Environments.RegisterDevice("Generators", "Atmospheric Water Generator", "Atmospheric Water Generator Basic", "generator_water_tower", "models/Slyfo/moisture_condenser.mdl")
@@ -66,7 +68,7 @@ Environments.RegisterDevice("Generators", "Hydrogen Fuel Cell", "Small Fuel Cell
 Environments.RegisterDevice("Generators", "Hydrogen Fuel Cell","Tiny Fuel Cell", "generator_hydrogen_fuel_cell", "models/Slyfo/crate_watersmall.mdl")
 
 --Microwave Emitters
-Environments.RegisterDevice("Generators", "Microwave Emitter", "Emitter", "generator_microwave", "models/props_phx/life_support/crylaser_small.mdl")
+Environments.RegisterDevice("Generators", "Microwave Emitter", "Emitter", "generator_microwave", "models/slyfo/finfunnel.mdl")
 Environments.RegisterDevice("Generators", "Microwave Emitter", "Small Reciever", "reciever_microwave", "models/slyfo_2/miscequipmentradiodish.mdl")
 Environments.RegisterDevice("Generators", "Microwave Emitter", "Large Reciever", "reciever_microwave", "models/spacebuild/nova/recieverdish.mdl")
 Environments.RegisterDevice("Generators", "Microwave Emitter", "Massive Reciever", "reciever_microwave", "models/props_spytech/satellite_dish001.mdl")
@@ -102,6 +104,7 @@ Environments.RegisterDevice("Life Support", "Fabricators","Item Materialiser", "
 --Water
 Environments.RegisterDevice("Storages", "Water Storage", "Massive Water Tank", "env_water_storage", "models/props/de_nuke/storagetank.mdl")
 Environments.RegisterDevice("Storages", "Water Storage", "Water Shipping Tank", "env_water_storage", "models/slyfo/crate_resource_large.mdl")
+Environments.RegisterDevice("Storages", "Water Storage", "Small Water Tank", "env_water_storage", "models/slyfo/crate_watersmall.mdl")
 
 --Energy
 Environments.RegisterDevice("Storages", "Energy Storage", "Large Battery", "env_energy_storage", "models/props_phx/life_support/battery_large.mdl")
