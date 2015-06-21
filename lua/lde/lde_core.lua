@@ -5,6 +5,7 @@ local function TellPlayers(Text)
 	end
 end
 
+--[[
 function LDE:Debug(Message)
 	if(LDE.ChatDebug)then
 		TellPlayers(Message)
@@ -12,7 +13,9 @@ function LDE:Debug(Message)
 	if(LDE.ConDebug)then
 		print(Message)
 	end
+	LDE.Utl:Debug("Debug",Message,2)
 end
+]]
 
 --List of models we want to scan clients for.
 LDERequiredModels={
@@ -102,11 +105,11 @@ if(SERVER)then
 
 		if(Role.name~=oldrole)then
 			local Text = ply:GetName().." is now a "..Role.name.."."
-			--TellPlayers(Text)
 			LDE:NotifyPlayers("Stats",Text,{r=0,g=100,b=255})
-			--LDE.Logger.LogEvent( Text )
 			ply:SetLDERole(Role.name)
 			ply:SetLDEStat("Moral",Role.Moral)
+			
+			LDE.Debug(Text,2,"Player Related")
 		end
 
 		LDE.Cash:UpdatePerson(ply)
@@ -148,7 +151,7 @@ if(SERVER)then
 		net.WriteString( ply:GetName() )
 		net.Send( ply )
 
-		--LDE.Logger.LogEvent( Text )
+		LDE.Debug(Text,3,"Player Related")
 	end
 	hook.Add("PlayerInitialSpawn","ldeplayerispawn",LDEFirstSpawn)
 	
@@ -156,8 +159,8 @@ if(SERVER)then
 		local Text = ply:GetName().." has disconnected from the server. (SteamID: "..ply:SteamID().." )"
 		--TellPlayers(Text) --Fixed
 		LDE:NotifyPlayers("Server",Text,{r=150,g=150,b=150})
+		LDE.Debug(Text,3,"Player Related")
 		
-		--LDE.Logger.LogEvent( Text )
 		hook.Call("LDEPlyLeft",nil,ply)
 	end
 	hook.Add("PlayerDisconnected","ldedisconnected",LDELeftServ)
@@ -166,8 +169,7 @@ if(SERVER)then
 		local Text = name .. " has connected from IP: " .. address
 		--TellPlayers( Text )
 		LDE:NotifyPlayers("Server",Text,{r=150,g=150,b=150})
-		
-		--LDE.Logger.LogEvent( Text )
+		LDE.Debug(Text,3,"Player Related")
 	end
 	hook.Add("PlayerConnect","ldeconnected",LDEPlayConnect)	
 	
@@ -179,16 +181,6 @@ if(SERVER)then
 	hook.Add("PlayerSpawnedSENT", "LDE.PlayerSpawnedSENT", LDESetOwner)
 	hook.Add("PlayerSpawnedVehicle", "LDE.PlayerSpawnedVehicle", LDESetOwner)
 	hook.Add("PlayerSpawnedSWEP", "LDE.PlayerSpawnedSWEP", LDESetOwner)
-
-	local meta = FindMetaTable("Player")
-
-	function meta:SendColorChat(nam,col,msg)
-		umsg.Start("ColoriseChat", self)
-			umsg.String(nam)
-			umsg.Vector(Vector(col.r,col.g,col.b))
-			umsg.String(msg)
-		umsg.End()
-	end
 
 	net.Receive( "PlyRequestModel", function( len )
 		local Stat = net.ReadString()
@@ -250,17 +242,6 @@ else
 			ScanModels(1,Name)
 		end)
     end )
-	   
-	local function ColChatRec(um)
-		local nam = um:ReadString()
-		local vcol = um:ReadVector()
-		local col = Color(vcol.x,vcol.y,vcol.z)
-		local msg = um:ReadString()
-		
-		chat.AddText(unpack({col, nam,Color(255,255,255),": "..msg}))
-	end
-	usermessage.Hook("ColoriseChat", ColChatRec)
-	
 end
 
 function LDE:IsLifeSupport(ent)
@@ -273,7 +254,9 @@ function LDE:IsLifeSupport(ent)
 end
 
 function LDE_EntCreated(ent)--Entity Spawn hook.
-	if(LDE:CheckBanned(ent))then LDE:Debug("Illegal Entity spawned. Removing it.") ent:Remove() return end
+	if(LDE:CheckBanned(ent))then --LDE:Debug("Illegal Entity spawned. Removing it.") 
+		ent:Remove() return 
+	end
 	if ent:IsValid() and not ent:IsWeapon() and CurTime() > 5 then
 		timer.Simple( 0.25, function()  if(not ent or not ent:IsValid())then return end LDE_Filter( ent ) end)  --Need the timer or the ent will be detect as the base class and with no model.
 	end

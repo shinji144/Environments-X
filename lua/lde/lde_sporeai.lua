@@ -79,7 +79,7 @@ if(SERVER)then
 		for I=1, math.Round(sporecount*0.4) do
 			SporeThink(swarm,sporecount,0)
 		end
-		LDE:Debug("Spore Main Ai Thread Ran.")
+		--LDE:Debug("Spore Main Ai Thread Ran.")
 	end
 
 	timer.Create("SporeAIThread",1.5,0, function() SporeMaster() end)

@@ -81,10 +81,10 @@ Environments.RegisterDevice("Generators", "Space Gas Collectors", "Gas Collector
 //Life Support Tool
 --Suit Dispener
 Environments.RegisterDevice("Life Support", "Suit Dispenser", "Suit Dispenser", "suit_dispenser", "models/props_combine/combine_emitter01.mdl")
-Environments.RegisterDevice("Life Support", "Suit Dispenser", "Flat Dispenser", "suit_dispenser", "models/resourcepump/resourcepump.mdl")
+--Environments.RegisterDevice("Life Support", "Suit Dispenser", "Flat Dispenser", "suit_dispenser", "models/resourcepump/resourcepump.mdl")
 
 --Medical Dispenser
-Environments.RegisterDevice("Life Support", "Medical Dispenser", "Flat Dispenser", "env_health", "models/resourcepump/resourcepump.mdl")
+--Environments.RegisterDevice("Life Support", "Medical Dispenser", "Flat Dispenser", "env_health", "models/resourcepump/resourcepump.mdl")
 Environments.RegisterDevice("Life Support", "Medical Dispenser", "Delux Dispenser", "env_health", "models/Items/HealthKit.mdl")
 
 --LS Cores
@@ -100,7 +100,6 @@ Environments.RegisterDevice("Life Support", "TradeConsoles","Compact TradeConsol
 
 --Item Fabricator
 Environments.RegisterDevice("Life Support", "Fabricators","Item Materialiser", "env_factory", "models/slyfo/swordreconlauncher.mdl")
-
 
 //Storage Tool
 --Water
@@ -192,7 +191,7 @@ Environments.RegisterDevice("Core Upgrades", "Heat Management","Basic Heater", "
 
 --Extra
 Environments.RegisterDevice("Core Upgrades", "Extra","Vehicle Exit Point", "EPoint", "models/jaanus/wiretool/wiretool_range.mdl")
-Environments.RegisterDevice("Core Upgrades", "Extra","Matter Teleporter", "wep_transporter", "models/SBEP_community/d12shieldemitter.mdl")
+Environments.RegisterDevice("Core Upgrades", "Extra","Matter Transporter", "wep_transporter", "models/SBEP_community/d12shieldemitter.mdl")
 Environments.RegisterDevice("Core Upgrades", "Extra","WarpDrive", "WarpDrive", "models/Slyfo/ftl_drive.mdl")
 Environments.RegisterDevice("Core Upgrades", "Extra","Cloning Device", "envx_clonetube", "models/TwinbladeTM/cryotubemkii.mdl")
 

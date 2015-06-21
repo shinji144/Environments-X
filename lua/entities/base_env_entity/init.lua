@@ -70,17 +70,6 @@ function ENT:AcceptInput(name,activator,caller)
 	end
 end
 
---[[
-function ENT:OnTakeDamage(DmgInfo)//should make the damage go to the shield if the shield is installed(CDS)
-	if self.Shield and self.Shield:IsValid() then --Fixed the dam error here.
-		self.Shield:ShieldDamage(DmgInfo:GetDamage())
-		CDS_ShieldImpact(self:GetPos())
-		return
-	end
-	Environments.DamageLS(self, DmgInfo:GetDamage())
-end
-]]
-
 function ENT:OnRemove()
 	if self.node and self.node:IsValid() then
 		self.node:Unlink(self)

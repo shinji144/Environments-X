@@ -208,15 +208,6 @@ function ENT:ConsumeResource(name, amt)
 	end
 end
 
-function ENT:OnTakeDamage(DmgInfo)//should make the damage go to the shield if the shield is installed(CDS)
-	if self.Shield then
-		self.Shield:ShieldDamage(DmgInfo:GetDamage())
-		CDS_ShieldImpact(self:GetPos())
-		return
-	end
-	Environments.DamageLS(self, DmgInfo:GetDamage())
-end
-
 function ENT:OnRemove()	
 	if self.connected then
 		for k,v in pairs(self.connected) do

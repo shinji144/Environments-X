@@ -5,7 +5,7 @@ LDE = LDE or {}
 LDE.EnableMenu = false
 
 --local DebugTypes = {Verbose=3,Basic=2,None=1}
-LDE.DebugMode=3
+LDE.DebugMode="Verbose"
 
 print("=========================")
 print("LDE Starting up.")
@@ -15,6 +15,7 @@ local LoadFile = EnvX.LoadFile --Lel Speed.
 local P = "lde/"
 
 LoadFile(P.."lde_variables.lua",2)
+LoadFile(P.."sh_constraints.lua",1)
 
 LoadFile(P.."sh_debug.lua",1)
 LoadFile(P.."sh_utility.lua",1)

@@ -48,19 +48,6 @@ function ENT:AcceptInput(name,activator,caller)
 	end
 end
 
-function ENT:OnTakeDamage(DmgInfo)
-	if self.Shield then
-		self.Shield:ShieldDamage(DmgInfo:GetDamage())
-		CDS_ShieldImpact(self:GetPos())
-		return
-	end
-	Environments.DamageLS(self, DmgInfo:GetDamage())
-	local hitpos = DmgInfo:GetDamagePosition()
-	if DmgInfo:GetDamage() > 50 then
-		--leak perhaps?
-	end
-end
-
 function ENT:OnRemove()
 	if self.node then
 		self.node:Unlink(self)

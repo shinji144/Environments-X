@@ -153,6 +153,4 @@ LDE.Rolesys.CreateRole("Civilian",{},Bad,0,1)
 
 --Extra Roles
 LDE.Rolesys.CreateRole("Developer",{Developer=1},{},0,9001)
-LDE.Rolesys.CreateRole("Therapist",{Rapes=1},{},2,9001) --This is for xkiarofl
-LDE.Rolesys.CreateRole("Turbo Nerd",{TNT=1},{},0,9001)
 

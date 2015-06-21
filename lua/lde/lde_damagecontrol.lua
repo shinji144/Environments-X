@@ -16,7 +16,9 @@ end
 
 
 function LDE_EntityTakeDamage( ent, dmginfo )
-	if(not dmginfo)then LDE:Debug("ERROR NO DAMAGE INFO!") return end
+	if(not dmginfo)then --LDE:Debug("ERROR NO DAMAGE INFO!") 
+		return 
+	end
     if not IsValid(ent) then return false end
 	if not ent.LDEHealth and not ent:IsPlayer() and not ent:IsNPC() then
    		LDE:CalcHealth(ent)
@@ -781,39 +783,6 @@ function LDE:CheckValid( entity )
 	return true
 end
 
-function constraint.GetAllWeldedEntities( ent, ResultTable ) --Modded constraint.GetAllConstrainedEntities to find only welded ents
-	local ResultTable = ResultTable or {}
-	if ( !ent ) then return end
-	if ( not IsValid(ent) ) then return end
-	if ( ResultTable[ ent ] ) then return end	
-	ResultTable[ ent ] = ent	
-	local ConTable = constraint.GetTable( ent )	
-	for k, con in ipairs( ConTable ) do	
-		for EntNum, Ent in pairs( con.Entity ) do
-			if (con.Type == "Weld") or (con.Type == "Axis") or (con.Type == "Ballsocket") or (con.Type == "Hydraulic") then
-				constraint.GetAllWeldedEntities( Ent.Entity, ResultTable )
-			end
-		end	
-	end
-	return ResultTable	
-end
-
-function constraint.GetAllConstrainedEntities_B( ent, ResultTable ) --Modded to filter out grabbers
-	local ResultTable = ResultTable or {}
-	if not IsValid(ent) then return end
-	if ( ResultTable[ ent ] ) then return end
-	ResultTable[ ent ] = ent
-	local ConTable = constraint.GetTable( ent )
-	for k, con in ipairs( ConTable ) do
-		for EntNum, Ent in pairs( con.Entity ) do
-			if con.Type != ""  then
-				constraint.GetAllWeldedEntities( Ent.Entity, ResultTable )
-			end
-		end
-	end
-	return ResultTable
-end
-
 function LDE:IsImmune(ent)
 	if not IsValid(ent) then return true end
 	if(ent.jailWall or ent.NoLDEDamage)then return true end
@@ -829,12 +798,4 @@ function LDE:IsImmune(ent)
 		end
 	end
 	return false
-end
-
-function GetCvarBool(cvar) --Mainly just to save space
-	return GetConVar(cvar):GetBool()
-end
-
-function CDS_ShieldImpact()
-	--Environments Override Compatability
 end

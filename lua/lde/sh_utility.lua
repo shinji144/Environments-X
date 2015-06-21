@@ -168,42 +168,6 @@ if(SERVER)then
 	end
 	
 	--[[----------------------------------------------------
-	Settings and File Functions.
-	----------------------------------------------------]]--
-	
-	--[[
-	local SettingsPath = LDE.SaveDataPath..LDE.SettingsName..".txt"
-	
-	if(not file.Exists(LDE.SaveDataPath,"DATA"))then
-		file.CreateDir(LDE.SaveDataPath)
-	end
-	
-	function Utl:LoadSettings()
-		local DSets = table.Copy(LDE.DefaultSettings)
-		LDE.Settings = table.Merge(DSets,util.JSONToTable(file.Read(SettingsPath,"DATA") or "") or {})
-	end
-	Utl:LoadSettings()
-	
-	function Utl:SaveSettings()
-		file.Write(SettingsPath, util.TableToJSON(LDE.Settings))
-	end
-	
-	Utl:HookHook("Shutdown","SettingsSave",Utl.SaveSettings,1)
-	
-	function Utl:SyncSettings(Ply)
-		local Data ={
-			Name="SingSettingsSync",Val=1,
-			Dat={{N="T",T="T",V=LDE.Settings}}
-		}
-		if Ply then
-			Utl.NetMan.AddData(Data,Ply)
-		else
-			Utl.NetMan.AddDataAll(Data)
-		end
-	end
-	]]
-	
-	--[[----------------------------------------------------
 	Serverside Chat Functions.
 	----------------------------------------------------]]--
 	util.AddNetworkString( "sing_sendcolchat" )
@@ -225,29 +189,6 @@ if(SERVER)then
 		net.Send(self)
 	end
 	
-	--OnJoin
-	local F = function( name, address )
-		local Text = name .. " has connected."
-		Utl:NotifyPlayers("Server",Text,{r=150,g=150,b=150})
-	end
-	--Utl:HookHook("PlayerConnect","UtlChatMsg",F,1)
-	
-	--OnLeave
-	local F = function( ply )
-		--ply:SteamID()
-		local Text = ply:GetName().." has disconnected from the server."
-		Utl:NotifyPlayers("Server",Text,{r=150,g=150,b=150})
-	end
-	--Utl:HookHook("PlayerDisconnected","UtlChatMsg",F,1)	
-	
-	--OnIntSpawn
-	local F = function( ply )
-		--local Text = ply:GetName().." has spawned."
-		--Utl:NotifyPlayers("Server",Text,{r=150,g=150,b=150})
-		Utl:SyncSettings(ply)
-	end
-	Utl:HookHook("PlayerInitialSpawn","UtlChatMsg",F,1)
-	
 else
 	--[[----------------------------------------------------
 	ClientSide Chat Handling.
@@ -260,10 +201,6 @@ else
 		
 		chat.AddText(unpack({col, nam,Color(255,255,255),": "..msg}))
 	end)
-
-	function Utl:SyncSetting(Name,Value)
-		Utl.NetMan.AddData({Name="SingSettingsSync",Val=1,Dat={{N="T",T="T",V={N=Name,V=Value}}}})
-	end	
 end
 
 --[[----------------------------------------------------
@@ -274,7 +211,7 @@ function Utl:CheckAdmin( entity )
 	if not entity or not IsValid(entity)then return false end
 	if not entity:IsPlayer() then return false end
 	
-	if entity.WarMelonDeveloper then return true end
+	if entity.IsDeveloper then return true end
 	
 	return entity:IsAdmin()
 end
