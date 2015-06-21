@@ -32,8 +32,10 @@ Environments.RegisterDevice("Generators", "Fusion Generator", "Rotary Reactor", 
 --Environments.RegisterDevice("Generators", "Fission Generator", "Basic Fission Reactor", "generator_fission", "models/SBEP_community/d12siesmiccharge.mdl")
 
 --WaterPumps
-Environments.RegisterDevice("Generators", "Water Pump", "Small Water Pump", "generator_water", "models/sbep_community/d12shieldemitter.mdl")
-Environments.RegisterDevice("Generators", "Water Pump", "Large Water Pump", "generator_water", "models/sbep_community/d12siesmiccharge.mdl")
+--Environments.RegisterDevice("Generators", "Water Pump", "Small Water Pump", "generator_water", "models/sbep_community/d12shieldemitter.mdl")
+--Environments.RegisterDevice("Generators", "Water Pump", "Large Water Pump", "generator_water", "models/sbep_community/d12siesmiccharge.mdl")
+Environments.RegisterDevice("Generators", "Water Pump", "Small Water Pump", "generator_water", "models/maxofs2d/thruster_propeller.mdl")
+Environments.RegisterDevice("Generators", "Water Pump", "Large Water Pump", "generator_water", "models/maxofs2d/hover_propeller.mdl")
 
 --Atmospheric Water Generator
 Environments.RegisterDevice("Generators", "Atmospheric Water Generator", "Atmospheric Water Generator Basic", "generator_water_tower", "models/Slyfo/moisture_condenser.mdl")

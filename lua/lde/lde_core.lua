@@ -16,12 +16,6 @@ end
 
 --List of models we want to scan clients for.
 LDERequiredModels={
-	{M="models/ce_ls3additional/resource_cache/resource_cache_large.mdl",
-	N="Life Support Model Pack",P="LSMP",
-	L="http://tausc.site.nfoservers.com/Downloads/LifeSupportModels.zip",
-	S="http://tausc.site.nfoservers.com/HitchHikersGuide/LifeSupportModelPack.jpg",
-	I="Copy the link into your browser."
-	},
 	{M="models/SmallBridge/Ships/sbfrigate1.mdl",
 	N="SpaceBuild Enhancement Pack",P="SBEP",
 	L="https://github.com/SnakeSVx/sbep/branches/beta",
