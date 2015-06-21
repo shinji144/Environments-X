@@ -1,0 +1,8 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "rawr/borecannon"
+	"$surfaceprop" "Metal_Box"
+	"$envmap" "envmap_cubemap"
+	"$basealphaenvmapmask" 1
+	"$model" 1
+}

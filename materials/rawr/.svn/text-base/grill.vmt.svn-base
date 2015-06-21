@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "rawr/grill"
+	"$surfaceprop" metal
+	"$phong"	1
+	"$model" 1
+}

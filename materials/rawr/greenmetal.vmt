@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "rawr/greenmetal"
+	"$surfaceprop" "Metal_Box"
+	"$phong" 1
+	"$model" 1
+}

@@ -1,0 +1,8 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "rawr/chrome"
+	"$surfaceprop" "metalpanel"
+	"$envmap" "env_cubemap"
+	"$envmapsaturation" 0
+	"$model" 1
+}

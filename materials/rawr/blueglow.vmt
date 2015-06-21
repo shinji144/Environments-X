@@ -1,0 +1,8 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "rawr/blueglow"
+	"$surfaceprop" "glass"
+	"$selfillum" 1
+	"$selfillum_envmapmask_alpha" 1
+	"$model"	1
+}
