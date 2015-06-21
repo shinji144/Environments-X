@@ -16,7 +16,6 @@ function ENT:Initialize()
 	self.damaged = 0
 	self.lastused = 0
 	self.Mute = 0
-	self.Multiplier = 1
 	if WireAddon then
 		self.WireDebugName = self.PrintName
 		self.Inputs = Wire_CreateInputs(self, { "On", "Overdrive", "Mute", "Multiplier" })
@@ -118,12 +117,7 @@ function ENT:TriggerInput(iname, value)
 		end
 	end
 	if (iname == "Multiplier") then
-		if (value > 0) then
-			self.Multiplier = value
-		else
-			self.Multiplier = 1
-
-		end	
+		self:SetMultiplier(value)
 	end
 end
 
@@ -150,9 +144,9 @@ function ENT:Proc_Water()
 	local energy = self:GetResourceAmount("energy")
 	local water = self:GetResourceAmount("water")
 	local einc = Energy_Increment + (self.overdrive*Energy_Increment)
-	einc = (math.Round(einc * self:GetMultiplier())) * self.Multiplier
+	einc = (math.Round(einc * self:GetSizeMultiplier())) * self:GetMultiplier()
 	local winc = Water_Increment + (self.overdrive*Water_Increment)
-	winc = (math.Round(winc * self:GetMultiplier())) * self.Multiplier
+	winc = (math.Round(winc * self:GetSizeMultiplier())) * self:GetMultiplier()
 
 	if (energy >= einc and water >= winc) then
 		if ( self.overdrive == 1 ) then

@@ -15,7 +15,6 @@ function ENT:Initialize()
 	self.damaged = 0
 	self.lastused = 0
 	self.Mute = 0
-	self.Multiplier = 1
 	if WireAddon then
 		self.WireDebugName = self.PrintName
 		self.Inputs = Wire_CreateInputs(self, { "On", "Overdrive", "Mute", "Multiplier" })
@@ -113,12 +112,7 @@ function ENT:TriggerInput(iname, value)
 		end
 	end
 	if (iname == "Multiplier") then
-		if (value > 0) then
-			self.Multiplier = value
-		else
-			self.Multiplier = 1
-
-		end	
+		self:SetMultiplier(value)
 	end
 end
 
@@ -140,9 +134,9 @@ function ENT:Proc_Water()
 	local oxygen = self:GetResourceAmount("oxygen")
 	local hydrogen = self:GetResourceAmount("hydrogen")
 	local hinc = Increment + (self.overdrive*Increment)
-	hinc = (math.Round(hinc * self:GetMultiplier())) * self.Multiplier * 2
+	hinc = (math.Round(hinc * self:GetSizeMultiplier())) * self:GetMultiplier() * 2
 	local oinc = Increment + (self.overdrive*Increment)
-	oinc = (math.Round(oinc * self:GetMultiplier())) * self.Multiplier
+	oinc = (math.Round(oinc * self:GetSizeMultiplier())) * self:GetMultiplier()
 	if (oxygen >= oinc and hydrogen >= hinc) then
 		if ( self.overdrive == 1 ) then
 			Environments.DamageLS(self, math.random(2, 3))

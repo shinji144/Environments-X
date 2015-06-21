@@ -15,7 +15,6 @@ function ENT:Initialize()
 	self.damaged = 0
 	self.lastused = 0
 	self.Mute = 0
-	self.Multiplier = 1
 	if not (WireAddon == nil) then
 		self.WireDebugName = self.PrintName
 		self.Inputs = Wire_CreateInputs(self.Entity, { "Water", "Flood", "Mute", "Multiplier" })
@@ -107,12 +106,7 @@ function ENT:TriggerInput(iname, value)
 		end
 	end
 	if (iname == "Multiplier") then
-		if (value > 0) then
-			self.Multiplier = value
-		else
-			self.Multiplier = 1
-
-		end	
+		self:SetMultiplier(value)
 	end
 end
 
@@ -146,7 +140,7 @@ function ENT:Proc_Water()
 	local water = self:GetResourceAmount("water")
 //	local co2 = self:GetResourceAmount("hydrogen")
 	local winc = Water_Increment + (self.Flood*Water_Increment)
-	winc = (math.Round(winc * self:GetMultiplier())) * self.Multiplier
+	winc = (math.Round(winc * self:GetSizeMultiplier())) * self:GetMultiplier()
 
 	if (water >= winc) then
 		if ( self.Flood == 1 ) then

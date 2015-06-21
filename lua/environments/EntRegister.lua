@@ -79,7 +79,7 @@ function Environments.MakeFunc(ent)
 	ent:SetMaxHealth(math.Round(data.basehealth*volume_mul))
 	ent:SetHealth(math.Round(data.basehealth*volume_mul))
 	
-	ent:SetMultiplier(volume_mul)
+	ent:SetSizeMultiplier(volume_mul)
 	
 	ent:GetPhysicsObject():SetMass(math.Round(data.basemass*volume_mul))
 end
@@ -96,7 +96,7 @@ GENERATOR_1_TO_2 = 3
 function GetGenerateFunc(type, res1, res2, res3)
 	if type == 1 then
 		CompileString([[func = function(self)
-			local mult = self:GetMultiplier() 
+			local mult = self:GetSizeMultiplier() 
 			local amt = self:ConsumeResource(]]..res1..[[, 200) 
 			amt = self:ConsumeResource(]]..res2..[[,amt*1.5)  
 			self:SupplyResource(]]..res3..[[, amt)

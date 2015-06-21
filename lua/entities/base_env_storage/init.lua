@@ -29,17 +29,17 @@ function ENT:SetOOO(value)
 	self:SetNetworkedInt( "OOO", value )
 end
 
-function ENT:GetMultiplier()
-	return self.MULTIPLIER or 1
+function ENT:GetSizeMultiplier()
+	return self.SizeMultiplier or 1
 end
 
-function ENT:SetMultiplier(num)
-	self.MULTIPLIER = tonumber(num) or 1
+function ENT:SetSizeMultiplier(num)
+	self.SizeMultiplier = tonumber(num) or 1
 end
 
 function ENT:Repair()
 	self:SetHealth( self:GetMaxHealth())
-	self:SetColor(Color(255,255,255,255))
+	--self:SetColor(Color(255,255,255,255))
 end
 
 function ENT:AcceptInput(name,activator,caller)

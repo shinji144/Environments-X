@@ -6,9 +6,9 @@ local Func = function(self) if(self.Active==1)then
 	local ore = self:GetResourceAmount("Refined Ore")
 	local needed = core.LDE.CoreMaxHealth-core.LDE.CoreHealth
 	if(needed>=100)then oreuse=100 else oreuse=needed end
-	if(ore>=math.abs((oreuse)*(self:GetMultiplier() or 1)) and oreuse>0) then
-		self:ConsumeResource("Refined Ore", math.abs((oreuse)*(self:GetMultiplier() or 1)))
-		LDE:RepairCoreHealth( core, (oreuse*10)*(self:GetMultiplier() or 1) )
+	if(ore>=math.abs((oreuse)*(self:GetSizeMultiplier() or 1)) and oreuse>0) then
+		self:ConsumeResource("Refined Ore", math.abs((oreuse)*(self:GetSizeMultiplier() or 1)))
+		LDE:RepairCoreHealth( core, (oreuse*10)*(self:GetSizeMultiplier() or 1) )
 		WireLib.TriggerOutput( core, "Health", core.LDE.CoreHealth)	
 	end end end
 local Data={name="Hull Repairer",class="lde_repair",In={"Refined Ore"},shootfunc=Func,InUse={0}}
@@ -23,10 +23,10 @@ local Func = function(self) if(self.Active==1)then
 	local needed = core.LDE.CoreMaxShield-core.LDE.CoreShield
 	if(core.LDE.CanRecharge==0)then return end
 	if(needed>=100)then energyuse=100 else energyuse=needed end
-	if(energy>=math.abs((energyuse*2)*(self:GetMultiplier() or 1)) and energyuse>0) then
+	if(energy>=math.abs((energyuse*2)*(self:GetSizeMultiplier() or 1)) and energyuse>0) then
 		WireLib.TriggerOutput( core, "Shields", core.LDE.CoreShield)	
-		self:ConsumeResource("energy", math.abs((energyuse*2)*(self:GetMultiplier() or 1)))
-		core.LDE.CoreShield = math.Clamp(core.LDE.CoreShield+math.abs(energyuse*(self:GetMultiplier() or 1)),0,core.LDE.CoreMaxShield)
+		self:ConsumeResource("energy", math.abs((energyuse*2)*(self:GetSizeMultiplier() or 1)))
+		core.LDE.CoreShield = math.Clamp(core.LDE.CoreShield+math.abs(energyuse*(self:GetSizeMultiplier() or 1)),0,core.LDE.CoreMaxShield)
 		core:SetNWInt("LDEShield", core.LDE.CoreShield)
 		WireLib.TriggerOutput( core, "Shields", core.LDE.CoreShield or 0 )
 	end end end

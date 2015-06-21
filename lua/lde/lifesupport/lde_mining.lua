@@ -97,7 +97,7 @@ local Base = {Tool="Mining Devices",Type="Mining Lasers"}
 --Ore Harvester
 local Func = function(self) if(self.Active==1)then
 if(LDE.LifeSupport.HasNeeded(self,self.Data.In))then LDE.LifeSupport.UseResources(self,self.Data.In)
-self:SupplyResource("Raw Ore",(LDE.LifeSupport.DrillEnt(self,"space_asteroid",(math.random(5,10)+10)*self:GetMultiplier())))
+self:SupplyResource("Raw Ore",(LDE.LifeSupport.DrillEnt(self,"space_asteroid",(math.random(5,10)+10)*self:GetSizeMultiplier())))
 end end end
 local Data={name="Ore Laser",class="lde_ore_harvester",In={"energy"},Out={"Raw Ore"},shootfunc=Func,InUse={300},OutMake={0}}
 local Makeup = {name={"Basic Laser"},model={"models/mandrac/laser5.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}

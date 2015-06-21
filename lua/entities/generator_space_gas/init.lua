@@ -22,7 +22,6 @@ function ENT:Initialize()
 	self:SetSolid( SOLID_VPHYSICS )
 	
 	self.Mute = 0
-	self.Multiplier = 1
 	if not (WireAddon == nil) then
 		self.WireDebugName = self.PrintName
 		self.Inputs = Wire_CreateInputs(self, { "On", "Overdrive", "Mute", "Multiplier" })
@@ -134,11 +133,7 @@ function ENT:TriggerInput(iname, value)
 		end
 	end
 	if (iname == "Multiplier") then
-		if (value > 0) then
-			self.Multiplier = value
-		else
-			self.Multiplier = 1
-		end	
+		self:SetMultiplier(value)	
 	end
 end
 
@@ -168,10 +163,10 @@ function ENT:SuckGas()
 	local waterlevel = 0
 	waterlevel = self:WaterLevel()
 
-	einc = (math.ceil(100 * self:GetMultiplier())) * self.Multiplier
+	einc = (math.ceil(100 * self:GetSizeMultiplier())) * self:GetMultiplier()
 	if WireAddon then Wire_TriggerOutput(self, "EnergyUsage", math.Round(einc)) end
 	if energy >= einc then 
-		local winc = 200 * self.Multiplier * self:GetMultiplier()
+		local winc = 200 * self:GetMultiplier() * self:GetSizeMultiplier()
 		if ( self.overdrive == 1 ) then
 			winc = winc * 3
 			self:SetHealth( self:Health() - math.random(2, 3))

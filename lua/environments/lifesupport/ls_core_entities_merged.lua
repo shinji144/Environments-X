@@ -12,7 +12,7 @@ Environments.RegisterLSStorage("Resource Cache", "env_cache_storage", {[1601] = 
 
 Environments.RegisterLSEntity("Water Heater","env_water_heater",{"water","energy"},{"steam"},
 function(self) 
-	local mult = self:GetMultiplier()*self.multiplier 
+	local mult = self:GetSizeMultiplier()*self.multiplier 
 	local amt = self:ConsumeResource("water", 200) or 0 
 	amt = self:ConsumeResource("energy",amt*1.5)  
 	self:SupplyResource("steam", amt) 

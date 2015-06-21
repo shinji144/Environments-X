@@ -25,7 +25,6 @@ if(SERVER)then
 		self.damaged = 0
 		self.lastused = 0
 		self.Mute = 0
-		self.Multiplier = 1
 		if not (WireAddon == nil) then
 			self.WireDebugName = self.PrintName
 			self.Inputs = Wire_CreateInputs(self.Entity, { "On", "Overdrive", "Mute", "Multiplier" })
@@ -140,12 +139,7 @@ if(SERVER)then
 			end
 		end
 		if (iname == "Multiplier") then
-			if (value > 0) then
-				self.Multiplier = value
-			else
-				self.Multiplier = 1
-
-			end	
+			self:SetMultiplier(value)
 		end
 	end
 

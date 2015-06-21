@@ -3,7 +3,7 @@ LDE.LifeSupport = {}
 //Needed resource check
 LDE.LifeSupport.HasNeeded = function(self, List)
 	for I,b in pairs(List) do  
-		if(self:GetResourceAmount(b)<self.Data.InUse[I]*self:GetMultiplier())then
+		if(self:GetResourceAmount(b)<self.Data.InUse[I]*self:GetSizeMultiplier())then
 			if(self.TurnOff)then
 				self:TurnOff()
 			end
@@ -27,14 +27,14 @@ end
 //Use Resource loop
 LDE.LifeSupport.UseResources = function(self, List)
 	for I,b in pairs(List) do
-		self:ConsumeResource(b, self.Data.InUse[I]*self:GetMultiplier())
+		self:ConsumeResource(b, self.Data.InUse[I]*self:GetSizeMultiplier())
 	end
 end
 
 //Make Resource loop
 LDE.LifeSupport.MakeResources = function(self, List)
 	for I,b in pairs(List) do
-		self:SupplyResource(b, self.Data.OutMake[I]*self:GetMultiplier())
+		self:SupplyResource(b, self.Data.OutMake[I]*self:GetSizeMultiplier())
 	end
 end
 
@@ -44,12 +44,12 @@ LDE.LifeSupport.ManageResources = function(self,Override)
 		if(LDE.LifeSupport.MaxedResources(self,self.Data.Out) and not Override)then return end --Dont run the device if were maxed out.
 		if(self.Data.In)then --Check if we have required resources.
 			for I,b in pairs(self.Data.In) do --For all the required resources...
-				self:ConsumeResource(b, self.Data.InUse[I]*self:GetMultiplier()) --Nom dem.
+				self:ConsumeResource(b, self.Data.InUse[I]*self:GetSizeMultiplier()) --Nom dem.
 			end
 		end
 		if(self.Data.Out)then --Check if we make stuff.
 			for I,b in pairs(self.Data.Out) do --For all the outputed resources
-				self:SupplyResource(b, self.Data.OutMake[I]*self:GetMultiplier())--Pump dat shit out
+				self:SupplyResource(b, self.Data.OutMake[I]*self:GetSizeMultiplier())--Pump dat shit out
 			end
 		end
 		return true --Everything went perfectly...
@@ -60,7 +60,7 @@ end
 //Heat Application function
 function LDE.LifeSupport.ApplyHeat(ent,Data)
 	heatchange = Data.heat or 0
-	LDE.HeatSim.ApplyHeat(ent,heatchange*ent:GetMultiplier())
+	LDE.HeatSim.ApplyHeat(ent,heatchange*ent:GetSizeMultiplier())
 	return true
 end
 
@@ -129,7 +129,7 @@ function LDE.LifeSupport.DrillEnt(self,Class,Rate)
 		if v:GetClass()==Class then --Make sure the entity is the right class.
 			ore = LDE:GetHealth(v) --Get its health
 			if(v and v:IsValid() and ore and ore>0)then
-				--Owner=self.LDEOwner Owner:GiveLDEStat("Mined", (Rate*self:GetMultiplier()))
+				--Owner=self.LDEOwner Owner:GiveLDEStat("Mined", (Rate*self:GetSizeMultiplier()))
 				if(ore>=Rate)then
 					if(not v.LDEHealth)then return end --Make sure the entity has health.
 					v.LDEHealth=v.LDEHealth-(Rate) --Harvest some of the entitys health.
@@ -258,7 +258,7 @@ function LDE.LifeSupport.RegisterDevice(Data)
 		function ENT:Think()
 			if(CurTime()>=self.LastTime+1)then
 				self.LastTime=CurTime()
-				self.Mult = self:GetMultiplier() or 1
+				self.Mult = self:GetSizeMultiplier() or 1
 				self:Generate()
 			end
 			self:NextThink(CurTime() + 1)

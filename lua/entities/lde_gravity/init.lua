@@ -75,12 +75,7 @@ function ENT:TriggerInput(iname, value)
 		end
 	end
 	if (iname == "Multiplier") then
-		if (value > 0) then
-			self.Multiplier = value
-		else
-			self.Multiplier = 1
-
-		end	
+		self:SetMultiplier(value)
 	end
 end
 

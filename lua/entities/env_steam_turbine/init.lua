@@ -62,16 +62,12 @@ function ENT:TriggerInput(iname, value)
 			end
 		end
 	elseif iname == "Multiplier" then
-		if value > 0 then
-			self:SetMultiplier(value)
-		else
-			self:SetMultiplier(1)
-		end
+		self:SetMultiplier(value)
 	end
 end
 
 function ENT:Generate()
-	local needed = self:GetMultiplier()*50
+	local needed = self:GetSizeMultiplier()*50
 	local amt = self:ConsumeResource("steam", needed)
 	self:SupplyResource("energy", amt)
 	self:SupplyResource("water", amt*0.4)

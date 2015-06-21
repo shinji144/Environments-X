@@ -225,8 +225,8 @@ function ENT:Extract_Energy()
 		end
 	end
 	
-	if (self:GetResourceAmount("water") < math.ceil(Coolant_Increment * self:GetMultiplier())) then
-		Environments.DamageLS(self, math.Round(15 - (15 * ( self:GetResourceAmount("water")/math.ceil(Coolant_Increment * self:GetMultiplier())))))
+	if (self:GetResourceAmount("water") < math.ceil(Coolant_Increment * self:GetSizeMultiplier())) then
+		Environments.DamageLS(self, math.Round(15 - (15 * ( self:GetResourceAmount("water")/math.ceil(Coolant_Increment * self:GetSizeMultiplier())))))
 		/*local Smoke = ents.Create("env_smoketrail")
 			Smoke:SetKeyValue("opacity", 1)
 			Smoke:SetKeyValue("spawnrate", 10)
@@ -266,7 +266,7 @@ function ENT:Extract_Energy()
 		
 		self.heat = self.heat + 1 --add heat to the core, its starting to overheat
 	else
-		local consumed = self:ConsumeResource("water", math.ceil(Coolant_Increment * self:GetMultiplier()))
+		local consumed = self:ConsumeResource("water", math.ceil(Coolant_Increment * self:GetSizeMultiplier()))
 		self:SupplyResource("steam", math.ceil(consumed * 0.95))
 		//self:SupplyResource("water", math.ceil(consumed * 0.02))
 		if self.heat > 0 then

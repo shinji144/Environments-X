@@ -155,7 +155,7 @@ function LDE.HeatSim.HeatThink(Ent)
 	if(not Ent.Active)then return end
 	local Active = Ent.Active
 	if type(Active)=="boolean" then if Active then Active = 1 else Active = 0 end end
-	local activeheat = (Active*(0.005*(LDE:CalcHealth(Ent)/100)))*Ent:GetMultiplier()
+	local activeheat = (Active*(0.005*(LDE:CalcHealth(Ent)/100)))*Ent:GetSizeMultiplier()
 	--Msg("Heat Think!")
 	--if (not Ent.LDE.Core or not Ent.LDE.Core:IsValid()) then --Check if the entity has a core attached.	
 	local IsFroze = Ent.LDE.IsFroze or false

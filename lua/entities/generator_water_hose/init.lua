@@ -47,7 +47,6 @@ local pstatus = {}
 	self:SetSolid( SOLID_VPHYSICS )
 	
 	self.Mute = 0
-	self.Multiplier = 1
 	if not (WireAddon == nil) then
 		self.WireDebugName = self.PrintName
 		self.Inputs = Wire_CreateInputs(self, { "On", "Overdrive", "Mute", "Multiplier" })
@@ -174,11 +173,7 @@ function ENT:TriggerInput(iname, value)
 		end
 	end
 	if (iname == "Multiplier") then
-		if (value > 0) then
-			self.Multiplier = value
-		else
-			self.Multiplier = 1
-		end	
+		self:SetMultiplier(value)
 	end
 end
 
@@ -189,7 +184,6 @@ function ENT:Initialize()
 		self.Outputs = Wire_CreateOutputs(self, { "InUse" })
 	end
 	self.overdrive = 0
-	self.Multiplier = 1
 
 	self:PhysicsInit( SOLID_VPHYSICS )
 	self:SetMoveType( MOVETYPE_VPHYSICS )
@@ -452,17 +446,17 @@ function ENT:Pump_Water(waterlevel)
 	local energy = self:GetResourceAmount("energy")
 	local einc = Energy_Increment + (self.overdrive*Energy_Increment*3)
 
-	einc = (math.ceil(einc * self:GetMultiplier())) * self.Multiplier
+	einc = (math.ceil(einc * self:GetSizeMultiplier())) * self:GetMultiplier()
 	if WireAddon then Wire_TriggerOutput(self, "EnergyUsage", math.Round(einc)) end
 	if (waterlevel > 0 and energy >= einc) then //seems to be problem when welding(/freezing when not with CAF)
-		local winc = (math.ceil(Pressure_Increment * (waterlevel / 3))) * self.Multiplier --Base water generation on the amount it is in the water
+		local winc = (math.ceil(Pressure_Increment * (waterlevel / 3))) * self:GetMultiplier() --Base water generation on the amount it is in the water
 		
 		if ( self.overdrive == 1 ) then
 			winc = winc * 3
 			einc = einc * 2
 			Environments.DamageLS(self, math.random(2, 3))
 		end
-		winc = math.ceil(winc * self:GetMultiplier())
+		winc = math.ceil(winc * self:GetSizeMultiplier())
 		self:ConsumeResource("energy", einc)
 		self:SupplyResource("water", winc)
 		if WireAddon then Wire_TriggerOutput(self, "WaterProduction", math.Round(winc)) end

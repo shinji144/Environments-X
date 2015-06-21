@@ -49,7 +49,7 @@ function ENT:Extract_Energy(mul)
 
 	if (self.damaged == 1) then inc = math.ceil(inc / 2) end
 	if (inc > 0) then
-		inc = math.ceil(inc * self:GetMultiplier() * mul)
+		inc = math.ceil(inc * self:GetSizeMultiplier() * mul)
 		self:SupplyResource("energy", inc)
 	end
 	if not (WireAddon == nil) then Wire_TriggerOutput(self, "Out", inc) end

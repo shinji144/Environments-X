@@ -225,8 +225,8 @@ function ENT:Extract_Energy()
 		end
 	end
 	
-	if (self:GetResourceAmount("water") < math.ceil(Coolant_Increment * self:GetMultiplier())) then
-		Environments.DamageLS(self, math.Round(15 - (15 * ( self:GetResourceAmount("water")/math.ceil(Coolant_Increment * self:GetMultiplier())))))
+	if (self:GetResourceAmount("water") < math.ceil(Coolant_Increment * self:GetSizeMultiplier())) then
+		Environments.DamageLS(self, math.Round(15 - (15 * ( self:GetResourceAmount("water")/math.ceil(Coolant_Increment * self:GetSizeMultiplier())))))
 		/*local Smoke = ents.Create("env_smoketrail")
 			Smoke:SetKeyValue("opacity", 1)
 			Smoke:SetKeyValue("spawnrate", 10)
@@ -265,9 +265,9 @@ function ENT:Extract_Energy()
 		end
 
 		--only supply 5-25% of the normal amount
-		if (inc > 0) then inc = math.ceil(inc/math.random(12 - math.ceil(8 * ( self:GetResourceAmount("water")/math.ceil(Coolant_Increment * self:GetMultiplier()))),20)) end
+		if (inc > 0) then inc = math.ceil(inc/math.random(12 - math.ceil(8 * ( self:GetResourceAmount("water")/math.ceil(Coolant_Increment * self:GetSizeMultiplier()))),20)) end
 	else
-		local consumed = self:ConsumeResource("water", math.ceil(Coolant_Increment * self:GetMultiplier()))
+		local consumed = self:ConsumeResource("water", math.ceil(Coolant_Increment * self:GetSizeMultiplier()))
 		--self:SupplyResource("steam", math.ceil(consumed * 0.92))
 		self:SupplyResource("water", math.ceil(consumed * 0.08))
 	end
@@ -282,14 +282,14 @@ function ENT:Extract_Energy()
 	else
 		self.hwcount = self.hwcount + 1
 		if (self.hwcount >= 5) then
-			self:ConsumeResource("heavy water", math.ceil(HW_Increment * self:GetMultiplier()))
+			self:ConsumeResource("heavy water", math.ceil(HW_Increment * self:GetSizeMultiplier()))
 			self.hwcount = 0
 		end
 	end*/
 
 	--the money shot!
 	if (inc > 0) then 
-		inc = math.ceil(inc * self:GetMultiplier())
+		inc = math.ceil(inc * self:GetSizeMultiplier())
 		self:SupplyResource("energy", inc)
 	end
 	if WireLib then WireLib.TriggerOutput(self, "Output", inc) end

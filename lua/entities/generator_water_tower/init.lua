@@ -75,7 +75,7 @@ function ENT:Extract_Energy()
 		local einc = math.floor(inc * Energy_Increment)
 		local nitro = self:GetResourceAmount("nitrogen")
 		if(nitro>=(einc*2))then return end
-		einc = math.ceil(einc * self:GetMultiplier())
+		einc = math.ceil(einc * self:GetSizeMultiplier())
 		
 		self:ConsumeResource("nitrogen", einc*2)
 		self:SupplyResource("water", einc)

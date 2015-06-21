@@ -16,7 +16,7 @@ function Environments.Devices.SolarExtract(self,mul)
 
 	if (self.damaged == 1) then inc = math.ceil(inc / 2) end
 	if (inc > 0) then
-		inc = math.ceil(inc * self:GetMultiplier() * mul)
+		inc = math.ceil(inc * self:GetSizeMultiplier() * mul)
 		self:SupplyResource("energy", inc)
 	end
 	if not (WireAddon == nil) then Wire_TriggerOutput(self, "Out", inc) end
@@ -102,11 +102,11 @@ local Func = function(self)
 	local einc = 500
 	local waterlevel = self:WaterLevel()
 
-	einc = (math.ceil(einc * self:GetMultiplier()))
+	einc = (math.ceil(einc * self:GetSizeMultiplier()))
 	if WireAddon then Wire_TriggerOutput(self, "EnergyUsage", math.Round(einc)) end
 	if (waterlevel > 0 and energy >= einc) then
 		local winc = (math.ceil(80 * (waterlevel / 3)))
-		winc = math.ceil(winc * self:GetMultiplier())
+		winc = math.ceil(winc * self:GetSizeMultiplier())
 		self:ConsumeResource("energy", einc)
 		self:SupplyResource("water", winc)
 		if WireAddon then Wire_TriggerOutput(self, "WaterProduction", math.Round(winc)) end
@@ -130,12 +130,12 @@ local Func = function(self)
 	
 	local inc = Energy_Increment
 	
-	if (self:GetResourceAmount("water") < math.ceil(Coolant_Increment * self:GetMultiplier())) then
-		Environments.DamageLS(self, math.Round(15 - (15 * ( self:GetResourceAmount("water")/math.ceil(Coolant_Increment * self:GetMultiplier())))))
+	if (self:GetResourceAmount("water") < math.ceil(Coolant_Increment * self:GetSizeMultiplier())) then
+		Environments.DamageLS(self, math.Round(15 - (15 * ( self:GetResourceAmount("water")/math.ceil(Coolant_Increment * self:GetSizeMultiplier())))))
 		--only supply 5-25% of the normal amount
-		if (inc > 0) then inc = math.ceil(inc/math.random(12 - math.ceil(8 * ( self:GetResourceAmount("water")/math.ceil(Coolant_Increment * self:GetMultiplier()))),20)) end
+		if (inc > 0) then inc = math.ceil(inc/math.random(12 - math.ceil(8 * ( self:GetResourceAmount("water")/math.ceil(Coolant_Increment * self:GetSizeMultiplier()))),20)) end
 	else
-		local consumed = self:ConsumeResource("water", math.ceil(Coolant_Increment * self:GetMultiplier()))
+		local consumed = self:ConsumeResource("water", math.ceil(Coolant_Increment * self:GetSizeMultiplier()))
 		--self:SupplyResource("steam", math.ceil(consumed * 0.92))
 		self:SupplyResource("water", math.ceil(consumed * 0.08))
 	end

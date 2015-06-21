@@ -71,7 +71,7 @@ function ENT:Extract_Energy()
 		if (inc > 0) then
 			local einc = math.floor(inc * Energy_Increment)
 			--if (inc > Energy_Increment) then inc = Energy_Increment end
-			einc = math.ceil(einc * self:GetMultiplier())
+			einc = math.ceil(einc * self:GetSizeMultiplier())
 			//print(CurTime(), "Generated "..einc)
 			self:SupplyResource("energy", einc)
 			if WireAddon then Wire_TriggerOutput(self, "Out", einc) end

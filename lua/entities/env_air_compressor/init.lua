@@ -16,7 +16,6 @@ function ENT:Initialize()
 	self.damaged = 0
 	self.lastused = 0
 	self.Mute = 0
-	self.Multiplier = 1
 	if WireAddon then
 		self.WireDebugName = self.PrintName
 		self.Inputs = Wire_CreateInputs(self, { "On", "Overdrive", "Mute", "Multiplier" })
@@ -121,11 +120,7 @@ function ENT:TriggerInput(iname, value)
 		end
 	end
 	if (iname == "Multiplier") then
-		if (value > 0) then
-			self.Multiplier = value
-		else
-			self.Multiplier = 1
-		end	
+		self:SetMultiplier(value)
 	end
 end
 
@@ -152,18 +147,18 @@ function ENT:Pump_Air()
 		end
 	end
 	--print(self.env_extra)
-	local einc = (Energy_Increment + (self.overdrive*Energy_Increment)) * self.Multiplier
-	einc = math.ceil(einc * self:GetMultiplier())
+	local einc = (Energy_Increment + (self.overdrive*Energy_Increment)) * self:GetMultiplier()
+	einc = math.ceil(einc * self:GetSizeMultiplier())
 	if WireAddon then Wire_TriggerOutput(self, "EnergyUsage", math.Round(einc)) end
 	if (self.energy >= einc) then
-		local ainc = math.ceil((Pressure_Increment + (self.overdrive * Pressure_Increment)) * mul * self:GetMultiplier())
+		local ainc = math.ceil((Pressure_Increment + (self.overdrive * Pressure_Increment)) * mul * self:GetSizeMultiplier())
 		if ( self.overdrive == 1 ) then
 			ainc = ainc * 2
 			Environments.DamageLS(self, math.random(2, 3))
 		end
 		self:ConsumeResource("energy", einc)
 		if ainc > 0 then
-			ainc = (ainc * self:GetMultiplier()) * self.Multiplier
+			ainc = (ainc * self:GetSizeMultiplier()) * self:GetMultiplier()
 			if WireAddon then Wire_TriggerOutput(self, "GasProduction", math.Round(ainc)) end
 			if self.environment then
 				local usage = ainc

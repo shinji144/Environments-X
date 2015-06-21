@@ -12,6 +12,7 @@ function ENT:Initialize()
 	self:SetSolid( SOLID_VPHYSICS )
 	self:SetNetworkedInt( "OOO", 0 )
 	self.Active = 0
+	self.Multiplier = 1
 	
 	self.maxresources = {}
 end
@@ -28,18 +29,29 @@ function ENT:SetOOO(value)
 	self:SetNetworkedInt( "OOO", value )
 end
 
+function ENT:GetSizeMultiplier()
+	return self.SizeMultiplier or 1
+end
+
 function ENT:GetMultiplier()
-	return self.MULTIPLIER or 1
+	return self.Multiplier or 1
+end
+
+function ENT:SetSizeMultiplier(num)
+	if num < 0.1 then num = 0.1 end
+	self.SizeMultiplier = tonumber(num) or 1
+	self:SetNetworkedInt( "EnvMultiplier", self.SizeMultiplier )
 end
 
 function ENT:SetMultiplier(num)
-	self.MULTIPLIER = tonumber(num) or 1
-	self:SetNetworkedInt( "EnvMultiplier", self.MULTIPLIER )
+	if num < 1 then num = 1 end
+	self.Multiplier = tonumber(num) or 1
+	self:SetNetworkedInt( "EnvMultiplier", self.Multiplier )
 end
 
 function ENT:Repair()
 	self:SetHealth( self:GetMaxHealth())
-	self:SetColor(Color(255,255,255,255))
+	--self:SetColor(Color(255,255,255,255))
 end
 
 function ENT:AcceptInput(name,activator,caller)

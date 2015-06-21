@@ -6,7 +6,7 @@ Environments.Devices = {}
 //Needed resource check
 Environments.Devices.HasNeeded = function(self, List)
 	for I,b in pairs(List) do  
-		if(self:GetResourceAmount(b)<self.Data.InUse[I]*self:GetMultiplier())then
+		if(self:GetResourceAmount(b)<self.Data.InUse[I]*self:GetSizeMultiplier())then
 			self:TurnOff()
 			return false
 		end
@@ -28,14 +28,14 @@ end
 //Use Resource loop
 Environments.Devices.UseResources = function(self, List)
 	for I,b in pairs(List) do
-		self:ConsumeResource(b, self.Data.InUse[I]*self:GetMultiplier())
+		self:ConsumeResource(b, self.Data.InUse[I]*self:GetSizeMultiplier())
 	end
 end
 
 //Make Resource loop
 Environments.Devices.MakeResources = function(self, List)
 	for I,b in pairs(List) do
-		self:SupplyResource(b, self.Data.OutMake[I]*self:GetMultiplier())
+		self:SupplyResource(b, self.Data.OutMake[I]*self:GetSizeMultiplier())
 	end
 end
 
@@ -45,12 +45,12 @@ Environments.Devices.ManageResources = function(self,Override)
 		if(Environments.Devices.MaxedResources(self,self.Data.Out) and not Override)then return end --Dont run the device if were maxed out.
 		if(self.Data.In)then --Check if we have required resources.
 			for I,b in pairs(self.Data.In) do --For all the required resources...
-				self:ConsumeResource(b, self.Data.InUse[I]*self:GetMultiplier()) --Nom dem.
+				self:ConsumeResource(b, self.Data.InUse[I]*self:GetSizeMultiplier()) --Nom dem.
 			end
 		end
 		if(self.Data.Out)then --Check if we make stuff.
 			for I,b in pairs(self.Data.Out) do --For all the outputed resources
-				self:SupplyResource(b, self.Data.OutMake[I]*self:GetMultiplier())--Pump dat shit out
+				self:SupplyResource(b, self.Data.OutMake[I]*self:GetSizeMultiplier())--Pump dat shit out
 			end
 		end
 		return true --Everything went perfectly...
@@ -179,7 +179,7 @@ function Environments.Devices.RegisterDevice(Data)
 			function ENT:Think()
 				if(CurTime()>=self.LastTime+1)then
 					self.LastTime=CurTime()
-					self.Mult = self:GetMultiplier() or 1
+					self.Mult = self:GetSizeMultiplier() or 1
 					self:Generate(self)
 				end
 				self:NextThink(CurTime() + 1)
