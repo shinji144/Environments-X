@@ -40,7 +40,6 @@ end
 function ENT:SetSizeMultiplier(num)
 	if num < 0.1 then num = 0.1 end
 	self.SizeMultiplier = tonumber(num) or 1
-	self:SetNetworkedInt( "EnvMultiplier", self.SizeMultiplier )
 end
 
 function ENT:SetMultiplier(num)
