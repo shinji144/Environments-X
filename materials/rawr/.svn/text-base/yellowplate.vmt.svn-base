@@ -1,7 +1,0 @@
-"VertexlitGeneric"
-{
-	"$basetexture" "rawr/yellowplate"
-	"$surfaceprop" "MetalPanel"
-	"$phong" 1
-	"$model" 1
-}
