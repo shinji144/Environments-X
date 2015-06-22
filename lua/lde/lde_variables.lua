@@ -137,15 +137,20 @@ LDE.Rolesys.CreateRole("Blackholium Miner",{Mined=40000000},{},1,18)
 LDE.Rolesys.CreateRole("StarLord",{Mined=10000,Traded=200000},{},1,20)
 
 --Pirate Roles
-LDE.Rolesys.CreateRole("Pirate",{Bounty=1},{},2,13)
-LDE.Rolesys.CreateRole("CrimeBoss",{Bounty=1000},{},2,14)
-LDE.Rolesys.CreateRole("WarLord",{Bounty=5000},{},2,18)
+LDE.Rolesys.CreateRole("Shady Civilian",{Bounty=1},{},2,13)
+LDE.Rolesys.CreateRole("Small Time Pirate",{Bounty=1000},{},2,14)
+LDE.Rolesys.CreateRole("Pirate",{Bounty=2500},{},2,15)
+LDE.Rolesys.CreateRole("Well Known Pirate",{Bounty=5000},{},2,16)
+LDE.Rolesys.CreateRole("Wanted Criminal",{Bounty=10000},{},2,17)
+LDE.Rolesys.CreateRole("Public Enemy #1",{Bounty=50000},{},2,17)
 
+--[[
 LDE.Rolesys.CreateRole("Hunter",{Kills=1},{},2,13.4)
 LDE.Rolesys.CreateRole("Mass Slayer",{Kills=10},{},2,14.1)
 LDE.Rolesys.CreateRole("Soul Collector",{Kills=100},{},2,18.5)
 
 LDE.Rolesys.CreateRole("Evil Genius",{Bounty=10000,Kills=200},{},2,20.5)
+]]
 
 --Misc Roles
 LDE.Rolesys.CreateRole("Civilian",{},Bad,0,1)
