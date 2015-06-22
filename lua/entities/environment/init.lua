@@ -129,12 +129,17 @@ function ENT:Check()
 				/*if ent.environment and ent.environment != self and ent.environment != Space() and (ent.environment.radius or 0) < (self.radius or 0) then --try and fix planets in each other
 					continue --breaks LS Core
 				end*/
-				if ent.NoGrav then continue end
+				--if ent.NoGrav then continue end
 				if ent:GetPos():Distance(self:GetPos()) <= radius then
-					//Set Planet
-					ent:SetGravity( self.gravity )
+					local Grav,Press = self.gravity,self.pressure
 					
-					self:GravNDrag(ent,self.gravity > 0.01,self.pressure > 0.1)
+					if ent.NoGrav then 
+						Grav = 0
+						Press = 0
+					end
+					
+					ent:SetGravity( Grav )
+					self:GravNDrag(ent,Grav > 0.01, Press> 0.1)
 					
 					ent.environment = self
 					if( ent:IsPlayer() ) then

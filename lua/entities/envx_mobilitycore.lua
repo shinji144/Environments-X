@@ -6,7 +6,7 @@ ENT.PrintName		= "Ship Drive Systems"
 ENT.Author			= "Ludsoe"
 ENT.Category		= "Other"
 
-ENT.Spawnable		= false
+ENT.Spawnable		= true
 ENT.AdminSpawnable	= true
 ENT.Owner			= nil
 ENT.SPL				= nil
@@ -130,7 +130,7 @@ if(SERVER)then
 		--self:GetPhysicsObject():EnableGravity(bool)
 		for _, ent in pairs( self.Props ) do
 			if not bool then
-				ent:GetPhysicsObject():EnableGravity(bool)
+			--	ent:GetPhysicsObject():EnableGravity(bool)
 			end
 			ent.NoGrav = not bool
 		end	
