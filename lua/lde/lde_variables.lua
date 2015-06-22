@@ -142,7 +142,7 @@ LDE.Rolesys.CreateRole("Small Time Pirate",{Bounty=1000},{},2,14)
 LDE.Rolesys.CreateRole("Pirate",{Bounty=2500},{},2,15)
 LDE.Rolesys.CreateRole("Well Known Pirate",{Bounty=5000},{},2,16)
 LDE.Rolesys.CreateRole("Wanted Criminal",{Bounty=10000},{},2,17)
-LDE.Rolesys.CreateRole("Public Enemy #1",{Bounty=50000},{},2,17)
+LDE.Rolesys.CreateRole("Public Enemy #1",{Bounty=50000},{},2,18)
 
 --[[
 LDE.Rolesys.CreateRole("Hunter",{Kills=1},{},2,13.4)
