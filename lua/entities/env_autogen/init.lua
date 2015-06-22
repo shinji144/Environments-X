@@ -283,7 +283,7 @@ function ENT:Think()
 						if IsValid(gen.node) and self.node == gen.node then
 							local energy_ratio = self:GetResourceAmount("energy") / self:GetNetworkCapacity("energy")
 							if gen.Active==0 and (energy_ratio <= 0.5 or self.First == 0) then
-								--gen.Mute = self.Mute
+								gen.Mute = self.Mute
 								gen:SetActive(1)
 							elseif gen.Active==1 and energy_ratio >= 0.99 then 
 								gen:SetActive(0)
@@ -303,7 +303,7 @@ function ENT:Think()
 						if IsValid(gen.node) and self.node == gen.node then
 							local energyused = 10 * gen.SizeMultiplier
 							local watergained = 80 * gen.SizeMultiplier
-							local maxmult = 20*20 - gen.SizeMultiplier*20
+							local maxmult = math.floor(2000/energyused)
 							if maxmult < 1 then maxmult = 1 end
 							local water_ratio = self:GetResourceAmount("water") / self:GetNetworkCapacity("water")
 							local mult = math.min(math.floor(energyleft/energyused),maxmult)
@@ -328,13 +328,13 @@ function ENT:Think()
 						if IsValid(gen.node) and self.node == gen.node then
 							local energyused = 75 * gen.SizeMultiplier
 							local waterused = 250 * gen.SizeMultiplier
-							local maxmult = 20*20 - gen.SizeMultiplier*20
+							local maxmult = math.floor(2000/energyused)
 							if maxmult < 1 then maxmult = 1 end
-							local waterleft = math.floor(self:GetResourceAmount("water")*0.75)
+							local waterleft = math.floor(self:GetResourceAmount("water")*0.5)
 							local oxy_ratio = self:GetResourceAmount("oxygen") / self:GetNetworkCapacity("oxygen")
 							local floor1 = math.floor(energyleft/energyused)
 							local floor2 = math.floor(waterleft/waterused)
-							local mult = math.min(floor1,floor2,maxmult)
+							local mult = math.min(floor1,floor2,10)
 							
 							if gen.Active==0 and (oxy_ratio <= 0.5 or self.First == 0) and mult >= 1 then
 								gen.Mute = self.Mute
