@@ -180,7 +180,7 @@ Environments.RegisterDevice("Storages", "Resource Cache", "Mandrac Small Cache",
 Environments.RegisterDevice("Storages", "Resource Cache", "Mandrac Tiny Cache", "env_cache_storage", "models/mandrac/resource_cache/small_cache.mdl")
 Environments.RegisterDevice("Storages", "Resource Cache", "Mandrac Levy Cache", "env_cache_storage", "models/mandrac/nitrogen_tank/nitro_large.mdl")
 --Admin Cache
-Environments.RegisterDevice("Storages", "Admin Cache", "Admin Cache", "environments_admincache", "models/sbep_community/d12siesmiccharge.mdl")
+--Environments.RegisterDevice("Storages", "Admin Cache", "Admin Cache", "environments_admincache", "models/sbep_community/d12siesmiccharge.mdl")
 
 //Core Upgrades
 --Radiators
