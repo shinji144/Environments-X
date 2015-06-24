@@ -38,9 +38,10 @@ if(SERVER)then
 
 	resource.AddWorkshop( "174935590" ) --Spore Models
 	resource.AddWorkshop( "160250458" ) --Wire Models
-	resource.AddWorkshop( "168326910" ) --Gibmod Textures
 	resource.AddWorkshop( "148070174" ) --Mandrac Models
 	resource.AddWorkshop( "182803531" ) --SBEP Models
+	resource.AddWorkshop( "247007332" ) --Envx
+	
 	
 	--We have to create a copy of each model so we can accuratly scan for them.
 	timer.Simple(1,function()

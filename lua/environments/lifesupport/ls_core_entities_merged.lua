@@ -182,20 +182,20 @@ Environments.RegisterDevice("Storages", "Resource Cache", "Mandrac Levy Cache", 
 --Admin Cache
 --Environments.RegisterDevice("Storages", "Admin Cache", "Admin Cache", "environments_admincache", "models/sbep_community/d12siesmiccharge.mdl")
 
-//Core Upgrades
+//Ship Utilities
 --Radiators
-Environments.RegisterDevice("Core Upgrades", "Heat Management","Basic Radiator", "lde_radiator", "models/props_c17/furnitureradiator001a.mdl")
-Environments.RegisterDevice("Core Upgrades", "Heat Management","Cyclic Radiator", "lde_radiator", "models/Slyfo/sat_rfg.mdl")
-Environments.RegisterDevice("Core Upgrades", "Heat Management","Singularity Radiator", "lde_radiator", "models/Slyfo/crate_reactor.mdl")
+Environments.RegisterDevice("Ship Utilities", "Heat Management","Basic Radiator", "lde_radiator", "models/props_c17/furnitureradiator001a.mdl")
+Environments.RegisterDevice("Ship Utilities", "Heat Management","Cyclic Radiator", "lde_radiator", "models/Slyfo/sat_rfg.mdl")
+Environments.RegisterDevice("Ship Utilities", "Heat Management","Singularity Radiator", "lde_radiator", "models/Slyfo/crate_reactor.mdl")
 
 --Heater
-Environments.RegisterDevice("Core Upgrades", "Heat Management","Basic Heater", "lde_heater", "models/gibs/airboat_broken_engine.mdl")
+Environments.RegisterDevice("Ship Utilities", "Heat Management","Basic Heater", "lde_heater", "models/gibs/airboat_broken_engine.mdl")
 
 --Extra
-Environments.RegisterDevice("Core Upgrades", "Extra","Vehicle Exit Point", "EPoint", "models/jaanus/wiretool/wiretool_range.mdl")
-Environments.RegisterDevice("Core Upgrades", "Extra","Matter Transporter", "wep_transporter", "models/SBEP_community/d12shieldemitter.mdl")
-Environments.RegisterDevice("Core Upgrades", "Extra","WarpDrive", "WarpDrive", "models/Slyfo/ftl_drive.mdl")
-Environments.RegisterDevice("Core Upgrades", "Extra","Cloning Device", "envx_clonetube", "models/TwinbladeTM/cryotubemkii.mdl")
+Environments.RegisterDevice("Ship Utilities", "Extra","Vehicle Exit Point", "EPoint", "models/jaanus/wiretool/wiretool_range.mdl")
+Environments.RegisterDevice("Ship Utilities", "Extra","Matter Transporter", "wep_transporter", "models/SBEP_community/d12shieldemitter.mdl")
+Environments.RegisterDevice("Ship Utilities", "Extra","WarpDrive", "WarpDrive", "models/Slyfo/ftl_drive.mdl")
+Environments.RegisterDevice("Ship Utilities", "Extra","Cloning Device", "envx_clonetube", "models/TwinbladeTM/cryotubemkii.mdl")
 
 //BaseBuilding Prototype
 Environments.RegisterDevice("Base Construction", "CoreModules","Base Node", "lde_basecore", "models/Cerus/Modbridge/Misc/LS/ls_gen11a.mdl")

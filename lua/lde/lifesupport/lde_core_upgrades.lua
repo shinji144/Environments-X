@@ -33,5 +33,5 @@ local Func = function(self) if(self.Active==1)then
 local Data={name="Shield Recharger",class="lde_recharge",In={"energy"},shootfunc=Func,InUse={0}}
 LDE.LifeSupport.RegisterDevice(Data)
 
-Environments.RegisterDevice("Core Upgrades", "Regenerators","Hull Repairer", "lde_repair", "models/gibs/airboat_broken_engine.mdl")
-Environments.RegisterDevice("Core Upgrades", "Regenerators","Shield Recharger", "lde_recharge", "models/slyfo_2/acc_sci_coolerator.mdl")
+Environments.RegisterDevice("Ship Utilities", "Regenerators","Hull Repairer", "lde_repair", "models/gibs/airboat_broken_engine.mdl")
+Environments.RegisterDevice("Ship Utilities", "Regenerators","Shield Recharger", "lde_recharge", "models/slyfo_2/acc_sci_coolerator.mdl")
