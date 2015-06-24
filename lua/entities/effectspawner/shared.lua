@@ -4,7 +4,7 @@ ENT.PrintName		= "Particle Effect Ent"
 ENT.Author			= "Ludsoe"
 ENT.Category		= "Other"
 
-ENT.Spawnable		= true
+ENT.Spawnable		= false
 ENT.AdminSpawnable	= true
 ENT.Owner			= nil
 ENT.SPL				= nil

@@ -4,7 +4,7 @@ ENT.Type 			= "anim"
 ENT.Base 			= "base_gmodentity"
 ENT.PrintName		= "Ship Drive Systems"
 ENT.Author			= "Ludsoe"
-ENT.Category		= "Other"
+ENT.Category		= "Environments"
 
 ENT.Spawnable		= true
 ENT.AdminSpawnable	= true
