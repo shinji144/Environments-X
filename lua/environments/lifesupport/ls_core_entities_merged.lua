@@ -19,6 +19,8 @@ function(self)
 end, 70000, 300, 300)
 
 //Generator Tool
+--Autogen
+Environments.RegisterDevice("Generators", "Resource Management", "R01 Automatic Resource Manager", "env_autogen", "models/rawr/minispire.mdl")
 
 --Fusion Reactors
 Environments.RegisterDevice("Generators", "Fusion Generator", "Small SBEP Reactor", "generator_fusion", "models/punisher239/punisher239_reactor_small.mdl")
