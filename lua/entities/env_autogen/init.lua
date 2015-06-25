@@ -1,10 +1,14 @@
 ------------------------------------------
 //  Environments   //
 //   CmdrMatthew   //
+// MECHANOS MADE ME LEL //
 ------------------------------------------
 util.PrecacheSound( "buttons/combine_button_locked.wav" )
 util.PrecacheSound( "warpdrive/error2.wav" )
 util.PrecacheSound( "common/warning.wav" )
+
+--Environments.RegisterDevice("Generators", "Resource Management", "R01 Automatic Resource Manager", "env_autogen", "models/rawr/minispire.mdl")
+
 
 --localize
 local math = math

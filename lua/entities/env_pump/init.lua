@@ -319,19 +319,24 @@ function ENT:AttachPlug( plug )
 	
 	--if IsValid(plug.socket:GetParent()) then		--parent checking, not really needed so we'll leave it commented so people can't hax the elastic
 		if (type(plug.socket.Hose) == "Entity") then		--Remove the Elastic so parented pumps don't go batshit insane, Elastic will remake itself.
-			plug.socket.Hose:Remove()
-			plug.socket.HoseStep = CurTime() + 0.5
-			plug.socket:NextThink( CurTime() + 0.5 )
-			--print("Removing Hose")
+			if IsValid(plug.socket.Hose) then
+				--print("Removing Hose")
+				plug.socket.Hose:Remove()
+				plug.socket.HoseStep = CurTime() + 0.5
+				plug.socket:NextThink( CurTime() + 0.5 )
+			end
+			
 		else 
 			--print(type(plug.Hose))
 		end
 	
 		if (type(plug.socket.rope) == "Entity") then
-			plug.socket.rope:Remove()
-			plug.socket.HoseStep = CurTime() + 0.5
-			plug.socket:NextThink( CurTime() + 0.5 )
-			--print("Removing Rope")
+			if IsValid(plug.socket.rope) then
+				--print("Removing Rope")
+				plug.socket.rope:Remove()
+				plug.socket.HoseStep = CurTime() + 0.5
+				plug.socket:NextThink( CurTime() + 0.5 )
+			end
 		else 
 			--print(type(plug.rope))
 		end
