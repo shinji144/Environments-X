@@ -8,8 +8,8 @@ ENT.Purpose = "Does anyone read these?"
 ENT.Instructions = "Point away from face" 
 ENT.Category = "Environments"
 
-ENT.Spawnable = true
-ENT.AdminSpawnable = true
+ENT.Spawnable = false
+ENT.AdminSpawnable = false
 --ENT.RenderGroup = RENDERGROUP_BOTH
 -- The next line is seriously important don't forget that shiat!  *(( I MEAN IT ))* -- lol old Deep comments
 ENT.AutomaticFrameAdvance = true
