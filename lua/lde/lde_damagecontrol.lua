@@ -211,6 +211,7 @@ function LDE:CoreKillProp(Prop,mass)
 end
 
 function LDE:CoreDeathWeld(ent)
+	--print("DeathWeld")
 	ent.Clumps = ent.Clumps or {}
 	ent.Looped = ent.Looped+1
 	if(ent.Looped >= ent.ExplodeLoop)then
@@ -296,6 +297,8 @@ function LDE:ExplodeCore(ent)
 	ent.ExplodeLoop = table.Count(ent.CoreLinked)/4
 	ent.Looped = 0
 	
+	--print("CoreDead")
+	
 	for _,i in pairs( ent.CoreLinked ) do 
 		if(i and i:IsValid())then
 			i:SetParent(nil) --Break the dead part off from the ship.
@@ -306,7 +309,7 @@ function LDE:ExplodeCore(ent)
 				i:Ignite(1000,100)--So only a fraction of the props burn.
 			end
 			i:Fire("enablemotion","",0)
-			timer.Create("Cleanup "..i:EntIndex(),300,1,function() LDE:BreakOff(i) end)
+			timer.Create("Cleanup "..i:EntIndex(),10,1,function() LDE:BreakOff(i) end)
 			local physobj = i:GetPhysicsObject()
 			if(physobj:IsValid()) then
 				physobj:Wake()
@@ -386,6 +389,8 @@ function LDE:BreakOff(ent)
 			ent.LDE.Core:CoreUnLink( ent )
 		end
 	end
+	
+	--print("Breaking off.")
 	
 	ent.NoLDEDamage=true
 	ent.IsDead = true

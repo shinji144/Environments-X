@@ -249,7 +249,6 @@ function ENT:Think()
 		end
 	end
 	
-	self:ShowOutput()
 	if (self.PumpOn == 1) or (self.DeployedPlug == 0 and self.Connected == 0) then
 		self:NextThink( CurTime() + 1 )
 		return true
@@ -313,16 +312,6 @@ function ENT:OnRemove()
 	self.BaseClass.OnRemove(self)
 	--if (self.plug and self.plug:IsValid()) then self.plug:Remove() end
 	if (self.MyPlug and self.MyPlug:IsValid()) then self.MyPlug.MySocket = nil end
-end
-
---this needs to be done client side
-function ENT:ShowOutput()
-	--local resbuf = "\nResources available:\n" .. self.Entity:GetAllResourcesAmountsText()
-	--if (self.pump_status > PUMP_NONE) then
-		--self:SetOverlayText("Supply Connector\nHose Length: "..self.hose_length.."\nPump: "..pstatus[self.pump_status].."\nPump Rate: "..self.pump_rate.."\n"..resbuf)
-	--else
-		--self:SetOverlayText("Supply Connector\nHose Length: "..self.hose_length.."\nPump: "..pstatus[self.pump_status].."\n"..resbuf)
-	--end
 end
 
 function ENT:AttachPlug( plug )

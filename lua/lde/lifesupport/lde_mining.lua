@@ -20,23 +20,6 @@ local Data={name="Polylodarium Rehydrator",class="generator_poly_hydrator",In={"
 local Makeup = {name={"Polylodarium Rehydrator"},model={"models/Slyfo_2/acc_sci_coolerator.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
 LDE.LifeSupport.CompileDevice(Data,Makeup)
 
-//Electromium
-local Base = {Tool="Mining Devices",Type="Electromium"}
-
---[[
---Electromium Materialiser
-local Func = function(self) if(self.Active==1)then LDE.LifeSupport.ManageResources(self) end end
-local Data={name="Electromium Materialiser",class="generator_electrom_mat",In={"energy"},Out={"Electromium"},shootfunc=Func,InUse={2000},OutMake={2}}
-local Makeup = {name={"Electromium Materialiser"},model={"models/ce_ls3additional/fusion_generator/fusion_generator_large.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
-LDE.LifeSupport.CompileDevice(Data,Makeup)
-]]
-
---Electromium Converter
-local Func = function(self) if(self.Active==1)then LDE.LifeSupport.ManageResources(self) end end
-local Data={name="Electromium Converter",class="generator_electrom_con",In={"Electromium"},Out={"Liquid Polylodarium"},shootfunc=Func,InUse={20},OutMake={2}}
-local Makeup = {name={"Electromium Converter"},model={"models/chipstiks_ls3_models/NitrogenLiquifier/nitrogenliquifier.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
-LDE.LifeSupport.CompileDevice(Data,Makeup)
-
 //Plasma
 local Base = {Tool="Mining Devices",Type="Plasma"}
 
@@ -76,7 +59,29 @@ local Data={name="Carbon Oxidizer",class="generator_carbon_oxidizer",In={"Carbon
 local Makeup = {name={"Carbon Oxidizer"},model={"models/SBEP_community/d12airscrubber.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
 LDE.LifeSupport.CompileDevice(Data,Makeup)
 
+--Scrap Collector
+local Base = {Tool="Life Support",Type="Scrap Collection"}
+local Func = function(self) end
+local Data={name="Scrap Collector",class="generator_scrap_collect",In={"Scrap Bits"},Out={"Recycled Resources"},shootfunc=Func,InUse={0},OutMake={0}}
+local Makeup = {name={"Scrap Collector"},model={"models/Slyfo/finfunnel.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+LDE.LifeSupport.CompileDevice(Data,Makeup)
+
+
+-------------I will decide if i want to keep this or not later.---------------------
+--Spore Harvester
+--[[
+local Func = function(self) if(self.Active==1)then
+if(LDE.LifeSupport.HasNeeded(self,self.Data.In))then LDE.LifeSupport.UseResources(self,self.Data.In)
+if(LDE.LifeSupport.DrillEnt(self,"lde_spore"))then rand = math.random(1,3) self:SupplyResource("Liquid Polylodarium",(1+rand)*self.Mult)
+Owner=self.LDEOwner
+Owner:GiveLDEStat("Mined", (4+rand*self.Mult))
+end end end end
+local Data={name="Spore Laser",class="lde_spore_harvester",In={"energy"},Out={"Liquid Polylodarium"},shootfunc=Func,InUse={300},OutMake={0}}
+local Makeup = {name={"Spore Laser"},model={"models/mandrac/laser2.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+LDE.LifeSupport.CompileDevice(Data,Makeup)
+
 //Drills
+
 local Base = {Tool="Mining Devices",Type="Mining Drills"}
 
 --Poly Drill
@@ -103,25 +108,19 @@ local Data={name="Ore Laser",class="lde_ore_harvester",In={"energy"},Out={"Raw O
 local Makeup = {name={"Basic Laser"},model={"models/mandrac/laser5.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
 LDE.LifeSupport.CompileDevice(Data,Makeup)
 
---Scrap Collector
-local Base = {Tool="Life Support",Type="Scrap Collection"}
-local Func = function(self) end
-local Data={name="Scrap Collector",class="generator_scrap_collect",In={"Scrap Bits"},Out={"Recycled Resources"},shootfunc=Func,InUse={0},OutMake={0}}
-local Makeup = {name={"Scrap Collector"},model={"models/Slyfo/finfunnel.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+//Electromium
+local Base = {Tool="Mining Devices",Type="Electromium"}
+
+--Electromium Materialiser
+local Func = function(self) if(self.Active==1)then LDE.LifeSupport.ManageResources(self) end end
+local Data={name="Electromium Materialiser",class="generator_electrom_mat",In={"energy"},Out={"Electromium"},shootfunc=Func,InUse={2000},OutMake={2}}
+local Makeup = {name={"Electromium Materialiser"},model={"models/ce_ls3additional/fusion_generator/fusion_generator_large.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
 LDE.LifeSupport.CompileDevice(Data,Makeup)
 
-
--------------I will decide if i want to keep this or not later.---------------------
---Spore Harvester
---[[
-local Func = function(self) if(self.Active==1)then
-if(LDE.LifeSupport.HasNeeded(self,self.Data.In))then LDE.LifeSupport.UseResources(self,self.Data.In)
-if(LDE.LifeSupport.DrillEnt(self,"lde_spore"))then rand = math.random(1,3) self:SupplyResource("Liquid Polylodarium",(1+rand)*self.Mult)
-Owner=self.LDEOwner
-Owner:GiveLDEStat("Mined", (4+rand*self.Mult))
-end end end end
-local Data={name="Spore Laser",class="lde_spore_harvester",In={"energy"},Out={"Liquid Polylodarium"},shootfunc=Func,InUse={300},OutMake={0}}
-local Makeup = {name={"Spore Laser"},model={"models/mandrac/laser2.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
-LDE.LifeSupport.CompileDevice(Data,Makeup)]]
-
+--Electromium Converter
+local Func = function(self) if(self.Active==1)then LDE.LifeSupport.ManageResources(self) end end
+local Data={name="Electromium Converter",class="generator_electrom_con",In={"Electromium"},Out={"Liquid Polylodarium"},shootfunc=Func,InUse={20},OutMake={2}}
+local Makeup = {name={"Electromium Converter"},model={"models/chipstiks_ls3_models/NitrogenLiquifier/nitrogenliquifier.mdl"},Tool=Base.Tool,Type=Base.Type,class=Data.class}
+LDE.LifeSupport.CompileDevice(Data,Makeup)
+]]
 

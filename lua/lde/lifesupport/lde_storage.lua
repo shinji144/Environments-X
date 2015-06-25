@@ -46,6 +46,7 @@ local Data={name="Liquid Polylodarium Storage",class="lde_liqu_poly_storage",sto
 local Makeup = {name=Names,model=Models,Tool=Base.Tool,Type=Base.Type,class=Data.class}
 LDE.LifeSupport.CompileStorage(Data,Makeup)
 
+--[[
 --Electromium Storage
 local Base = {Tool="Mining Storage",Type="Electromium"}
 local Names = {"Electromium Storage Huge","Electromium Storage Large","Electromium Storage Medium","Electromium Storage Small"}
@@ -53,6 +54,7 @@ local Models = {"models/ce_ls3additional/energy_cells/energy_cell_huge.mdl","mod
 local Data={name="Electromium Storage",class="lde_electrom_storage",storage={"Electromium"},Rates={[10] = "Electromium"}}
 local Makeup = {name=Names,model=Models,Tool=Base.Tool,Type=Base.Type,class=Data.class}
 LDE.LifeSupport.CompileStorage(Data,Makeup)
+]]
 
 --Casings Storage
 local Base = {Tool="Ammo Production",Type="Casings"}

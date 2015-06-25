@@ -1,0 +1,9 @@
+ENT.Type 			= "anim"
+ENT.Base 			= "base_anim"
+ENT.PrintName 		= "Resource Pool"
+ENT.Author			= "Deep_thought"
+ENT.Contact			= ""
+ENT.Purpose			= "Environments Mining Resources"
+ENT.RenderGroup		= RENDERGROUP_TRANSLUCENT
+ENT.Spawnable		= false
+ENT.AdminSpawnable	= false

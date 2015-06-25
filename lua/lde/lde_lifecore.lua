@@ -188,7 +188,7 @@ function LDE.LifeSupport.RegisterDevice(Data)
 				if(Data.WireOut)then
 					self.Outputs = WireLib.CreateOutputs(self, Data.WireOut)
 				else
-					self.Outputs = WireLib.CreateOutputs(self, "On")
+					self.Outputs = WireLib.CreateOutputs(self, {"On"})
 				end
 			end
 			if(self.Data.Initialize)then

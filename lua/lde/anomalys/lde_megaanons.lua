@@ -105,7 +105,8 @@ local Think = function(self)
 			local range = v:GetPos():Distance(ent:GetPos())
 			if(not LDE:IsImmune(v) and not LDE:IsInSafeZone(v))then
 				--Msg("NOT IMMUNE! ")
-				local dir = (v:GetPos()-ent:GetPos()):Normalize() --LDE:Normalise(v:GetPos()-ent:GetPos())
+				local dir = (v:GetPos()-ent:GetPos()) --LDE:Normalise(v:GetPos()-ent:GetPos())
+				dir:Normalize()
 				local phys = v:GetPhysicsObject()
 				if math.random(1,15) == 1 then
 					if (phys:IsValid()) then 

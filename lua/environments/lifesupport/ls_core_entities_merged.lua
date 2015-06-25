@@ -50,10 +50,6 @@ Environments.RegisterDevice("Generators", "Atmospheric Water Generator", "Atmosp
 --Environments.RegisterDevice("Generators", "CO2 Compressor", "CO2 Compressor", "env_air_compressor", "models/props_outland/generator_static01a.mdl", nil, "carbon dioxide")
 
 --SolarPanels
-Environments.RegisterDevice("Generators", "Solar Panel", "Large Nasa Solar Panel", "generator_solar", "models/props_phx/life_support/panel_large.mdl")
-Environments.RegisterDevice("Generators", "Solar Panel", "Medium Nasa Solar Panel", "generator_solar", "models/props_phx/life_support/panel_medium.mdl")
-Environments.RegisterDevice("Generators", "Solar Panel", "Small Nasa Solar Panel", "generator_solar", "models/props_phx/life_support/panel_small.mdl")
-Environments.RegisterDevice("Generators", "Solar Panel", "Dish Solar Panel", "generator_solar", "models/props_phx/life_support/rau_small.mdl")
 Environments.RegisterDevice("Generators", "Solar Panel", "Mounted Solar Panels", "generator_solar", "models/Slyfo_2/miscequipmentsolar.mdl")
 Environments.RegisterDevice("Generators", "Solar Panel", "Small Mounted Solar Panel", "generator_solar", "models/Slyfo_2/acc_sci_spaneltanks.mdl")
 
@@ -102,6 +98,24 @@ Environments.RegisterDevice("Life Support", "TradeConsoles","Compact TradeConsol
 
 --Item Fabricator
 Environments.RegisterDevice("Life Support", "Fabricators","Item Materialiser", "env_factory", "models/slyfo/swordreconlauncher.mdl")
+
+//Mining Devices...
+Environments.RegisterEnt("mining_laser", 800, 500, 12)
+Environments.RegisterEnt("resource_drill", 1500, 850, 14)
+Environments.RegisterEnt("resource_scanner", 1200, 350, 10)
+--# Mining Laser
+Environments.RegisterDevice("Mining Devices","Mining Laser","Standard Mining Laser","mining_laser","models/Slyfo_2/pss_missilepod.mdl")
+
+--# Surface Drills
+Environments.RegisterDevice("Mining Devices","Mining Drills","Offset Drill Rig","resource_drill","models/Slyfo/rover_drillbase.mdl",0,1)
+Environments.RegisterDevice("Mining Devices","Mining Drills","Standrd Drill Platform","resource_drill","models/Slyfo/drillplatform.mdl",0,2)
+Environments.RegisterDevice("Mining Devices","Mining Drills","Basic Drill Rig","resource_drill","models/Slyfo/drillbase_basic.mdl",0,3)
+
+--# Resource Scanners
+Environments.RegisterDevice("Mining Devices","Detection","Huge Resource Scanner","resource_scanner","models/Slyfo_2/sattelite_doomray.mdl",1,12000)
+Environments.RegisterDevice("Mining Devices","Detection","Large Resource Scanner","resource_scanner","models/Slyfo/sat_relay.mdl",1,8192)
+Environments.RegisterDevice("Mining Devices","Detection","Medium Resource Scanner","resource_scanner","models/Slyfo/searchlight.mdl",1,2000)
+Environments.RegisterDevice("Mining Devices","Detection","Small Resource Scanner","resource_scanner","models/Slyfo/rover1_spotlight.mdl",1,1000)
 
 //Storage Tool
 --Water
