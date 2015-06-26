@@ -104,7 +104,7 @@ e2function wirelink entity:wirelink()
 	if not this.Inputs and not this.Outputs then return nil end
 	if !this.extended then
 		this.extended = true
-		RefreshSpecialOutputs(this)
+		WireLib.RefreshSpecialOutputs(this)
 	end
 	return this
 end
@@ -115,7 +115,7 @@ e2function number entity:removeWirelink()
 	if not isOwner(self, this) then return 0 end
 	if !this.extended then return 0 end
 	this.extended = false
-	RefreshSpecialOutputs(this)
+	WireLib.RefreshSpecialOutputs(this)
 	return 1
 end
 
