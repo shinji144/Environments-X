@@ -301,9 +301,8 @@ local Func = function(self,CanFire)
 				NewShell:Fire("kill", "", 120)
 				NewShell.ParL = self
 				NewShell:Think()
-				if(NADMOD)then
-					NADMOD.SetOwnerWorld(NewShell)
-				end
+				NewShell:CPPISetOwnerless(true)
+				
 				self.MCDown = CurTime() + 1
 				self:TurnOff()
 				return true

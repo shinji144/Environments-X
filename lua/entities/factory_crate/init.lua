@@ -12,19 +12,17 @@ function ENT:Initialize()
 	self.Active=0
 	self.Constructed = false
 
-	if(NADMOD)then
-		NADMOD.SetOwnerWorld(self)
-	end
+	self:CPPISetOwnerless(true)
 end
  
 function ENT:Think()
 	if(not self.Constructed)then return end
-   local ent = ents.Create(self.product)
+	local ent = ents.Create(self.product)
 	ent:SetModel(self.productmodel)
 	ent:SetPos( self.factory:LocalToWorld(Vector(0,0,60)) )
 	ent:Spawn()
 
-	NADMOD.PlayerMakePropOwner(self.LDEOwner,ent)
+	self:CPPISetOwner(self.LDEOwner)
 	ent.WasMade=true
 	local phys = ent:GetPhysicsObject()
 	

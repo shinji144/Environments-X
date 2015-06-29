@@ -351,9 +351,7 @@ function LDE.Anons.GenerateAnomaly(Data)
 				self.Data.Startup(self)
 			end
 			
-			if(NADMOD)then
-				NADMOD.SetOwnerWorld(self)
-			end
+			self:CPPISetOwnerless(true)
 			
 			self.LastTime=0
 		end		

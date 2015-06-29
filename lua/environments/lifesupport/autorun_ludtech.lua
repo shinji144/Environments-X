@@ -20,6 +20,7 @@ LoadFile(P.."sh_constraints.lua",1)
 LoadFile(P.."sh_debug.lua",1)
 LoadFile(P.."sh_utility.lua",1)
 LoadFile(P.."sh_networking.lua",1)
+LoadFile(P.."lde_ownership.lua",1)
 
 LoadFile(P.."lde_userinterface.lua",1)
 LoadFile(P.."sh_vguiease.lua",1)

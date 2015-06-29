@@ -22,9 +22,7 @@ local Int = function(self)
 			if spore:IsInWorld() then
 				spore:GetPhysicsObject():Sleep()
 				spore.Genetics=Genes
-				if(NADMOD)then
-					NADMOD.SetOwnerWorld(spore)
-				end
+				spore:CPPISetOwnerless(true)
 				break
 			end
 			pos = self:GetPos()+Vector(math.random(-512,512),math.random(-512,512),math.random(-512,512))

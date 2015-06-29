@@ -228,9 +228,9 @@ function LDE.SporeAI.GenerateSporeFinal(self,Pos,Norm,HEnt)
 	LDE.SporeAI.Attach(ent,HEnt)
 	ent.Genetics = self.Genetics
 	ent:SetColor(self.Genetics.Color)
-	if(NADMOD)then
-		NADMOD.SetOwnerWorld(ent)
-	end
+	
+	ent:CPPISetOwnerless(true)
+	
 	SporeDebug("made a spore!")
 end
 
@@ -299,10 +299,8 @@ function LDE.SporeAI.MakeSpore(Data)
 			self:SetSolid(SOLID_VPHYSICS)
 			self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)--Prevents them from self colliding.
 			//self.Entity:SetMaterial("models/debug/debugwhite")
-			if(NADMOD)then
-				NADMOD.SetOwnerWorld(self)
-			end
-			
+			self:CPPISetOwnerless(true)
+
 			if self:GetPhysicsObject():IsValid() then
 				self:GetPhysicsObject():Wake()
 				self:GetPhysicsObject():EnableGravity(false)

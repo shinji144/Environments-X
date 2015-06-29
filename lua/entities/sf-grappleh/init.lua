@@ -23,9 +23,7 @@ function ENT:Initialize()
 	self:StartMotionController()
 	self.PhysObj = self:GetPhysicsObject()
 	
-	if(NADMOD)then
-		NADMOD.SetOwnerWorld(self)
-	end
+	self:CPPISetOwnerless(true)
 
 	self.ATime = 0
 	

@@ -9,9 +9,8 @@ function ENT:Initialize()
 	
 	self.Active=0
 	self.Resources = {}
-	if(NADMOD)then
-		NADMOD.SetOwnerWorld(self)
-	end
+	self:CPPISetOwnerless(true)
+	
 	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()

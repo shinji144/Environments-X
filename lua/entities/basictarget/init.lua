@@ -34,9 +34,7 @@ function ENT:Initialize()
 	self.LastShot=CurTime()
 	self.DebugBeam=0
 	
-	if(NADMOD)then
-		NADMOD.SetOwnerWorld(self)
-	end
+	self:CPPISetOwnerless(true)
 end
 
 function ENT:VantagePoint(TargetPos)
