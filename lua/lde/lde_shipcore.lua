@@ -106,8 +106,8 @@ LDE.CoreSys.CoreHealth = function(self,Data)
 			local health = self.PropHealth[ent:EntIndex()] or 0
 			local enthealth = LDE:GetHealth(ent)*Data.HealthRate
 			local Calcedhealth = LDE:CalcHealth(ent)
-			local maxhealth = (Calcedhealth*1.5)*Data.HealthRate			
-			local entshield = (Calcedhealth/10)*Data.ShieldRate
+			local maxhealth = (Calcedhealth)*Data.HealthRate
+			local entshield = (Calcedhealth)*Data.ShieldRate
 			local entpoints = Calcedhealth*Data.CPSRate
 			
 			if string.find(ent:GetClass(),"spore") then 
