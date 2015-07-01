@@ -69,7 +69,7 @@ function ENT:SetActive( value, caller )
 		self:ConsumeResource("oxygen", Res_needed/2)
 		
 		caller.suit.energy = MaxAmount
-	elseif (self.energy > 0) then
+	elseif (energy > 0) then
 		caller.suit.energy = caller.suit.energy + math.floor(MaxCharge * Multiplier)
 		self:ConsumeResource("energy", energy)
 		self:ConsumeResource("water", water)

@@ -461,15 +461,6 @@ function ENT:Think()
 	return true
 end
 
---# No moving when we are working :|
-local function SteadyDrill(ply,ent)
-	if ent:GetClass() == "resource_drill" then
-		if ent.dt.Locked ~= 0 then return false end
-	end
-	return true
-end
-hook.Add("PhysgunPickup","DrillLockDown",SteadyDrill)
-
 --# On lockdown :S
 function ENT:CanTool()
 	if self.dt.Locked ~= 0 then return false end

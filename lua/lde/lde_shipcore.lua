@@ -514,23 +514,23 @@ function LDE.CoreSys.RegisterCore(Data)
 	print("Core Registered: "..Data.class)
 end
 
-	local Files
-	if file.FindInLua then
-		Files = file.FindInLua( "lde/cores/*.lua" )
-	else//gm13
-		Files = file.Find("lde/cores/*.lua", "LUA")
-	end
+local Files
+if file.FindInLua then
+	Files = file.FindInLua( "lde/cores/*.lua" )
+else//gm13
+	Files = file.Find("lde/cores/*.lua", "LUA")
+end
 
-	--Get the weapon data from the lifesupport folder.
-	for k, File in ipairs(Files) do
-		Msg("*LDE Core System Loading: "..File.."...\n")
-		local ErrorCheck, PCallError = pcall(include, "lde/cores/"..File)
-		ErrorCheck, PCallError = pcall(AddCSLuaFile, "lde/cores/"..File)
-		if !ErrorCheck then
-			Msg(PCallError.."\n")
-		end
+--Get the weapon data from the lifesupport folder.
+for k, File in ipairs(Files) do
+	Msg("*LDE Core System Loading: "..File.."...\n")
+	local ErrorCheck, PCallError = pcall(include, "lde/cores/"..File)
+	ErrorCheck, PCallError = pcall(AddCSLuaFile, "lde/cores/"..File)
+	if !ErrorCheck then
+		Msg(PCallError.."\n")
 	end
-	Msg("LDE Core System Loaded: Successfully\n")
+end
+Msg("LDE Core System Loaded: Successfully\n")
 
 
 
