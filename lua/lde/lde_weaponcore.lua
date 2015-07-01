@@ -96,6 +96,8 @@ LDE.Weapons.CanFireTab.Status = function(self)
 	local Core=self:GetNWInt("WepNoCore") or 0
 	local Points=self:GetNWInt("WepNeedPoints") or 0
 	local Safe=self:GetNWInt("WepSafeZone") or 0
+	local Unlocked=self:GetNWInt("WepUnlocked") or 0
+	
 	local Text = "Cant Fire"
 	if(CanFire>0)then 
 		Text = "Can Fire" 
@@ -108,6 +110,9 @@ LDE.Weapons.CanFireTab.Status = function(self)
 		end
 		if(Safe>0)then
 			Text=Text.." Inside SafeZone"
+		end
+		if(Unlocked>0)then
+			Text=Text.." Technology Locked"
 		end
 	end
 	return Text
@@ -294,31 +299,47 @@ function LDE.Weapons.RegisterWeapon(Data,Models)
 			self:SetCanFire(0)
 		end
 		
+		function ENT:CheckCanFire()
+			if(not IsValid(self.LDE.Core))then
+				self:CantFire() 
+				self:SetNetVar("WepNoCore",1) 
+				return true
+			else
+				self:SetNetVar("WepNoCore",0) 
+			end
+			
+			if(not self.HasPoints)then 
+				self:CantFire() 
+				self:SetNetVar("WepNeedPoints",1) 
+				return true
+			else
+				self:SetNetVar("WepNeedPoints",0) 
+			end
+			
+			if(LDE:IsInSafeZone(self) and not self.Data.SafeAllow)then 
+				self:CantFire() 
+				self:SetNetVar("WepSafeZone",1) 
+				return true
+			else
+				self:SetNetVar("WepSafeZone",0) 
+			end	
+
+			if(LDE:CheckUnlocked(LDE.GetPropOwner(self),self))then 
+				self:CantFire() 
+				self:SetNetVar("WepUnlocked",1) 
+				return true
+			else
+				self:SetNetVar("WepUnlocked",0) 
+			end
+			return false
+		end
+		
 		function ENT:FireWeapon()
 			self.SPL = self.LDEOwner
 			self.Active=self.Active or 0
 			self.LDE = self.LDE or {}
-			if(not IsValid(self.LDE.Core))then
-				self:CantFire() 
-				self:SetNetVar("WepNoCore",1) 
-				return
-			else
-				self:SetNetVar("WepNoCore",0) 
-			end
-			if(not self.HasPoints)then 
-				self:CantFire() 
-				self:SetNetVar("WepNeedPoints",1) 
-				return
-			else
-				self:SetNetVar("WepNeedPoints",0) 
-			end
-			if(LDE:IsInSafeZone(self) and not self.Data.SafeAllow)then 
-				self:CantFire() 
-				self:SetNetVar("WepSafeZone",1) 
-				return
-			else
-				self:SetNetVar("WepSafeZone",0) 
-			end
+
+			 if self:CheckCanFire() then return false end
 			
 			local CF = CurTime()>=self.LastTime+self.Data.firespeed
 			if CF then

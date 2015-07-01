@@ -19,14 +19,15 @@ if(SERVER)then
 		return false
 	end
 
+	--[[
 	function LDE.UnlockCreateCheck(ply,ent)--Entity Spawn hook.
 		if(LDE:CheckUnlocked(ply,ent))then 
 			ent:Remove()
 			LDE:NotifyPlayer(ply,"Unlocks","Sorry you don't have that unlocked yet!",Color(255,80,80,255))
 			return 
 		end --Add print telling player they dont have unlock.
-	end 
-	hook.Add( "PlayerSpawnedSENT", "UnlockCheck", LDE.UnlockCreateCheck)
+	end ]]
+	--hook.Add( "PlayerSpawnedSENT", "UnlockCheck", LDE.UnlockCreateCheck)
 	
 	function UnlockUnlockable(ply, cmd, args)
 		local Type,Class = args[1],args[2]
